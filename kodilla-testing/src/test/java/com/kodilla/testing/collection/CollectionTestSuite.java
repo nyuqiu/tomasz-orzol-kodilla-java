@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CollectionTestSuite {
 
@@ -27,9 +28,7 @@ public class CollectionTestSuite {
         ArrayList<Integer> empty = oddNumbersExterminator.exterminate(argument);
         System.out.println("Testing "+empty);
         //Then
-        for(int i=0; i<empty.size(); i++){
-            Assert.assertEquals(empty.get(i), argument.get(i));
-        }
+        Assert.assertEquals(argument, empty);
     }
 
     @Test
@@ -37,12 +36,10 @@ public class CollectionTestSuite {
             //Given
             OddNumbersExterminator oddNumbersExterminator = new OddNumbersExterminator();
             ArrayList<Integer> argument = new ArrayList<>();
-            argument.add(1);
-            argument.add(2);
-            argument.add(3);
-            argument.add(4);
-            argument.add(5);
-            argument.add(6);
+            Random random = new Random();
+            for(int i=0; i<random.nextInt(50);i++){
+                argument.add(random.nextInt(50));
+            }
             //When
             ArrayList<Integer> ready = oddNumbersExterminator.exterminate(argument);
             ArrayList<Integer> evenNumbers = new ArrayList<>();
@@ -54,8 +51,7 @@ public class CollectionTestSuite {
             }
             System.out.println("Testing "+argument);
             //Then
-            for(int i=0; i<ready.size(); i++){
-                Assert.assertEquals(ready.get(i), evenNumbers.get(i));
-            }
-        }
+            Assert.assertEquals(ready, evenNumbers);
+    }
+
 }
