@@ -26,7 +26,7 @@ public class CollectionTestSuite {
         ArrayList<Integer> argument = new ArrayList<>();
         //When
         ArrayList<Integer> empty = oddNumbersExterminator.exterminate(argument);
-        System.out.println("Testing "+empty);
+        System.out.println("Testing: "+empty);
         //Then
         Assert.assertEquals(argument, empty);
     }
@@ -49,7 +49,7 @@ public class CollectionTestSuite {
                     evenNumbers.add(testNumber);
                 }
             }
-            System.out.println("Testing "+argument);
+            System.out.println("Testing: "+argument);
             //Then
             Assert.assertEquals(ready, evenNumbers);
     }
