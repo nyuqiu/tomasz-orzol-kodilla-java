@@ -9,6 +9,11 @@ public class Triangle implements Shape {
         this.high = high;
     }
 
+    @Override
+    public String getDimensions(){
+        return String.valueOf(base)+" "+String.valueOf(high);
+    }
+
     public double getBase() {
         return base;
     }

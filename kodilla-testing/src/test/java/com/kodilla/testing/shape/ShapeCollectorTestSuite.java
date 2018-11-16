@@ -75,11 +75,17 @@ public class ShapeCollectorTestSuite {
         //Given
         ShapeCollector shapeCollector = new ShapeCollector();
         Shape square = new Square(2);
+        Shape circle = new Circle(2);
+        Shape triangle = new Triangle(2,2);
         shapeCollector.addFigure(square);
+        shapeCollector.addFigure(circle);
+        shapeCollector.addFigure(triangle);
         //When
         String result =  shapeCollector.showFigures();
         //Then
-        Assert.assertEquals("Figures in list are: Square, side length 2, field 4", result);
+        Assert.assertEquals("Figures in list are: Square, side dimension 2.0, field 4.0\n"+
+        "Circle, radius dimension 2.0, field 12.566370614359172\n"+
+        "Triangle, base and high dimensions 2.0 2.0, field 2.0\n", result);
     }
 
     @Test

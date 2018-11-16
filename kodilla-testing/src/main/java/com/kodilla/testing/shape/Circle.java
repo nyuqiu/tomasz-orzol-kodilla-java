@@ -12,6 +12,11 @@ public class Circle implements Shape{
     }
 
     @Override
+    public String getDimensions(){
+        return String.valueOf(radius);
+    }
+
+    @Override
     public String getShapeName() {
         return "Circle";
     }

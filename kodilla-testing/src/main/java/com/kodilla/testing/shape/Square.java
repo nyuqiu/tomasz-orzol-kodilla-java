@@ -12,6 +12,11 @@ public class Square implements Shape {
     }
 
     @Override
+    public String getDimensions(){
+        return String.valueOf(length);
+    }
+
+    @Override
     public String getShapeName() {
         return "Square";
     }
