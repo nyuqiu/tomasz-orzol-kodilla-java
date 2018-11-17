@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryUser {
-    String firstname;
-    String lastname;
-    String peselId;
-    List<Book> userBookList;
+    private String firstname;
+    private String lastname;
+    private String peselId;
+    private List<Book> userBookList;
 
     public LibraryUser(String firstname, String lastname, String peselId) {
         this.firstname = firstname;
