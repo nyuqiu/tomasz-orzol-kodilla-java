@@ -1,12 +1,12 @@
 package com.kodilla.testing.forum.statistics;
 
-public class CountingStatistics {
-    double averageAmountOfPostsPerUser;
-    double averageAmountOfCommentsPerUser;
-    double averageAmountOfCommentsPerPost;
+public class StatisticsCalculator {
+    private double averageAmountOfPostsPerUser;
+    private double averageAmountOfCommentsPerUser;
+    private double averageAmountOfCommentsPerPost;
     Statistics statistics;
 
-    public CountingStatistics(Statistics statistics) {
+    public StatisticsCalculator(Statistics statistics) {
         this.statistics = statistics;
         this.averageAmountOfPostsPerUser = 0;
         this.averageAmountOfCommentsPerUser = 0;
@@ -35,7 +35,10 @@ public class CountingStatistics {
     }
 
     String showStatistic(){
-        return null;
+        String result = "Forum statistics: average of comments per user "+getAverageAmountOfCommentsPerUser()+"\n"+
+                ", average of comments per post "+getAverageAmountOfCommentsPerPost()+"\n"+
+                ", average of posts per user "+getAverageAmountOfPostsPerUser()+"\n";
+        return result;
     }
 
 

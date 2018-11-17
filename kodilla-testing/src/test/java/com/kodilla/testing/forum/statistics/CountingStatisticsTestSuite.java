@@ -37,7 +37,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.usersNames()).thenReturn(userAmount);
         when(statisticsMock.postsCount()).thenReturn(postCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -57,7 +57,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.usersNames()).thenReturn(userAmount);
         when(statisticsMock.postsCount()).thenReturn(postCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -77,7 +77,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.usersNames()).thenReturn(userAmount);
         when(statisticsMock.postsCount()).thenReturn(postCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -96,7 +96,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.usersNames()).thenReturn(userAmount);
         when(statisticsMock.postsCount()).thenReturn(postCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -114,7 +114,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.commentsCount()).thenReturn(commentCount);
         when(statisticsMock.postsCount()).thenReturn(postCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -133,7 +133,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.commentsCount()).thenReturn(commentCount);
         when(statisticsMock.postsCount()).thenReturn(postCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -152,7 +152,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.commentsCount()).thenReturn(commentCount);
         when(statisticsMock.postsCount()).thenReturn(postCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -171,7 +171,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.commentsCount()).thenReturn(commentCount);
         when(statisticsMock.postsCount()).thenReturn(postCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -192,7 +192,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.commentsCount()).thenReturn(commentCount);
 
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -212,7 +212,7 @@ public class CountingStatisticsTestSuite{
         int commentCount = 1000;
         when(statisticsMock.commentsCount()).thenReturn(commentCount);
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -234,7 +234,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.commentsCount()).thenReturn(commentCount);
 
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -255,7 +255,7 @@ public class CountingStatisticsTestSuite{
         when(statisticsMock.commentsCount()).thenReturn(commentCount);
 
 
-        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+        StatisticsCalculator countingStatistics = new StatisticsCalculator(statisticsMock);
         countingStatistics.calculateAdvStatistics(statisticsMock);
 
         //When
@@ -264,4 +264,35 @@ public class CountingStatisticsTestSuite{
         //Then
         Assert.assertEquals((Double)(1000.0/0), (Double)average);
     }
+
+//    @Test
+//    public void testCalculateAverageOfPostsPerUsersWithMock() {
+//        //Given
+//        Statistics statisticsMock = mock(Statistics.class);
+//        List<String> userAmount100 = mock(List.class);
+//        List<String> userAmount0 = mock(List.class);
+//
+//        when(userAmount100.size()).thenReturn(100);
+//        when(userAmount0.size()).thenReturn(0);
+//
+//        int postCount1000 = 1000;
+//        int postCount0 = 0;
+//
+//        OngoingStubbing size100 = when(statisticsMock.usersNames()).thenReturn(userAmount100);
+//        OngoingStubbing size00 = when(statisticsMock.usersNames()).thenReturn(userAmount0);
+//        OngoingStubbing count1000 = when(statisticsMock.postsCount()).thenReturn(postCount1000);
+//        OngoingStubbing count0 = when(statisticsMock.postsCount()).thenReturn(postCount0);
+//
+//        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
+//        countingStatistics.calculateAdvStatistics(statisticsMock);
+//
+//        //When
+//        double average0per0 = countingStatistics.getAverageAmountOfPostsPerUser();
+//        double average = countingStatistics.getAverageAmountOfPostsPerUser();
+//        double average = countingStatistics.getAverageAmountOfPostsPerUser();
+//        double average = countingStatistics.getAverageAmountOfPostsPerUser();
+//
+//        //Then
+//        Assert.assertEquals((Double)10.0, (Double)average);
+//    }
 }
