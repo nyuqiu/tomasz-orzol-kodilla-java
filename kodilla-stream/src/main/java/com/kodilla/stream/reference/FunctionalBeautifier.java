@@ -1,4 +1,4 @@
-package com.kodilla.stream.beautifier;
+package com.kodilla.stream.reference;
 
 public class FunctionalBeautifier {
     public static String addABCOnEnd(String string) {
