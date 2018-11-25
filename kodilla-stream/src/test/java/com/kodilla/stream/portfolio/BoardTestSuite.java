@@ -140,7 +140,7 @@ public class BoardTestSuite {
     }
 
     @Test
-    public void testAddTaskListAverageWorkingOnTask(){
+    public void testAddTaskListAverageDaysWorkingOnTask(){
         // Given
         Board project = prepareTestData();
 
