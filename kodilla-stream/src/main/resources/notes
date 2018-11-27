@@ -1,0 +1,8 @@
+from array
+
+//        if(numbers.length==0) {
+//            return 0;
+//        }
+//            IntStream showElements = IntStream.range(0, numbers.length)
+//                    .map(n -> numbers[n]);
+//            System.out.println(showElements);
