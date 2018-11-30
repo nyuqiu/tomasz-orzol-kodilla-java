@@ -30,8 +30,12 @@ public class FlightModuleRunner {
         for (Flight flight : flights) {
             try {
                 Map<String, Boolean> canFlyTo = findFlight.findFlight(flight);
-                System.out.println("Flight from " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() +
-                        " can land in " + canFlyTo);
+                if(canFlyTo.size()==0){
+                    throw new RouteNotFoundException();
+                } else {
+                    System.out.println("Flight from " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() +
+                            " can land in " + canFlyTo);
+                }
             } catch (RouteNotFoundException e) {
                 System.out.println(e);
             }

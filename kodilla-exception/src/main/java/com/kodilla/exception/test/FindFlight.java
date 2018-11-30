@@ -1,7 +1,6 @@
 package com.kodilla.exception.test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FindFlight {
     public Map<String, Boolean> findFlight(Flight flight) throws RouteNotFoundException {
@@ -13,22 +12,53 @@ public class FindFlight {
         canFlyTo.put("London", false);
         canFlyTo.put("Dubai", false);
 
-        Map<String, Boolean> resultsOfCanFlyTo = new HashMap<>();
-        for (String key : canFlyTo.keySet()) {
-            try {
+        Set<String> airportsNotExsistTest = new HashSet<>();
+        Set<String> airportsNotExsist = new HashSet<>();
+
+        try {
+            for (String key : canFlyTo.keySet()) {
                 if (flight.getArrivalAirport() != null || flight.getDepartureAirport() != null) {
-                    if (flight.getArrivalAirport() == key || flight.getDepartureAirport() == key) {
-                        resultsOfCanFlyTo.put(key, true);
+                    if (flight.getArrivalAirport() == key) {
+                        canFlyTo.replace(key, true);
                     } else {
-                        throw new RouteNotFoundException();
+                        airportsNotExsistTest.add(flight.getArrivalAirport());
+                        airportsNotExsist.add(flight.getArrivalAirport());
+                    }
+                    if (flight.getDepartureAirport() == key) {
+                        canFlyTo.replace(key, true);
+                    } else {
+                        airportsNotExsistTest.add(flight.getDepartureAirport());
+                        airportsNotExsist.add(flight.getDepartureAirport());
                     }
                 } else {
-                    throw new RouteNotFoundException();
+                    System.out.println("Arrival and departure airport are unknown.");
                 }
-            } catch (RouteNotFoundException e) {
-                System.out.println("Airport " + key + " not avaiable on map");
+            }
+            System.out.println("Flight from "+flight.getDepartureAirport()+" to "+flight.getArrivalAirport());
+
+            for (String key1 : canFlyTo.keySet()) {
+                for (String airport : airportsNotExsistTest) {
+                    if (key1 == airport) {
+                        airportsNotExsist.remove(airport);
+                    }
+                }
+            }
+            if (airportsNotExsist.size() > 0) {
+                throw new RouteNotFoundException();
+            }
+        } catch (RouteNotFoundException e) {
+            for (String airport : airportsNotExsist) {
+                System.out.println("Airport " + airport + " not avaiable on map");
             }
         }
-        return resultsOfCanFlyTo;
+        Map<String, Boolean> resultOfCanFlyTo = canFlyTo;
+        for (int i=0; i<canFlyTo.size()*10; i++) {
+            resultOfCanFlyTo.values().remove(false);
+            }
+
+        return resultOfCanFlyTo;
     }
+
 }
+
+
