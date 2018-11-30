@@ -33,11 +33,10 @@ public class FlightModuleRunner {
                 if(canFlyTo.size()==0){
                     throw new RouteNotFoundException();
                 } else {
-                    System.out.println("Flight from " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() +
-                            " can land in " + canFlyTo);
+                    System.out.println("Can land in " + canFlyTo);
                 }
             } catch (RouteNotFoundException e) {
-                System.out.println("Airports not on map.");
+                System.out.println("Airports not on map "+e);
             }
         }
     }
