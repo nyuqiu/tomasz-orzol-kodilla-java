@@ -37,7 +37,7 @@ public class FlightModuleRunner {
                             " can land in " + canFlyTo);
                 }
             } catch (RouteNotFoundException e) {
-                System.out.println(e);
+                System.out.println("Airports not on map.");
             }
         }
     }
