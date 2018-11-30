@@ -15,11 +15,5 @@ public class StreamMain {
                 .collect(Collectors.toMap(ForumUser::getId, forumUser -> forumUser));
 
         System.out.println(theResultMapOfUsers);
-
-
-//        for(ForumUser forumUser: Forum.getUserList()){
-//            System.out.println(forumUser);
-//        }
-
     }
 }

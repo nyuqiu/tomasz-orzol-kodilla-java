@@ -36,27 +36,3 @@ public final class Forum {
         return new ArrayList<>(userList);
     }
 }
-
-//class UserGenerator{
-//    public ForumUser userGenerator(){
-//        int id = random.nextInt(10000);
-//        String userName = "username"+random.nextInt(100);
-//        char sex ='A';
-//        if(random.nextInt(1)==0){
-//            sex = 'M';
-//        } else {
-//            sex = 'F';
-//        }
-//        int year = 1900+random.nextInt(117);
-//        int month = random.nextInt(11);
-//        int day=0;
-//        if(year%4==2){
-//            day = random.nextInt(27);
-//        } else {
-//            day = random.nextInt(29);
-//        }
-//        LocalDate dateOfBirtt = LocalDate.of(year, month+1, day+1);
-//        int postCount = random.nextInt(200);
-//        return new ForumUser(id, userName, sex, dateOfBirtt, postCount);
-//    }
-//}

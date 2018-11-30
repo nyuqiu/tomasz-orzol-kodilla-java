@@ -3,8 +3,7 @@ package com.kodilla.stream.portfolio;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDate;
-<<<<<<< HEAD
-=======
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +11,7 @@ import java.util.stream.IntStream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.stream.Collectors.toList;
->>>>>>> 3913cf504ed13f462a63f5e4e8f5ceb83afd7a0a
+
 
 public class BoardTestSuite {
     public Board prepareTestData() {
@@ -86,8 +85,7 @@ public class BoardTestSuite {
         //Then
         Assert.assertEquals(3, project.getTaskLists().size());
     }
-<<<<<<< HEAD
-=======
+
 
     @Test
     public void testAddTaskListFindUsersTasks() {
@@ -163,5 +161,4 @@ public class BoardTestSuite {
         //Then
         Assert.assertEquals(55.0/3, averageOfDaysOfOutgoingTasks, 0);
     }
->>>>>>> 3913cf504ed13f462a63f5e4e8f5ceb83afd7a0a
 }
