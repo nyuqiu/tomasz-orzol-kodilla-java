@@ -17,10 +17,10 @@ public class FindFlight {
         canFlyTo.put("London", false);
         canFlyTo.put("Dubai", false);
 
-        Map<String, Boolean> resultOfCanFlyTo = new HashMap<>();
+        Map<String, Boolean> canFlyToTrueValues = canFlyTo;
         canFlyTo.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(flight.getArrivalAirport()) || entry.getKey().equals(flight.getDepartureAirport()))
-                .forEach(entry -> canFlyTo.replace(entry.getKey(), entry.getValue(), entry.setValue(true)));
+                .forEach(entry -> canFlyToTrueValues.replace(entry.getKey(), entry.getValue(), entry.setValue(true)));
 
         Set<String> airportsNotExsist = new HashSet<>();
 
@@ -51,7 +51,11 @@ public class FindFlight {
                 System.out.println("Airport " + airport + " not avaiable on map");
             }
         }
-        return resultOfCanFlyTo;
+        Map<String,Boolean> resultCanFlyTo = new HashMap<>();
+        canFlyToTrueValues.entrySet().stream()
+                .filter(entry -> entry.getValue())
+                .forEach(entry -> resultCanFlyTo.put(entry.getKey(), entry.getValue()));
+        return resultCanFlyTo;
     }
 }
 
