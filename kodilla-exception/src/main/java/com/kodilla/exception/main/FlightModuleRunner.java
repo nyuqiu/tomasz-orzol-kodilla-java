@@ -3,12 +3,22 @@ package com.kodilla.exception.main;
 import com.kodilla.exception.test.FindFlight;
 import com.kodilla.exception.test.Flight;
 import com.kodilla.exception.test.RouteNotFoundException;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class FlightModuleRunner {
     public static void main(String args[]) {
+        Map<String, Boolean> airports = new HashMap<>();
+        airports.put("Amsterdam",false);
+        airports.put("Frankfurt",false);
+        airports.put("Warsaw",false);
+        airports.put("New York",false);
+        airports.put("London",false);
+        airports.put("Dubai",false);
+
         FindFlight findFlight = new FindFlight();
         List<Flight> flights = new ArrayList<>();
         Flight flight1 = new Flight("Amsterdam", "Miami");
@@ -29,7 +39,7 @@ public class FlightModuleRunner {
 
         for (Flight flight : flights) {
             try {
-                Map<String, Boolean> canFlyTo = findFlight.findFlight(flight);
+                Map<String, Boolean> canFlyTo = findFlight.findFlight(flight, airports);
                 if(canFlyTo.size()==0){
                     throw new RouteNotFoundException();
                 } else {
