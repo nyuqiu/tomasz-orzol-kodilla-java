@@ -9,5 +9,6 @@ public class ArrayOperations {
                     .peek(n -> System.out.println(n))
                     .average().orElse(0);
             return getAverage;
+
     }
 }
