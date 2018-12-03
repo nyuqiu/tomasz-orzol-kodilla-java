@@ -8,15 +8,9 @@ import java.util.stream.Collectors;
 
 public class FindFlight {
 
-    public Map<String, Boolean> findFlight(Flight flight) throws RouteNotFoundException {
-        Map<String, Boolean> canFlyTo = new HashMap<>();
-        canFlyTo.put("Amsterdam", false);
-        canFlyTo.put("Frankfurt", false);
-        canFlyTo.put("Warsaw", false);
-        canFlyTo.put("New York", false);
-        canFlyTo.put("London", false);
-        canFlyTo.put("Dubai", false);
+    public Map<String, Boolean> findFlight(Flight flight, Map<String, Boolean> canFlyToOrigin) throws RouteNotFoundException {
 
+        Map<String, Boolean> canFlyTo = new HashMap<>(canFlyToOrigin);
         Map<String, Boolean> canFlyToTrueValues = canFlyTo;
         canFlyTo.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(flight.getArrivalAirport()) || entry.getKey().equals(flight.getDepartureAirport()))
