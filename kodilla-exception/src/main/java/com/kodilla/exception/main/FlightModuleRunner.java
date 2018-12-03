@@ -4,20 +4,17 @@ import com.kodilla.exception.test.FindFlight;
 import com.kodilla.exception.test.Flight;
 import com.kodilla.exception.test.RouteNotFoundException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FlightModuleRunner {
     public static void main(String args[]) {
         Map<String, Boolean> airports = new HashMap<>();
-        airports.put("Amsterdam",false);
-        airports.put("Frankfurt",false);
-        airports.put("Warsaw",false);
-        airports.put("New York",false);
-        airports.put("London",false);
-        airports.put("Dubai",false);
+        airports.put("Amsterdam", false);
+        airports.put("Frankfurt", false);
+        airports.put("Warsaw", false);
+        airports.put("New York", false);
+        airports.put("London", false);
+        airports.put("Dubai", false);
 
         FindFlight findFlight = new FindFlight();
         List<Flight> flights = new ArrayList<>();
@@ -36,18 +33,21 @@ public class FlightModuleRunner {
         flights.add(flight6);
         flights.add(flight7);
 
-
         for (Flight flight : flights) {
             try {
+                Set<String> airportsNotOnMap = findFlight.airportsNotExist(flight, airports);
                 Map<String, Boolean> canFlyTo = findFlight.findFlight(flight, airports);
-                if(canFlyTo.size()==0){
+                if (airportsNotOnMap.size() > 0) {
                     throw new RouteNotFoundException();
                 } else {
                     System.out.println("Can land in " + canFlyTo);
                 }
             } catch (RouteNotFoundException e) {
-                System.out.println("Airports not on map "+e);
+                System.out.println("Airport/s not avaiable on map");
             }
         }
     }
 }
+
+
+

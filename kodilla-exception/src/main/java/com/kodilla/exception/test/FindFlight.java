@@ -1,5 +1,6 @@
 package com.kodilla.exception.test;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,13 +9,9 @@ import java.util.stream.Collectors;
 
 public class FindFlight {
 
-    public Map<String, Boolean> findFlight(Flight flight, Map<String, Boolean> canFlyToOrigin) throws RouteNotFoundException {
+    public Set<String> airportsNotExist(Flight flight, Map<String, Boolean> canFlyToOrigin) throws RouteNotFoundException {
 
         Map<String, Boolean> canFlyTo = new HashMap<>(canFlyToOrigin);
-        Map<String, Boolean> canFlyToTrueValues = canFlyTo;
-        canFlyTo.entrySet().stream()
-                .filter(entry -> entry.getKey().equals(flight.getArrivalAirport()) || entry.getKey().equals(flight.getDepartureAirport()))
-                .forEach(entry -> canFlyToTrueValues.replace(entry.getKey(), entry.getValue(), entry.setValue(true)));
 
         Set<String> airportsNotExsist = new HashSet<>();
 
@@ -31,6 +28,7 @@ public class FindFlight {
                     System.out.println("Arrival and departure airport are unknown.");
                 }
             }
+
             System.out.println("Flight from " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport());
 
             airportsNotExsist = airportsNotExsist.stream()
@@ -38,14 +36,23 @@ public class FindFlight {
                     .collect(Collectors.toSet());
 
             if (airportsNotExsist.size() > 0) {
-                throw new RouteNotFoundException();
+                throw new IOException();
             }
-        } catch (RouteNotFoundException e) {
-            for (String airport : airportsNotExsist) {
-                System.out.println("Airport " + airport + " not avaiable on map");
-            }
+        } catch (IOException e) {
+            throw new RouteNotFoundException();
         }
-        Map<String,Boolean> resultCanFlyTo = new HashMap<>();
+        return airportsNotExsist;
+    }
+
+    public Map<String, Boolean> findFlight(Flight flight, Map<String, Boolean> canFlyToOrigin) throws RouteNotFoundException {
+
+        Map<String, Boolean> canFlyTo = new HashMap<>(canFlyToOrigin);
+        Map<String, Boolean> canFlyToTrueValues = canFlyTo;
+        canFlyTo.entrySet().stream()
+                .filter(entry -> entry.getKey().equals(flight.getArrivalAirport()) || entry.getKey().equals(flight.getDepartureAirport()))
+                .forEach(entry -> canFlyToTrueValues.replace(entry.getKey(), entry.getValue(), entry.setValue(true)));
+
+        Map<String, Boolean> resultCanFlyTo = new HashMap<>();
         canFlyToTrueValues.entrySet().stream()
                 .filter(entry -> entry.getValue())
                 .forEach(entry -> resultCanFlyTo.put(entry.getKey(), entry.getValue()));
