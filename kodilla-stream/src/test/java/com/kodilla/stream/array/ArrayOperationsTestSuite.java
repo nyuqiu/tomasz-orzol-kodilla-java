@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class ArrayOperationsTestSuite {
+
     @Test
     public void testGetAverage() {
         // Given
@@ -26,6 +27,5 @@ public class ArrayOperationsTestSuite {
 
         //Then//
         Assert.assertEquals( 0.0, result,0);
-
     }
 }
