@@ -15,6 +15,7 @@ public class ArrayOperationsTestSuite {
         //Then//
         Assert.assertEquals( 5.0, result,0);
     }
+
     @Test
     public void testGetAverageWhenEmpty() {
         // Given
@@ -25,5 +26,6 @@ public class ArrayOperationsTestSuite {
 
         //Then//
         Assert.assertEquals( 0.0, result,0);
+
     }
 }
