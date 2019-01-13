@@ -3,11 +3,11 @@ package com.kodilla.good.paterns.challenges.ProductOrderService;
 class BuyingDto {
 
     private User user;
-    private boolean isBought;
+    private boolean bought;
 
-    public BuyingDto(final User user, final boolean isBought) {
+    public BuyingDto(final User user, final boolean bought) {
         this.user = user;
-        this.isBought = isBought;
+        this.bought = bought;
     }
 
     public User getUser() {
@@ -15,6 +15,6 @@ class BuyingDto {
     }
 
     public boolean isBought() {
-        return isBought;
+        return bought;
     }
 }

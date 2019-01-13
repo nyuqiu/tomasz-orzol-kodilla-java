@@ -5,7 +5,7 @@ class Application {
         BuyRequestRetriever buyRequestRetriever = new BuyRequestRetriever();
         BuyingRequest buyingRequest = buyRequestRetriever.retrieve();
 
-        ProductOrderService productOrderService = new ProductOrderService(new EmailService(), new ProductBuyingService(), new ProductBuyingRepository());
+        ProductOrderService productOrderService = new ProductOrderService(new EmailService());
         productOrderService.process(buyingRequest);
     }
 }
