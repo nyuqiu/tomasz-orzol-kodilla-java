@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 class MovieStore {
 
@@ -28,10 +29,10 @@ class MovieStore {
 
         String showMovieTitles = booksTitlesWithTranslations.entrySet().stream()
                 .flatMap(listEntry -> listEntry.getValue().stream())
-                .reduce("" , (value, current) -> value = value+current+"!");
+                .collect(Collectors.joining("!"));
 
 
 
-        return showMovieTitles.substring(0,showMovieTitles.length()-1);
+        return showMovieTitles;
     }
 }
