@@ -1,22 +1,11 @@
 package com.kodilla.good.paterns.challenges.Food2Door;
 
-import java.util.HashMap;
+import java.util.Map;
 
-public class Producent {
+public interface Producent {
 
-    private String name;
-    private HashMap<String, Integer> products;
+    void process(OrderRequest orderRequest);
 
-    public Producent(String name, HashMap<String, Integer> products) {
-        this.name = name;
-        this.products = products;
-    }
+    Map<String, Integer> productsList(Map<String, Integer> avaiableProducts);
 
-    public String getName() {
-        return name;
-    }
-
-    public HashMap<String, Integer> getProducts() {
-        return products;
-    }
 }
