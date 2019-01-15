@@ -1,47 +1,47 @@
 package com.kodilla.good.paterns.challenges.Food2Door;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ProductsAvaliablity {
 
-    public List<Map<String, Integer>> checkAvaliablity(OrderRequest orderRequest, Map<String, Integer> avaiableProducts){
+    public List<Map<String, Integer>> checkAvaliablity(OrderRequest orderRequest, Map<String, Integer> avaiableProducts) {
 
         List<Map<String, Integer>> orderedAndAvaliable = new ArrayList<>();
-
         Map<String, Integer> orderedProducts = orderRequest.getOrderedProducts();
+        Map<String, Integer> productsToSent = new HashMap<>();
 
-        for(Map.Entry<String, Integer> entry : avaiableProducts.entrySet()){
-            String product = entry.getKey();
-            Integer amount = entry.getValue();
+        for (Map.Entry<String, Integer> entry : orderedProducts.entrySet()) {
+            String orderedProduct = entry.getKey();
+            Integer orderedAmount = entry.getValue();
 
-            for(Map.Entry<String, Integer> entry1 : orderedProducts.entrySet()){
-                String orderedPoduct = entry1.getKey();
-                Integer amountOrdered = entry1.getValue();
+            boolean isAvaliable = avaiableProducts.containsKey(orderedProduct);
+            int amountOrdered = orderedProducts.get(orderedProduct);
 
-                if(product==orderedPoduct){
-                    int newAmount = amount-amountOrdered;
-                    if(newAmount>0) {
-                        avaiableProducts.put(product, newAmount);
-                        System.out.println(product+" avaliable.");
-                    } else {
-                        avaiableProducts.put(product, amount);
-                        System.out.println(product+" not enough avaiable." + " Ordered "+amountOrdered+" available "+amount);
-                    }
-
+            if (isAvaliable) {
+                int amountAvaiable = avaiableProducts.get(orderedProduct);
+                int newAmount = amountAvaiable - amountOrdered;
+                if (newAmount > 0) {
+                    productsToSent.put(orderedProduct, amountOrdered);
+                    avaiableProducts.put(orderedProduct, newAmount);
+                    System.out.println(orderedProduct + "is avaliable.");
                 } else {
-                    orderedProducts.remove(orderedPoduct);
-                    System.out.println(product+" not avaliable");
+                    avaiableProducts.put(orderedProduct, amountAvaiable);
+                    System.out.println(orderedAmount + " not enough avaiable2." + " Ordered " + amountOrdered + ", available " + amountAvaiable);
                 }
-
+            } else {
+                productsToSent.put(orderedProduct, 0);
             }
-
         }
 
-        orderedAndAvaliable.add(orderedProducts);
+        orderedAndAvaliable.add(productsToSent);
         orderedAndAvaliable.add(avaiableProducts);
 
         return orderedAndAvaliable;
     }
 }
+
+
+

@@ -1,6 +1,5 @@
 package com.kodilla.good.paterns.challenges.Food2Door;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class OrderRequest {
@@ -15,8 +14,8 @@ public class OrderRequest {
         this.address = address;
     }
 
-    public boolean createOrder(User user, HashMap<String, Integer> orderedProducts, String address) {
-        if(orderedProducts.size()!=0 && address!=null) {
+    public boolean createOrder(User user, Map<String, Integer> orderedProducts, String address) {
+        if(orderedProducts!=null && address!=null) {
             System.out.println("Creating order for "+ user.getName()+" "+user.getSurname()+" with product "+orderedProducts+ ", for address "+address);
             return true;
         } else {
@@ -27,5 +26,13 @@ public class OrderRequest {
 
     public Map<String, Integer> getOrderedProducts() {
         return orderedProducts;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

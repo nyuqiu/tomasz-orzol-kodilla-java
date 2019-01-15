@@ -11,9 +11,10 @@ public class ExtraFoodShop implements Producent{
 
     @Override
     public Map<String, Integer> productsList (Map<String, Integer> avaiableProducts){
-        if(avaiableProducts.size()==0) {
+        if(avaiableProducts!=null) {
             listOfProducts.put("sugar", 10000);
             listOfProducts.put("flour", 200000);
+            listOfProducts.put("salt", 1000);
         }
         return listOfProducts;
     }
@@ -27,7 +28,10 @@ public class ExtraFoodShop implements Producent{
         Map<String, Integer> ordered =  orderedAndAvaliableMaps.get(0);
         Map<String, Integer> available =  orderedAndAvaliableMaps.get(1);
 
-        if(ordered.size()>0){
+        orderRequest.createOrder(orderRequest.getUser(), orderRequest.getOrderedProducts() , orderRequest.getAddress());
+
+
+        if(ordered!=null){
             System.out.println("Products in basket, products ready to sent: "+ordered);
             System.out.println("Products reamaining: "+available);
         }

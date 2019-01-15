@@ -6,7 +6,8 @@ public class Application {
         OrderRequestRetriever orderRequestRetriever = new OrderRequestRetriever();
         OrderRequest orderRequest = orderRequestRetriever.retreive();
 
-        orderRequest.createOrder();
+        ExtraFoodShop extraFoodShop = new ExtraFoodShop();
+        extraFoodShop.process(orderRequest);
 
     }
 }
