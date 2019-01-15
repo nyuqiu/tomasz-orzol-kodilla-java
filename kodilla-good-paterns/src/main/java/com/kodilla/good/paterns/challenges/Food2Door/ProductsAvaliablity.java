@@ -26,10 +26,10 @@ public class ProductsAvaliablity {
                 if (newAmount > 0) {
                     productsToSent.put(orderedProduct, amountOrdered);
                     avaiableProducts.put(orderedProduct, newAmount);
-                    System.out.println(orderedProduct + "is avaliable.");
+                    System.out.println(orderedProduct + " is avaliable.");
                 } else {
                     avaiableProducts.put(orderedProduct, amountAvaiable);
-                    System.out.println(orderedAmount + " not enough avaiable2." + " Ordered " + amountOrdered + ", available " + amountAvaiable);
+                    System.out.println(orderedAmount + " not enough avaiable." + " Ordered " + amountOrdered + ", available " + amountAvaiable);
                 }
             } else {
                 productsToSent.put(orderedProduct, 0);

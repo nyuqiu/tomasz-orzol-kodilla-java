@@ -32,7 +32,7 @@ public class ExtraFoodShop implements Producent{
 
 
         if(ordered!=null){
-            System.out.println("Products in basket, products ready to sent: "+ordered);
+            System.out.println("Products in basket, ready to sent: "+ordered);
             System.out.println("Products reamaining: "+available);
         }
 

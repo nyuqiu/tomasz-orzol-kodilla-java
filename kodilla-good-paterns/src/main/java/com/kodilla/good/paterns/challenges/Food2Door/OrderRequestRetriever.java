@@ -12,7 +12,7 @@ public class OrderRequestRetriever {
         Map<String, Integer> orderedProducts = new HashMap<>();
         orderedProducts.put("sugar", 1000);
         orderedProducts.put("flour", 1000);
-
+        orderedProducts.put("salt", 100);
 
         String address = "Bristol";
 
