@@ -6,6 +6,6 @@ public interface Producent {
 
     void process(OrderRequest orderRequest);
 
-    Map<String, Integer> productsList(Map<String, Integer> avaiableProducts);
+    Map<String, Integer> productsList();
 
 }

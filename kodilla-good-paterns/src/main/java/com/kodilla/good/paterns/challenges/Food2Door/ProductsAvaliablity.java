@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ProductsAvaliablity {
 
-    public List<Map<String, Integer>> checkAvaliablity(OrderRequest orderRequest, Map<String, Integer> avaiableProducts) {
+    public OrderDto checkAvaliablity(OrderRequest orderRequest, Map<String, Integer> avaiableProducts) {
 
         List<Map<String, Integer>> orderedAndAvaliable = new ArrayList<>();
         Map<String, Integer> orderedProducts = orderRequest.getOrderedProducts();
@@ -36,10 +36,9 @@ public class ProductsAvaliablity {
             }
         }
 
-        orderedAndAvaliable.add(productsToSent);
-        orderedAndAvaliable.add(avaiableProducts);
+        OrderDto orderDto = new OrderDto(productsToSent, avaiableProducts);
 
-        return orderedAndAvaliable;
+        return orderDto;
     }
 }
 
