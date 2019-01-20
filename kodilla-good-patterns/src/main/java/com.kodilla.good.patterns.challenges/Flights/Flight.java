@@ -1,35 +1,5 @@
 package com.kodilla.good.patterns.challenges.Flights;
 
-//import java.util.List;
-//import java.util.Objects;
-//
-//public class Flight{
-//    private List<String> connections;
-//
-//    public Flight(List<String> connections) {
-//        if(connections.size()==2) {
-//            this.connections = connections;
-//        }
-//    }
-//
-//    public List<String> getConnections() {
-//        return connections;
-//    }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Flight flight = (Flight) o;
-//        return Objects.equals(connections, flight.connections);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(connections);
-//    }
-//}
-
 import java.util.Objects;
 
 public class Flight {

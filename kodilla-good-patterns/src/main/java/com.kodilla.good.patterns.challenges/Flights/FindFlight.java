@@ -12,14 +12,14 @@ public class FindFlight {
     public Set<String> findFlightDirect(String airport, List<Flight> canFlyToOrigin) {
 
         List<Flight> canFlyTo = new ArrayList<>(canFlyToOrigin);
-        Set<String> destionations = canFlyTo.stream()
+        Set<String> destination = canFlyTo.stream()
                 .filter(entry -> (entry.getArrivalAirport()).equals(airport) || (entry.getDepartureAirport()).equals(airport))
                 .flatMap(entry -> Stream.of(entry.getArrivalAirport(), entry.getDepartureAirport()))
                 .collect(Collectors.toSet());
 
-        destionations.remove(airport);
+        destination.remove(airport);
 
-        return destionations;
+        return destination;
     }
 
     public Set<String> findFlightWithOneChange(String airport, String airport2, List<Flight> canFlyToOrigin) {
