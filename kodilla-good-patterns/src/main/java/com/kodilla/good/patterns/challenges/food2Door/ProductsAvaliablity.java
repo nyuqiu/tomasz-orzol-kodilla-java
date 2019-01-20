@@ -1,15 +1,12 @@
-package com.kodilla.good.patterns.challenges.Food2Door;
+package com.kodilla.good.patterns.challenges.food2Door;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ProductsAvaliablity {
 
     public OrderDto checkAvaliablity(OrderRequest orderRequest, Map<String, Integer> avaiableProducts) {
 
-        List<Map<String, Integer>> orderedAndAvaliable = new ArrayList<>();
         Map<String, Integer> orderedProducts = orderRequest.getOrderedProducts();
         Map<String, Integer> productsToSent = new HashMap<>();
 

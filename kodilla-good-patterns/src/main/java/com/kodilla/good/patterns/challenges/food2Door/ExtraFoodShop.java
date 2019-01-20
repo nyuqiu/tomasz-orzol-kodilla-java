@@ -1,12 +1,12 @@
-package com.kodilla.good.patterns.challenges.Food2Door;
+package com.kodilla.good.patterns.challenges.food2Door;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ExtraFoodShop implements Producent{
 
-    ProductsAvaliablity productsAvaliablity = new ProductsAvaliablity();
-    Map<String, Integer> listOfProducts = new HashMap<>();
+    private ProductsAvaliablity productsAvaliablity = new ProductsAvaliablity();
+    private Map<String, Integer> listOfProducts = new HashMap<>();
 
     @Override
     public Map<String, Integer> productsList (){
@@ -24,8 +24,8 @@ public class ExtraFoodShop implements Producent{
 
         OrderDto orderDto = productsAvaliablity.checkAvaliablity(orderRequest, productsList());
 
-        Map<String, Integer> ordered =  orderDto.readyToSent;
-        Map<String, Integer> available =  orderDto.remainingProducts;
+        Map<String, Integer> ordered =  orderDto.getReadyToSent();
+        Map<String, Integer> available =  orderDto.getRemainingProducts();
 
         orderRequest.createOrder(orderRequest.getUser(), orderRequest.getOrderedProducts() , orderRequest.getAddress());
 
