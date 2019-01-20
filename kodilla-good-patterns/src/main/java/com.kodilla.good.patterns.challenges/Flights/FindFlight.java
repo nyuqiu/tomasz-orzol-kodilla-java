@@ -9,10 +9,9 @@ import java.util.stream.Stream;
 
 public class FindFlight {
 
-    public Set<String> findFlightDirect(String airport, List<Flight> canFlyToOrigin) {
+    public Set<String> findFlightDirect(String airport, List<Flight> allConnections) {
 
-        List<Flight> canFlyTo = new ArrayList<>(canFlyToOrigin);
-        Set<String> destination = canFlyTo.stream()
+        Set<String> destination = allConnections.stream()
                 .filter(entry -> (entry.getArrivalAirport()).equals(airport) || (entry.getDepartureAirport()).equals(airport))
                 .flatMap(entry -> Stream.of(entry.getArrivalAirport(), entry.getDepartureAirport()))
                 .collect(Collectors.toSet());
@@ -22,19 +21,19 @@ public class FindFlight {
         return destination;
     }
 
-    public Set<String> findFlightWithOneChange(String airport, String airport2, List<Flight> canFlyToOrigin) {
+    public Set<String> findFlightWithOneChange(String fromAirport, String toAirport, List<Flight> allConnections) {
 
-        List<Flight> canFlyTo = canFlyToOrigin.stream()
-                .filter(entry -> ((entry.getArrivalAirport()).equals(airport) || (entry.getDepartureAirport()).equals(airport))
-                        || (entry.getArrivalAirport()).equals(airport2) || (entry.getDepartureAirport()).equals(airport2))
+        List<Flight> canFlyTo = allConnections.stream()
+                .filter(entry -> ((entry.getArrivalAirport()).equals(fromAirport) || (entry.getDepartureAirport()).equals(fromAirport))
+                        || (entry.getArrivalAirport()).equals(toAirport) || (entry.getDepartureAirport()).equals(toAirport))
                 .collect(Collectors.toList());
 
-        Set<String> possibleChanges = canFlyToOrigin.stream()
-                .filter(entry -> ((entry.getArrivalAirport()).equals(airport) || (entry.getDepartureAirport()).equals(airport))
-                        || (entry.getArrivalAirport()).equals(airport2) || (entry.getDepartureAirport()).equals(airport2))
+        Set<String> possibleChanges = allConnections.stream()
+                .filter(entry -> ((entry.getArrivalAirport()).equals(fromAirport) || (entry.getDepartureAirport()).equals(fromAirport))
+                        || (entry.getArrivalAirport()).equals(toAirport) || (entry.getDepartureAirport()).equals(toAirport))
                 .flatMap(entry -> Stream.of(entry.getArrivalAirport(), entry.getDepartureAirport()))
-                .filter(entry -> !entry.equals(airport))
-                .filter(entry -> !entry.equals(airport2))
+                .filter(entry -> !entry.equals(fromAirport))
+                .filter(entry -> !entry.equals(toAirport))
                 .collect(Collectors.toSet());
 
         List<List<String>> airportsInArrays = new ArrayList<>();
@@ -46,10 +45,10 @@ public class FindFlight {
         }
         Set<String> confirmedChanges = new HashSet<>();
         for (List<String> flight : airportsInArrays) {
-            for (List<String> flight1 : airportsInArrays) {
-                if (!flight.equals(flight1)) {
+            for (List<String> comparingFlight : airportsInArrays) {
+                if (!flight.equals(comparingFlight)) {
                     for (String changes : possibleChanges) {
-                        if (flight.contains(airport) && flight1.contains(airport2) && flight.contains(changes) && flight1.contains(changes)) {
+                        if (flight.contains(fromAirport) && comparingFlight.contains(toAirport) && flight.contains(changes) && comparingFlight.contains(changes)) {
                             confirmedChanges.add(changes);
                         }
                     }
