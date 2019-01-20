@@ -1,4 +1,4 @@
-package com.kodilla.good.paterns.challenges.ProductOrderService;
+package com.kodilla.good.patterns.challenges.ProductOrderService;
 
 class User {
 
