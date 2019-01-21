@@ -29,7 +29,7 @@ public class ProductsAvaliablity {
                     System.out.println(orderedAmount + " not enough avaiable." + " Ordered " + amountOrdered + ", available " + amountAvaiable);
                 }
             } else {
-                productsToSent.put(orderedProduct, 0);
+                productsToSent.remove(orderedProduct);
             }
         }
 

@@ -13,6 +13,8 @@ public class OrderRequestRetriever {
         orderedProducts.put("sugar", 1000);
         orderedProducts.put("flour", 1000);
         orderedProducts.put("salt", 100);
+        orderedProducts.put("beer", 100);
+        orderedProducts.put("chia", 500);
 
         String address = "Bristol";
 
