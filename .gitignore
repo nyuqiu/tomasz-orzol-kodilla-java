@@ -37,6 +37,8 @@ kodilla-spring/build/
 kodilla-spring/out/
 kodilla-spring-web/build/
 kodilla-spring-web/out/
+kodilla-patterns/build/
+kodilla-patterns/out/
 
 ### NetBeans ###
 /nbproject/private/
