@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class ListOfExecutedTasks {
     private static ListOfExecutedTasks listOfExecutedTasksInstance = null;
-    static List<String> executedTasks = new ArrayList<>();
+    private static final List<String> executedTasks = new ArrayList<>();
 
     private ListOfExecutedTasks() {
     }

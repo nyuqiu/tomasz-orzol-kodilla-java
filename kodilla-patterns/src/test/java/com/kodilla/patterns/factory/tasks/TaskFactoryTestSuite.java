@@ -15,7 +15,6 @@ public class TaskFactoryTestSuite {
         shoppingTask.executeTask();
         //Then
         Assert.assertEquals(true, listOfExecutedTasks.getExecutedTasks().contains(shoppingTask.getTaskName()));
-        Assert.assertEquals(3, listOfExecutedTasks.getExecutedTasks().size());
     }
 
     @Test
@@ -28,7 +27,6 @@ public class TaskFactoryTestSuite {
         paintingTask.executeTask();
         //Then
         Assert.assertEquals(true, listOfExecutedTasks.getExecutedTasks().contains(paintingTask.getTaskName()));
-        Assert.assertEquals(2, listOfExecutedTasks.getExecutedTasks().size());
     }
 
     @Test
@@ -41,6 +39,5 @@ public class TaskFactoryTestSuite {
         drivingTask.executeTask();
         //Then
         Assert.assertEquals(true, listOfExecutedTasks.getExecutedTasks().contains(drivingTask.getTaskName()));
-        Assert.assertEquals(1, listOfExecutedTasks.getExecutedTasks().size());
     }
 }
