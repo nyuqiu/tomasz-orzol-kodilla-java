@@ -3,8 +3,6 @@ package com.kodilla.patterns.factory.tasks;
 import java.util.ArrayList;
 import java.util.List;
 
-//zrob instancje
-
 public final class ListOfExecutedTasks {
     private static ListOfExecutedTasks listOfExecutedTasksInstance = null;
     static List<String> executedTasks = new ArrayList<>();
