@@ -32,20 +32,20 @@ public final class Library extends Prototype {
     @Override
     public String toString() {
         String s = "Library [" + name + "]\n";
-        for(Book books : books) {
+        for (Book books : books) {
             s = s + books.toString() + "\n";
         }
         return s;
     }
 
-    public Library shallowCopy() throws CloneNotSupportedException{
-        return (Library)super.clone();
+    public Library shallowCopy() throws CloneNotSupportedException {
+        return (Library) super.clone();
     }
 
-    public Library deepCopy() throws CloneNotSupportedException{
-        Library clonedLibrary = (Library)super.clone();
+    public Library deepCopy() throws CloneNotSupportedException {
+        Library clonedLibrary = (Library) super.clone();
         clonedLibrary.books = new HashSet<>();
-        for(Book books : books){
+        for (Book books : books) {
             Book clonedBook = new Book(books.getTitle(), books.getAuthor(), books.getPublicationDate());
             clonedLibrary.getBooks().add(clonedBook);
         }
