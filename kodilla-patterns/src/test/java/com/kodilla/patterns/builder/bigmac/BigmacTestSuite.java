@@ -18,8 +18,8 @@ public class BigmacTestSuite {
                 .build();
         System.out.println(bigmac);
         //When
-        int howManyIngredients = bigmac.getIngredients().size();
+        int ingredientsCount = bigmac.getIngredients().size();
         //Then
-        Assert.assertEquals(3, howManyIngredients);
+        Assert.assertEquals(3, ingredientsCount);
     }
 }

@@ -1,6 +1,7 @@
 package com.kodilla.patterns.builder.bigmac;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class Bigmac {
@@ -35,35 +36,11 @@ public final class Bigmac {
         }
 
         public BigmacBuilder ingredient(String ingredient) {
-            switch (ingredient) {
-                case "salad":
-                    ingredients.add(ingredient);
-                    break;
-                case "onion":
-                    ingredients.add(ingredient);
-                    break;
-                case "bacon":
-                    ingredients.add(ingredient);
-                    break;
-                case "cucumber":
-                    ingredients.add(ingredient);
-                    break;
-                case "peppers":
-                    ingredients.add(ingredient);
-                    break;
-                case "chilli":
-                    ingredients.add(ingredient);
-                    break;
-                case "mushrooms":
-                    ingredients.add(ingredient);
-                    break;
-                case "prawns":
-                    ingredients.add(ingredient);
-                    break;
-                case "cheese":
-                    ingredients.add(ingredient);
-                    break;
-                default:
+            List<String> allowedIngredients = new ArrayList<>();
+            Collections.addAll(allowedIngredients,"salad", "onion", "bacon", "cucumber", "peppers", "chilli", "mushrooms", "prawns", "cheese");
+            if(allowedIngredients.contains(ingredient)) {
+                ingredients.add(ingredient);
+            } else {
                     System.out.println(ingredient + " not available.");
             }
             return this;
@@ -74,7 +51,7 @@ public final class Bigmac {
         }
     }
 
-    private Bigmac(final String bun, final int burgers, final String sauce, List<String> ingredients) {
+    private Bigmac(final String bun, final int burgers, final String sauce, final List<String> ingredients) {
         this.bun = bun;
         this.burgers = burgers;
         this.sauce = sauce;
