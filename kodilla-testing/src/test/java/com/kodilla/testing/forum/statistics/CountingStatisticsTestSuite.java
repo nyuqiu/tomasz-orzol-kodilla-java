@@ -7,7 +7,7 @@ import java.util.List;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CountingStatisticsTestSuite{
+public class CountingStatisticsTestSuite {
 
     private static int testCounter = 0;
 
@@ -44,7 +44,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfPostsPerUser();
 
         //Then
-        Assert.assertEquals((Double)10.0, (Double)average);
+        Assert.assertEquals((Double) 10.0, (Double) average);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfPostsPerUser();
 
         //Then
-        Assert.assertEquals((Double)0.0, (Double)average);
+        Assert.assertEquals((Double) 0.0, (Double) average);
     }
 
     @Test
@@ -84,8 +84,9 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfPostsPerUser();
 
         //Then
-        Assert.assertEquals((Double)(0.0/0.0), (Double)average);
+        Assert.assertEquals((Double) (0.0 / 0.0), (Double) average);
     }
+
     @Test
     public void testCalculateAverageOfPostsPerUsers1000per0WithMock() {
         //Given
@@ -103,8 +104,9 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfPostsPerUser();
 
         //Then
-        Assert.assertEquals((Double)(1000/0.0), (Double)average);
+        Assert.assertEquals((Double) (1000 / 0.0), (Double) average);
     }
+
     @Test
     public void testCalculateAverageOfCommentsPerPosts100per1000WithMock() {
         //Given
@@ -121,7 +123,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfCommentsPerPost();
 
         //Then
-        Assert.assertEquals((Double)(100.0/1000), (Double)average);
+        Assert.assertEquals((Double) (100.0 / 1000), (Double) average);
     }
 
     @Test
@@ -140,7 +142,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfCommentsPerPost();
 
         //Then
-        Assert.assertEquals((Double)(1000.0/0), (Double)average);
+        Assert.assertEquals((Double) (1000.0 / 0), (Double) average);
     }
 
     @Test
@@ -159,7 +161,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfCommentsPerPost();
 
         //Then
-        Assert.assertEquals((Double)(0.0/0), (Double)average);
+        Assert.assertEquals((Double) (0.0 / 0), (Double) average);
     }
 
     @Test
@@ -178,7 +180,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfCommentsPerPost();
 
         //Then
-        Assert.assertEquals((Double)(0.0/100), (Double)average);
+        Assert.assertEquals((Double) (0.0 / 100), (Double) average);
     }
 
     @Test
@@ -199,7 +201,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfCommentsPerUser();
 
         //Then
-        Assert.assertEquals((Double)(100/0.0), (Double)average);
+        Assert.assertEquals((Double) (100 / 0.0), (Double) average);
     }
 
     @Test
@@ -219,7 +221,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfCommentsPerUser();
 
         //Then
-        Assert.assertEquals((Double)(1000.0/100.0), (Double)average);
+        Assert.assertEquals((Double) (1000.0 / 100.0), (Double) average);
     }
 
 
@@ -241,7 +243,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfCommentsPerUser();
 
         //Then
-        Assert.assertEquals((Double)(0.0/0), (Double)average);
+        Assert.assertEquals((Double) (0.0 / 0), (Double) average);
     }
 
     @Test
@@ -262,37 +264,7 @@ public class CountingStatisticsTestSuite{
         double average = countingStatistics.getAverageAmountOfCommentsPerUser();
 
         //Then
-        Assert.assertEquals((Double)(1000.0/0), (Double)average);
+        Assert.assertEquals((Double) (1000.0 / 0), (Double) average);
     }
-
-//    @Test
-//    public void testCalculateAverageOfPostsPerUsersWithMock() {
-//        //Given
-//        Statistics statisticsMock = mock(Statistics.class);
-//        List<String> userAmount100 = mock(List.class);
-//        List<String> userAmount0 = mock(List.class);
-//
-//        when(userAmount100.size()).thenReturn(100);
-//        when(userAmount0.size()).thenReturn(0);
-//
-//        int postCount1000 = 1000;
-//        int postCount0 = 0;
-//
-//        OngoingStubbing size100 = when(statisticsMock.usersNames()).thenReturn(userAmount100);
-//        OngoingStubbing size00 = when(statisticsMock.usersNames()).thenReturn(userAmount0);
-//        OngoingStubbing count1000 = when(statisticsMock.postsCount()).thenReturn(postCount1000);
-//        OngoingStubbing count0 = when(statisticsMock.postsCount()).thenReturn(postCount0);
-//
-//        CountingStatistics countingStatistics = new CountingStatistics(statisticsMock);
-//        countingStatistics.calculateAdvStatistics(statisticsMock);
-//
-//        //When
-//        double average0per0 = countingStatistics.getAverageAmountOfPostsPerUser();
-//        double average = countingStatistics.getAverageAmountOfPostsPerUser();
-//        double average = countingStatistics.getAverageAmountOfPostsPerUser();
-//        double average = countingStatistics.getAverageAmountOfPostsPerUser();
-//
-//        //Then
-//        Assert.assertEquals((Double)10.0, (Double)average);
-//    }
 }
+
