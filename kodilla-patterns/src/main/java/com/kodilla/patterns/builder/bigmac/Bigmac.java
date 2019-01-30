@@ -17,7 +17,7 @@ public final class Bigmac {
         private List<String> ingredients = new ArrayList<>();
 
         public BigmacBuilder bun(String bun) {
-            if (bun.equals("bun with sezam") || bun.equals("normal bun")) {
+            if (bun.equals("bun with sesam") || bun.equals("normal bun")) {
                 this.bun = bun;
             }
             return this;
