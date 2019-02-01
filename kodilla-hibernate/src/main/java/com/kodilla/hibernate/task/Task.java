@@ -1,5 +1,6 @@
 package com.kodilla.hibernate.task;
 
+<<<<<<< HEAD
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -61,3 +62,7 @@ public final class Task {
         this.duration = duration;
     }
 }
+=======
+public class Task {
+}
+>>>>>>> 7f4463768ac0c647e98bb2fc7fd21a29fb7efa43
