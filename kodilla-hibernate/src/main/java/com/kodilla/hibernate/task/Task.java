@@ -7,11 +7,22 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "TASKS")
 public final class Task {
+
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "ID", unique = true)
     private int id;
+
+    @Column(name = "DESCRIPTION")
     private String description;
+
+    @NotNull
+    @Column(name="CREATED")
     private Date created;
+
+    @Column(name="DURATION")
     private int duration;
     private TaskFinancialDetails taskFinancialDetails;
     private TaskList taskList;
@@ -25,26 +36,18 @@ public final class Task {
         this.duration = duration;
     }
 
-    @Id
-    @GeneratedValue
-    @NotNull
-    @Column(name = "ID", unique = true)
     public int getId() {
         return id;
     }
 
-    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }
 
-    @NotNull
-    @Column(name="CREATED")
     public Date getCreated() {
         return created;
     }
 
-    @Column(name="DURATION")
     public int getDuration() {
         return duration;
     }
