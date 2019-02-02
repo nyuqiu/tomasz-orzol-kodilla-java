@@ -27,6 +27,13 @@ public final class TaskList {
 
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @OneToMany(
+            targetEntity = Task.class,
+            mappedBy = "taskList",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
     private List<Task> tasks = new ArrayList<>();
 
     public TaskList() {
@@ -49,12 +56,6 @@ public final class TaskList {
         return description;
     }
 
-    @OneToMany(
-            targetEntity = Task.class,
-            mappedBy = "taskList",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
     public List<Task> getTasks() {
         return tasks;
     }

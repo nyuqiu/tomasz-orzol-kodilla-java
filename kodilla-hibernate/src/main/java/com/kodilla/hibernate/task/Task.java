@@ -24,7 +24,13 @@ public final class Task {
 
     @Column(name="DURATION")
     private int duration;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "TASKS_FINANCIAL_ID")
     private TaskFinancialDetails taskFinancialDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "TASKLIST_ID")
     private TaskList taskList;
 
     public Task() {
@@ -52,14 +58,10 @@ public final class Task {
         return duration;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "TASKS_FINANCIAL_ID")
     public TaskFinancialDetails getTaskFinancialDetails() {
         return taskFinancialDetails;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "TASKLIST_ID")
     public TaskList getTaskList() {
         return taskList;
     }
