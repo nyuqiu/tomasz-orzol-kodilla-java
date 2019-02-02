@@ -1,12 +1,13 @@
 package com.kodilla.good.paterns.challenges;
 
+import com.kodilla.good.patterns.challenges.MovieStore;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class ListOfMoviesSuiteTest {
     @Test
     public void testShowListOfMovies(){
-        //Given
+        //Given\
         MovieStore movieStore = new MovieStore();
         //When
 
