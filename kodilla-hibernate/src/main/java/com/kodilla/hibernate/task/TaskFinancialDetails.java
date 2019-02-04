@@ -7,8 +7,14 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "TASKS_FINANCIALS")
 public class TaskFinancialDetails {
+    @Id
+    @GeneratedValue
+    @NotNull
+    @Column(name = "ID", unique = true)
     private int id;
+    @Column(name = "PRICE")
     private BigDecimal price;
+    @Column(name = "PAID")
     private boolean paid;
 
     public TaskFinancialDetails() {
@@ -19,20 +25,14 @@ public class TaskFinancialDetails {
         this.paid = paid;
     }
 
-    @Id
-    @GeneratedValue
-    @NotNull
-    @Column(name = "ID", unique = true)
     public int getId() {
         return id;
     }
 
-    @Column(name = "PRICE")
     public BigDecimal getPrice() {
         return price;
     }
 
-    @Column(name = "PAID")
     public boolean isPaid() {
         return paid;
     }
