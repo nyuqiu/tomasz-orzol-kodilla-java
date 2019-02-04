@@ -27,16 +27,22 @@ public class InvoiceDaoTestSuite {
     @Test
     public void testInvoiceDaoSave(){
         //Given
+        Item item = new Item(BigDecimal.valueOf(2), 4);
+        Item item1 = new Item(BigDecimal.valueOf(3), 5);
+        Item item2 = new Item(BigDecimal.valueOf(4),6);
         Product product = new Product("bread");
         Product product1 = new Product("lasagne");
         Invoice invoice = new Invoice("2345");
         Invoice invoice1 = new Invoice("6789");
-        Item item = new Item(BigDecimal.valueOf(2), 4);
-        Item item1 = new Item(BigDecimal.valueOf(3), 5);
-        Item item2 = new Item(BigDecimal.valueOf(4),6);
+//        invoice.getItems().add(item);
+//        invoice.getItems().add(item1);
+//        invoice1.getItems().add(item2);
+//        product.getItems().add(item);
+//        product.getItems().add(item1);
+//        product1.getItems().add(item2);
         item.setProduct(product);
-        item2.setProduct(product1);
         item1.setProduct(product);
+        item2.setProduct(product1);
         item.setInvoice(invoice);
         item1.setInvoice(invoice);
         item2.setInvoice(invoice1);
