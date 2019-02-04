@@ -41,6 +41,8 @@ kodilla-patterns/build/
 kodilla-patterns/out/
 kodilla-jdbc/out/
 kodilla-jdbc/build/
+kodilla-rps/build/
+kodilla-rps/out/
 
 ### NetBeans ###
 /nbproject/private/
