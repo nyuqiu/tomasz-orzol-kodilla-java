@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 @NamedQuery(
         name = "Employee.findEmplyoeeByLastname",
-        query = "FROM Employee WHERE lastname > :LASTNAME"
+        query = "FROM Employee WHERE lastname = :LASTNAME"
 )
 @Entity
 public class Employee {

@@ -75,18 +75,39 @@ public class CompanyDaoTestSuite {
         Company softwareMachine = new Company("Software Machine");
         Company dataMaesters = new Company("Data Maesters");
         Company greyMatter = new Company("Grey Matter");
+
+        employeeDao.save(johnSmith);
+        int johnSmithID = johnSmith.getId();
+        employeeDao.save(stephanieClarckson);
+        int stephanieClarcksonId = stephanieClarckson.getId();
+        employeeDao.save(lindaKovalsky);
+        int lindaKovalskyId = lindaKovalsky.getId();
+
+        companyDao.save(softwareMachine);
+        int softwareMachineId = softwareMachine.getId();
+        companyDao.save(dataMaesters);
+        int dataMaestersId = dataMaesters.getId();
+        companyDao.save(greyMatter);
+        int greyMatterId = greyMatter.getId();
+
         //When
         List<Employee> findSmith = employeeDao.findEmplyoeeByLastname("Smith");
-        List<Company> findCompanyByThreeFirstLetters = companyDao.findCompanyByFirstThreeLetters("dat");
+        List<Company> findCompanyByThreeFirstLetters = companyDao.findCompanyByFirstThreeLetters("Dat");
+
         //Then
         Assert.assertEquals(1, findSmith.size());
-        Assert.assertEquals(1, findCompanyByThreeFirstLetters);
+        Assert.assertEquals(1, findCompanyByThreeFirstLetters.size());
+
         //CleanUp
-        companyDao.delete(softwareMachine);
-        companyDao.delete(dataMaesters);
-        companyDao.delete(greyMatter);
-        employeeDao.delete(johnSmith);
-        employeeDao.delete(stephanieClarckson);
-        employeeDao.delete(lindaKovalsky);
+        try {
+            companyDao.delete(softwareMachineId);
+            companyDao.delete(dataMaestersId);
+            companyDao.delete(greyMatterId);
+            employeeDao.delete(johnSmithID);
+            employeeDao.delete(stephanieClarcksonId);
+            employeeDao.delete(lindaKovalskyId);
+        } catch (Exception e){
+            //do nothing
+        }
     }
 }
