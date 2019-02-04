@@ -9,11 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CompanyDaoTestSuite {
     @Autowired
-    CompanyDao companyDao;
+    private CompanyDao companyDao;
+    @Autowired
+    private EmployeeDao employeeDao;
 
     @Test
     public void testSaveManyToMany(){
@@ -59,5 +63,30 @@ public class CompanyDaoTestSuite {
         } catch (Exception e) {
             //do nothing
         }
+    }
+
+    @Test
+    public void testNamedQueries(){
+        //Given
+        Employee johnSmith = new Employee("John", "Smith");
+        Employee stephanieClarckson = new Employee("Stephanie", "Clarckson");
+        Employee lindaKovalsky = new Employee("Linda", "Kovalsky");
+
+        Company softwareMachine = new Company("Software Machine");
+        Company dataMaesters = new Company("Data Maesters");
+        Company greyMatter = new Company("Grey Matter");
+        //When
+        List<Employee> findSmith = employeeDao.findEmplyoeeByLastname("Smith");
+        List<Company> findCompanyByThreeFirstLetters = companyDao.findCompanyByFirstThreeLetters("dat");
+        //Then
+        Assert.assertEquals(1, findSmith.size());
+        Assert.assertEquals(1, findCompanyByThreeFirstLetters);
+        //CleanUp
+        companyDao.delete(softwareMachine);
+        companyDao.delete(dataMaesters);
+        companyDao.delete(greyMatter);
+        employeeDao.delete(johnSmith);
+        employeeDao.delete(stephanieClarckson);
+        employeeDao.delete(lindaKovalsky);
     }
 }
