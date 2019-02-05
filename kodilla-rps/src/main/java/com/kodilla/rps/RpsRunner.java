@@ -1,5 +1,8 @@
 package com.kodilla.rps;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class RpsRunner {
@@ -26,58 +29,79 @@ public class RpsRunner {
         int playerOneWonRounds = 0;
         int playerTwoWonRounds = 0;
         Dao dao = null;
+        List<String> keysToUse = new ArrayList<>();
+        keysToUse.addAll(Arrays.asList("1","2","3","4","5","x","n","m"));
 
         boolean end = false;
         printOptions();
         while (!end) {
-            switch (scanner.next()) {
-                case "1":
-                    System.out.println("Play stone");
-                    dao = avaliableMoves.playStone(percentWinningGames);
-                    break;
-                case "2":
-                    System.out.println("Play paper");
-                    dao = avaliableMoves.playStone(percentWinningGames);
-                    break;
-                case "3":
-                    System.out.println("Play scissors");
-                    dao = avaliableMoves.playStone(percentWinningGames);
-                    break;
-                case "x":
-                    System.out.println("Do you really wanna finish game? y/n");
-                    switch (scanner.next()) {
-                        case "y":
-                            end = true;
-                            System.out.println("Bye bye");
-                            break;
-                        case "n":
-                            System.out.println("Thanks for staying");
-                            break;
-                    }
-                    break;
+            String keyboardInput = scanner.next();
+            if(keysToUse.contains(keyboardInput)) {
+                switch (keyboardInput) {
+                    case "1":
+                        System.out.println("Play rock");
+                        dao = avaliableMoves.play(Move.ROCK, percentWinningGames);
+                        break;
+                    case "2":
+                        System.out.println("Play paper");
+                        dao = avaliableMoves.play(Move.PAPER, percentWinningGames);
+                        break;
+                    case "3":
+                        System.out.println("Play scissors");
+                        dao = avaliableMoves.play(Move.SCISSORS, percentWinningGames);
+                        break;
+                    case "4":
+                        System.out.println("Play Spock");
+                        dao = avaliableMoves.play(Move.SPOCK, percentWinningGames);
+                        break;
+                    case "5":
+                        System.out.println("Play lizard");
+                        dao = avaliableMoves.play(Move.LIZARD, percentWinningGames);
+                        break;
+                    case "x":
+                        System.out.println("Do you really wanna finish game? y/n");
+                        String yesNoOption = scanner.next();
+                        if(yesNoOption.equals("y") || yesNoOption.equals("n")) {
+                        switch (yesNoOption) {
+                                case "y":
+                                    end = true;
+                                    System.out.println("Bye bye");
+                                    break;
+                                case "n":
+                                    System.out.println("Thanks for staying");
+                                    break;
+                            }
+                        }
+                        break;
 
-                case "n":
-                    System.out.println("Do you really wanna finish actual game? y/n");
-                    switch (scanner.next()) {
-                        case "y":
-                            System.out.println("Starting new game");
-                            playerOneWonRounds = 0;
-                            playerTwoWonRounds = 0;
-                            System.out.println("How many won rounds to win a game?");
-                            wonRounds = scanner.nextInt();
-                            System.out.println("How much percent to win?");
-                            percentWinningGames = scanner.nextInt();
-                            printOptions();
-                            break;
-                        case "n":
-                            System.out.println("Playing the same game");
-                            break;
-                    }
-                    break;
+                    case "n":
+                        System.out.println("Do you really wanna finish actual game? y/n");
+                        String yesNoOption1 = scanner.next();
+                        if(yesNoOption1.equals("y") || yesNoOption1.equals("n")) {
+                            switch (yesNoOption1) {
+                                case "y":
+                                    System.out.println("Starting new game");
+                                    playerOneWonRounds = 0;
+                                    playerTwoWonRounds = 0;
+                                    System.out.println("How many won rounds to win a game?");
+                                    wonRounds = scanner.nextInt();
+                                    System.out.println("How much percent to win?");
+                                    percentWinningGames = scanner.nextInt();
+                                    printOptions();
+                                    break;
+                                case "n":
+                                    System.out.println("Playing the same game");
+                                    break;
+                            }
+                        }
+                        break;
 
-                case "m":
-                    printOptions();
-                    break;
+                    case "m":
+                        printOptions();
+                        break;
+                }
+            } else {
+                System.out.println("Use one of those keys: "+keysToUse);
             }
             playerOneWonRounds += dao.getPlayerOneScore();
             playerTwoWonRounds += dao.getPlayerTwoScore();
