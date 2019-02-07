@@ -3,7 +3,6 @@ package com.kodilla.hibernate.tasklist.dao;
 import com.kodilla.hibernate.task.Task;
 import com.kodilla.hibernate.task.TaskFinancialDetails;
 import com.kodilla.hibernate.task.dao.TaskDao;
-import com.kodilla.hibernate.task.dao.TaskFinancialDetailsDao;
 import com.kodilla.hibernate.tasklist.TaskList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,8 +21,7 @@ public class TaskListDaoTestSuite {
     private TaskListDao taskListDao;
     @Autowired
     private TaskDao taskDao;
-    @Autowired
-    private TaskFinancialDetailsDao taskFinancialDetailsDao;
+
     private static final String DESCRIPTION = "Test: Description";
     private static final String LISTNAME = "Test: Listname";
 
@@ -66,7 +64,6 @@ public class TaskListDaoTestSuite {
         //CleanUp
         taskListDao.delete(id);
     }
-
     @Test
     public void testNamedQueries() {
         //Given
@@ -106,18 +103,10 @@ public class TaskListDaoTestSuite {
         int task3Id = task3.getId();
         taskDao.save(task4);
         int task4Id = task4.getId();
-        taskFinancialDetailsDao.save(tfd1);
-        int tfd1ID = tfd1.getId();
-        taskFinancialDetailsDao.save(tfd2);
-        int tfd2ID = tfd2.getId();
-        taskFinancialDetailsDao.save(tfd3);
-        int tfd3ID = tfd3.getId();
-        taskFinancialDetailsDao.save(tfd4);
-        int tfd4ID = tfd4.getId();
         //When
         List<Task> longTasks = taskDao.retrieveLongTasks();
         List<Task> shortTasks = taskDao.retrieveShortTasks();
-        List<Task> enoughTimeTasks = taskDao.retrieveTasksWithEnoughTime();
+        List<Task> enoughTimeTasks = taskDao.retrieveTaskWithEnoughTime();
         List<Task> durationLongerThanTasks = taskDao.retrieveTasksWithDurationLongerThan(6);
 
         //Then
