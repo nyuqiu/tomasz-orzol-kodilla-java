@@ -43,7 +43,7 @@ public class RpsRunner {
         keysToUse.addAll(Arrays.asList("1", "2", "3", "4", "5", "x", "n", "m"));
 
         boolean end = false;
-        printOptions();
+        printOptions();         //tu usunac
         while (!end) {
             String keyboardInput = scanner.next();
             if (keysToUse.contains(keyboardInput)) {
@@ -69,7 +69,7 @@ public class RpsRunner {
                         dtoPlayerScorePerRound = gameMechanism.play(Move.LIZARD, percentWinningGames);
                         break;
                     case "x":
-                        System.out.println("Do you really wanna finish game? y/n");
+                        System.out.println("Do you really wanna finish game? y/n");  //metoda
                         String yesNoOption = scanner.next();
                         if (yesNoOption.equals("y") || yesNoOption.equals("n")) {
                             switch (yesNoOption) {
@@ -84,10 +84,10 @@ public class RpsRunner {
                         }
                         break;
                     case "n":
-                        System.out.println("Do you really wanna finish actual game? y/n");
-                        String yesNoOption1 = scanner.next();
-                        if (yesNoOption1.equals("y") || yesNoOption1.equals("n")) {
-                            switch (yesNoOption1) {
+                        System.out.println("Do you really wanna finish actual game? y/n");  //metoda
+                        String chooseOption = scanner.next();
+                        if (chooseOption.equals("y") || chooseOption.equals("n")) {
+                            switch (chooseOption) {
                                 case "y":
                                     System.out.println("Starting new game");
                                     playerOneWonRounds = 0;
@@ -131,7 +131,7 @@ public class RpsRunner {
                     System.out.println("Computer won game!");
                     end = true;
                 }
-            } else {
+            } else {    //tu usunac
                 printOptions();
             }
         }

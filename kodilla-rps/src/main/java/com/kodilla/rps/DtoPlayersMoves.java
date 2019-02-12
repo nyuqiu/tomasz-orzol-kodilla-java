@@ -17,12 +17,11 @@ public class DtoPlayersMoves {
         return playerTwoMove;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DtoPlayersMoves that = (DtoPlayersMoves) o;
-        return playerOneMove == that.playerOneMove &&
-                playerTwoMove == that.playerTwoMove;
+    public void setPlayerOneMove(Move playerOneMove) {
+        this.playerOneMove = playerOneMove;
+    }
+
+    public void setPlayerTwoMove(Move playerTwoMove) {
+        this.playerTwoMove = playerTwoMove;
     }
 }

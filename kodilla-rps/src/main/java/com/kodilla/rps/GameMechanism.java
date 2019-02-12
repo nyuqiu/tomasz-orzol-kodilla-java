@@ -33,8 +33,8 @@ public class GameMechanism {
 
 
         for (DtoPlayersMoves dtoPlayersMoves : listWithCombinations()) {
-            if (!(playerMove == computerMove)) {
-                if (new DtoPlayersMoves(playerMove, computerMove).equals(dtoPlayersMoves)) {
+            if (playerMove != computerMove) {
+                if (new DtoPlayersMoves(playerMove, computerMove).equals(dtoPlayersMoves)) {  //to bardziej czytelne
                     playerOneScore++;
                 }
             } else {
@@ -44,8 +44,6 @@ public class GameMechanism {
         if(playerOneScore==0 && !ifDraw){
             playerTwoScore++;
         }
-
-        DtoPlayerScorePerRound dtoPlayerScorePerRound = new DtoPlayerScorePerRound(playerOneScore, playerTwoScore);
-        return dtoPlayerScorePerRound;
+        return new DtoPlayerScorePerRound(playerOneScore, playerTwoScore);
     }
 }

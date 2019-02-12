@@ -1,7 +1,7 @@
 package com.kodilla.rps;
 
 public class ComputersAnswersForPlayersMove {
-    private Move toWin;
+    private Move toWin;         //zrob listy
     private Move toWin1;
     private Move toDraw;
     private Move toLose;
