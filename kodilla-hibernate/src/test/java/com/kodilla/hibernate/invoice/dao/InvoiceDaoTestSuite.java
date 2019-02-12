@@ -34,12 +34,6 @@ public class InvoiceDaoTestSuite {
         Product product1 = new Product("lasagne");
         Invoice invoice = new Invoice("2345");
         Invoice invoice1 = new Invoice("6789");
-//        invoice.getItems().add(item);
-//        invoice.getItems().add(item1);
-//        invoice1.getItems().add(item2);
-//        product.getItems().add(item);
-//        product.getItems().add(item1);
-//        product1.getItems().add(item2);
         item.setProduct(product);
         item1.setProduct(product);
         item2.setProduct(product1);
