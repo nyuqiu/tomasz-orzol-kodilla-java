@@ -14,6 +14,7 @@ public class Item {
     private int id;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
@@ -24,6 +25,7 @@ public class Item {
     private int quantity;
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "INVOICE_ID")
     private Invoice invoice;
 

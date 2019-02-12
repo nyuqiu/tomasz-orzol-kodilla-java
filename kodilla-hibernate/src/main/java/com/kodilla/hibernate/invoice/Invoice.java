@@ -1,5 +1,4 @@
 package com.kodilla.hibernate.invoice;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ public class Invoice {
 
     @OneToMany(
             targetEntity = Item.class,
+            cascade = CascadeType.ALL,
             mappedBy = "invoice",
             fetch = FetchType.EAGER
     )
