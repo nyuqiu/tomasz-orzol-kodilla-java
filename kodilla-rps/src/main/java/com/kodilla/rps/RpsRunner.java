@@ -38,7 +38,7 @@ public class RpsRunner {
 
         int playerOneWonRounds = 0;
         int playerTwoWonRounds = 0;
-        Dao dao = null;
+        DtoPlayerScorePerRound dtoPlayerScorePerRound = null;
         List<String> keysToUse = new ArrayList<>();
         keysToUse.addAll(Arrays.asList("1", "2", "3", "4", "5", "x", "n", "m"));
 
@@ -50,23 +50,23 @@ public class RpsRunner {
                 switch (keyboardInput) {
                     case "1":
                         System.out.println("Play rock");
-                        dao = gameMechanism.play(Move.ROCK, percentWinningGames);
+                        dtoPlayerScorePerRound = gameMechanism.play(Move.ROCK, percentWinningGames);
                         break;
                     case "2":
                         System.out.println("Play paper");
-                        dao = gameMechanism.play(Move.PAPER, percentWinningGames);
+                        dtoPlayerScorePerRound = gameMechanism.play(Move.PAPER, percentWinningGames);
                         break;
                     case "3":
                         System.out.println("Play scissors");
-                        dao = gameMechanism.play(Move.SCISSORS, percentWinningGames);
+                        dtoPlayerScorePerRound = gameMechanism.play(Move.SCISSORS, percentWinningGames);
                         break;
                     case "4":
                         System.out.println("Play Spock");
-                        dao = gameMechanism.play(Move.SPOCK, percentWinningGames);
+                        dtoPlayerScorePerRound = gameMechanism.play(Move.SPOCK, percentWinningGames);
                         break;
                     case "5":
                         System.out.println("Play lizard");
-                        dao = gameMechanism.play(Move.LIZARD, percentWinningGames);
+                        dtoPlayerScorePerRound = gameMechanism.play(Move.LIZARD, percentWinningGames);
                         break;
                     case "x":
                         System.out.println("Do you really wanna finish game? y/n");
@@ -112,11 +112,11 @@ public class RpsRunner {
             } else {
                 System.out.println("Use one of those keys: " + keysToUse);
             }
-            playerOneWonRounds += dao.getPlayerOneScore();
-            playerTwoWonRounds += dao.getPlayerTwoScore();
-            if (dao.getPlayerOneScore() == 1) {
+            playerOneWonRounds += dtoPlayerScorePerRound.getPlayerOneScore();
+            playerTwoWonRounds += dtoPlayerScorePerRound.getPlayerTwoScore();
+            if (dtoPlayerScorePerRound.getPlayerOneScore() == 1) {
                 System.out.println(name + " scored one point!");
-            } else if (dao.getPlayerTwoScore() == 1) {
+            } else if (dtoPlayerScorePerRound.getPlayerTwoScore() == 1) {
                 System.out.println("Computer scored one point!");
             } else {
                 System.out.println("Draw!");

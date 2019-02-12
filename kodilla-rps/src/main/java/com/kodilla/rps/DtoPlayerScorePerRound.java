@@ -1,10 +1,10 @@
 package com.kodilla.rps;
 
-public class Dao {
+public class DtoPlayerScorePerRound {
     private int playerOneScore;
     private int playerTwoScore;
 
-    public Dao(int playerOneScore, int playerTwoScore) {
+    public DtoPlayerScorePerRound(int playerOneScore, int playerTwoScore) {
         this.playerOneScore = playerOneScore;
         this.playerTwoScore = playerTwoScore;
     }

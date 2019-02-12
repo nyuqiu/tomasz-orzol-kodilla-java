@@ -1,10 +1,10 @@
 package com.kodilla.rps;
 
-public class DaoPlayersMoves {
+public class DtoPlayersMoves {
     private Move playerOneMove;
     private Move playerTwoMove;
 
-    public DaoPlayersMoves(Move playerOneMove, Move playerTwoMove) {
+    public DtoPlayersMoves(Move playerOneMove, Move playerTwoMove) {
         this.playerOneMove = playerOneMove;
         this.playerTwoMove = playerTwoMove;
     }
@@ -21,7 +21,7 @@ public class DaoPlayersMoves {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DaoPlayersMoves that = (DaoPlayersMoves) o;
+        DtoPlayersMoves that = (DtoPlayersMoves) o;
         return playerOneMove == that.playerOneMove &&
                 playerTwoMove == that.playerTwoMove;
     }
