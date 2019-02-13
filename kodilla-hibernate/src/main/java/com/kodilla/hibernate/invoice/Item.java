@@ -1,6 +1,12 @@
 package com.kodilla.hibernate.invoice;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -13,7 +19,7 @@ public class Item {
     @Column(name = "ID", unique = true)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
@@ -24,14 +30,13 @@ public class Item {
     @Column(name = "QUANTITY")
     private int quantity;
 
-    @ManyToOne
-    @NotNull
-    @JoinColumn(name = "INVOICE_ID")
+    @ManyToOne(optional = false)
     private Invoice invoice;
 
-    public Item(BigDecimal price, int quantity) {
+    public Item(BigDecimal price, int quantity, Product product) {
         this.price = price;
         this.quantity = quantity;
+        this.product = product;
     }
 
     public Item() {
