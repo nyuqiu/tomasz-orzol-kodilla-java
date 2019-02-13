@@ -1,5 +1,7 @@
 package com.kodilla.rps;
 
+import java.util.Objects;
+
 public class DtoPlayersMoves {
     private Move playerOneMove;
     private Move playerTwoMove;
@@ -23,5 +25,19 @@ public class DtoPlayersMoves {
 
     public void setPlayerTwoMove(Move playerTwoMove) {
         this.playerTwoMove = playerTwoMove;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DtoPlayersMoves that = (DtoPlayersMoves) o;
+        return playerOneMove == that.playerOneMove &&
+                playerTwoMove == that.playerTwoMove;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playerOneMove, playerTwoMove);
     }
 }

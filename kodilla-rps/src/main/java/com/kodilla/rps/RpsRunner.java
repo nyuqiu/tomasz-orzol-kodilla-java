@@ -43,8 +43,8 @@ public class RpsRunner {
         keysToUse.addAll(Arrays.asList("1", "2", "3", "4", "5", "x", "n", "m"));
 
         boolean end = false;
-        printOptions();         //tu usunac
         while (!end) {
+            printOptions();
             String keyboardInput = scanner.next();
             if (keysToUse.contains(keyboardInput)) {
                 switch (keyboardInput) {
@@ -131,8 +131,6 @@ public class RpsRunner {
                     System.out.println("Computer won game!");
                     end = true;
                 }
-            } else {    //tu usunac
-                printOptions();
             }
         }
     }
