@@ -30,12 +30,18 @@ public class InvoiceDaoTestSuite {
         Item item2 = new Item(BigDecimal.valueOf(4), 6, new Product("bread"));
         Item item3 = new Item(BigDecimal.valueOf(2), 4, new Product("spaghetti"));
 
-
         invoice1.addItem(item1);
         invoice1.addItem(item2);
         invoice1.addItem(item3);
 
         //When
         invoiceDao.save(invoice1);
+
+        //Then
+        Assert.assertNotEquals(0,invoice1);
+
+        //CleanUp
+        invoiceDao.delete(invoice1);
+
     }
 }
