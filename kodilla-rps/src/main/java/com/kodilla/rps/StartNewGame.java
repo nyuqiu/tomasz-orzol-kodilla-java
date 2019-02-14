@@ -29,9 +29,14 @@ public class StartNewGame {
                 input = scanner.next();
                 checkForInteger = Integer.parseInt(input);
             } catch(NumberFormatException e) {
-                System.out.println("Not integer, or input is below 0 or above 100, try again");
+                System.out.println("Not integer, try again");
             }
-            percentWinningGames = checkForInteger;
+            if(checkForInteger>=0 && checkForInteger<=100) {
+                percentWinningGames = checkForInteger;
+            } else {
+                System.out.println("Input is below 0 or above 100, try again");
+                percentWinningGames = -1;
+            }
         }
         return new NewGameDto(playerOneWonRounds, playerTwoWonRounds, wonRounds, percentWinningGames);
     }
