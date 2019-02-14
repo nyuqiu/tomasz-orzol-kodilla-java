@@ -2,11 +2,11 @@ package com.kodilla.rps;
 
 import java.util.Objects;
 
-public class DtoPlayersMoves {
+public class EveryRoundPlayersMovesDto {
     private Move playerOneMove;
     private Move playerTwoMove;
 
-    public DtoPlayersMoves(Move playerOneMove, Move playerTwoMove) {
+    public EveryRoundPlayersMovesDto(Move playerOneMove, Move playerTwoMove) {
         this.playerOneMove = playerOneMove;
         this.playerTwoMove = playerTwoMove;
     }
@@ -31,7 +31,7 @@ public class DtoPlayersMoves {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DtoPlayersMoves that = (DtoPlayersMoves) o;
+        EveryRoundPlayersMovesDto that = (EveryRoundPlayersMovesDto) o;
         return playerOneMove == that.playerOneMove &&
                 playerTwoMove == that.playerTwoMove;
     }

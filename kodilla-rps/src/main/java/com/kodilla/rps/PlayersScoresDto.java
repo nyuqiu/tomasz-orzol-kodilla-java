@@ -1,10 +1,10 @@
 package com.kodilla.rps;
 
-public class DtoPlayerScorePerRound {
+public class PlayersScoresDto {
     private int playerOneScore;
     private int playerTwoScore;
 
-    public DtoPlayerScorePerRound(int playerOneScore, int playerTwoScore) {
+    public PlayersScoresDto(int playerOneScore, int playerTwoScore) {
         this.playerOneScore = playerOneScore;
         this.playerTwoScore = playerTwoScore;
     }

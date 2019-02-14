@@ -19,107 +19,83 @@ public class RpsRunner {
     }
 
     public static void main(String[] args) {
+        StartNewGame startNewGame = new StartNewGame();
+        ChosenOptions chosenOptions = new ChosenOptions();
         Scanner scanner = new Scanner(System.in);
-        GameMechanism gameMechanism = new GameMechanism();
+        RoundResult roundResult = new RoundResult();
         System.out.println("What is your name?");
         String name = scanner.next();
         System.out.println("Hello " + name);
-        System.out.println("How many won rounds to win a game?");
-        int wonRounds = scanner.nextInt();
-        System.out.println("How much percent to win?");
-        int percentRangeChecker = scanner.nextInt();
-        int percentWinningGames;
-
-        while (percentRangeChecker < 0 || 100 < percentRangeChecker) {
-            System.out.println("Avaliable range is 0 to 100. Try again");
-            percentRangeChecker = scanner.nextInt();
-        }
-        percentWinningGames = percentRangeChecker;
-
-        int playerOneWonRounds = 0;
-        int playerTwoWonRounds = 0;
-        DtoPlayerScorePerRound dtoPlayerScorePerRound = null;
+        NewGameDto newGame = startNewGame.startNewGame();
+        int wonRounds = newGame.getHowManyRoundsToWin();
+        int percentWinningGames = newGame.getHowManyPercentToWin();
+        int playerOneWonRounds = newGame.getPlayerOneWonRounds();
+        int playerTwoWonRounds = newGame.getPlayerTwoWonRounds();
+        PlayersScoresDto playersScoresDto = null;
         List<String> keysToUse = new ArrayList<>();
         keysToUse.addAll(Arrays.asList("1", "2", "3", "4", "5", "x", "n", "m"));
 
         boolean end = false;
+        boolean gameInterupted = false;
         while (!end) {
             printOptions();
             String keyboardInput = scanner.next();
             if (keysToUse.contains(keyboardInput)) {
+                gameInterupted = false;
                 switch (keyboardInput) {
                     case "1":
                         System.out.println("Play rock");
-                        dtoPlayerScorePerRound = gameMechanism.play(Move.ROCK, percentWinningGames);
+                        playersScoresDto = roundResult.play(Move.ROCK, percentWinningGames);
                         break;
                     case "2":
                         System.out.println("Play paper");
-                        dtoPlayerScorePerRound = gameMechanism.play(Move.PAPER, percentWinningGames);
+                        playersScoresDto = roundResult.play(Move.PAPER, percentWinningGames);
                         break;
                     case "3":
                         System.out.println("Play scissors");
-                        dtoPlayerScorePerRound = gameMechanism.play(Move.SCISSORS, percentWinningGames);
+                        playersScoresDto = roundResult.play(Move.SCISSORS, percentWinningGames);
                         break;
                     case "4":
                         System.out.println("Play Spock");
-                        dtoPlayerScorePerRound = gameMechanism.play(Move.SPOCK, percentWinningGames);
+                        playersScoresDto = roundResult.play(Move.SPOCK, percentWinningGames);
                         break;
                     case "5":
                         System.out.println("Play lizard");
-                        dtoPlayerScorePerRound = gameMechanism.play(Move.LIZARD, percentWinningGames);
+                        playersScoresDto = roundResult.play(Move.LIZARD, percentWinningGames);
                         break;
                     case "x":
-                        System.out.println("Do you really wanna finish game? y/n");  //metoda
-                        String yesNoOption = scanner.next();
-                        if (yesNoOption.equals("y") || yesNoOption.equals("n")) {
-                            switch (yesNoOption) {
-                                case "y":
-                                    end = true;
-                                    System.out.println("Bye bye");
-                                    break;
-                                case "n":
-                                    System.out.println("Thanks for staying");
-                                    break;
-                            }
-                        }
+                        end = chosenOptions.finishingGame();
+                        gameInterupted = true;
                         break;
                     case "n":
-                        System.out.println("Do you really wanna finish actual game? y/n");  //metoda
-                        String chooseOption = scanner.next();
-                        if (chooseOption.equals("y") || chooseOption.equals("n")) {
-                            switch (chooseOption) {
-                                case "y":
-                                    System.out.println("Starting new game");
-                                    playerOneWonRounds = 0;
-                                    playerTwoWonRounds = 0;
-                                    System.out.println("How many won rounds to win a game?");
-                                    wonRounds = scanner.nextInt();
-                                    System.out.println("How much percent to win?");
-                                    percentWinningGames = scanner.nextInt();
-                                    printOptions();
-                                    break;
-                                case "n":
-                                    System.out.println("Playing the same game");
-                                    break;
-                            }
+                        gameInterupted = chosenOptions.startAgain();
+                        if(gameInterupted){
+                            NewGameDto nextGame = startNewGame.startNewGame();
+                            wonRounds = nextGame.getHowManyRoundsToWin();
+                            percentWinningGames = nextGame.getHowManyPercentToWin();
+                            playerOneWonRounds = nextGame.getPlayerOneWonRounds();
+                            playerTwoWonRounds = nextGame.getPlayerTwoWonRounds();
                         }
                         break;
-
                     case "m":
+                        gameInterupted = true;
                         printOptions();
                         break;
                 }
             } else {
                 System.out.println("Use one of those keys: " + keysToUse);
+                gameInterupted = true;
             }
-            playerOneWonRounds += dtoPlayerScorePerRound.getPlayerOneScore();
-            playerTwoWonRounds += dtoPlayerScorePerRound.getPlayerTwoScore();
-            if (dtoPlayerScorePerRound.getPlayerOneScore() == 1) {
-                System.out.println(name + " scored one point!");
-            } else if (dtoPlayerScorePerRound.getPlayerTwoScore() == 1) {
-                System.out.println("Computer scored one point!");
-            } else {
-                System.out.println("Draw!");
+            if(!gameInterupted) {
+                playerOneWonRounds += playersScoresDto.getPlayerOneScore();
+                playerTwoWonRounds += playersScoresDto.getPlayerTwoScore();
+                if (playersScoresDto.getPlayerOneScore() == 1) {
+                    System.out.println(name + " scored one point!");
+                } else if (playersScoresDto.getPlayerTwoScore() == 1) {
+                    System.out.println("Computer scored one point!");
+                } else {
+                    System.out.println("Draw!");
+                }
             }
             System.out.println(name+" "+playerOneWonRounds+" : "+playerTwoWonRounds+" Computer");
 
