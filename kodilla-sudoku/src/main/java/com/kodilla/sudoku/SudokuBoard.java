@@ -21,6 +21,10 @@ public class SudokuBoard {
         return sudokuColumns;
     }
 
+    public SudokuElement fieldByColumnAndRow(int column, int row){
+        return getSudokuColumns().get(column).getSudokuRow().get(row);
+    }
+
     public Set<Integer> getValuesFromOneOfNineParts(int column, int row) {
         if (column < 3) {
             return whichColumns(row);
@@ -57,10 +61,10 @@ public class SudokuBoard {
         Set<Integer> valuesFromOneOfNine = new HashSet<>();
         for (; fromColumnNumber < toColumnNumber; fromColumnNumber++) {
             for (; fromRowNumber < toRowNumber; fromRowNumber++) {
-                if (valuesFromOneOfNine.contains(sudokuColumns.get(fromColumnNumber).getSudokuRow().get(fromRowNumber).getValue())) {
+                if (valuesFromOneOfNine.contains(fieldByColumnAndRow(fromColumnNumber, fromRowNumber).getValue())) {
                     System.out.println(VALUEEXIST);
                 } else {
-                    valuesFromOneOfNine.add(sudokuColumns.get(fromColumnNumber).getSudokuRow().get(fromRowNumber).getValue());
+                    valuesFromOneOfNine.add(fieldByColumnAndRow(fromColumnNumber, fromRowNumber).getValue());
                 }
             }
         }

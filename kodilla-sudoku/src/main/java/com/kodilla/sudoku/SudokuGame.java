@@ -13,7 +13,8 @@ public class SudokuGame {
 
         for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
             for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
-                SudokuElement sudokuElement = sudokuBoard.getSudokuColumns().get(columnNumber).getSudokuRow().get(rowNumber);
+                avaiableValues.avaiableValuesForField(sudokuBoard);
+                SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                 if(sudokuElement.getValue()==-1){
                     if(sudokuElement.getPossilbeValues().size()==1){
                         List<Integer> onePossibleElement = new ArrayList<>(sudokuElement.getPossilbeValues());

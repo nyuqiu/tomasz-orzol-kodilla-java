@@ -11,20 +11,21 @@ public class AvaiableValues {
         Set<Integer> usedValues = new HashSet<>();
         for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
             for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
-                SudokuElement sudokuElement = sudokuBoard.getSudokuColumns().get(columnNumber).getSudokuRow().get(rowNumber);
+                SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                 if (sudokuElement.getValue() == SudokuElement.EMPTY) {
                     for (int numbersFromColumns = 0; numbersFromColumns < 9; numbersFromColumns++) {
                         if (usedValues.contains(sudokuElement.getValue()) && sudokuElement.getValue() > 0) {
                             sudokuBoard = trueForDuplicatedValues();
                         } else {
-                            usedValues.add(sudokuBoard.getSudokuColumns().get(numbersFromColumns).getSudokuRow().get(rowNumber).getValue());
+                            usedValues.add(sudokuBoard.fieldByColumnAndRow(numbersFromColumns, rowNumber).getValue());
                         }
                     }
                     for (int numbersFromRows = 0; numbersFromRows < 9; numbersFromRows++) {
                         if (usedValues.contains(sudokuElement.getValue()) && sudokuElement.getValue() > 0) {
                             sudokuBoard = trueForDuplicatedValues();
                         } else {
-                            usedValues.add(sudokuBoard.getSudokuColumns().get(columnNumber).getSudokuRow().get(numbersFromRows).getValue());
+
+                            usedValues.add(sudokuBoard.fieldByColumnAndRow(columnNumber, numbersFromRows).getValue());
                         }
                     }
                     if (sudokuBoard.getValuesFromOneOfNineParts(columnNumber, rowNumber).contains(sudokuElement.getValue()) && sudokuElement.getValue() > 0) {
