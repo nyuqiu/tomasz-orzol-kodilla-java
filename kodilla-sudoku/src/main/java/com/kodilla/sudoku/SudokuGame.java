@@ -1,7 +1,6 @@
 package com.kodilla.sudoku;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SudokuGame {
@@ -23,6 +22,7 @@ public class SudokuGame {
                 }
             }
         }
+        return true;
     }
 }
 
