@@ -57,9 +57,9 @@ public class CompanyDaoTestSuite {
 
         //CleanUp
         try {
-            companyDao.delete(softwareMachineId);
-            companyDao.delete(dataMaestersId);
-            companyDao.delete(greyMatterId);
+            companyDao.delete(softwareMachine);
+            companyDao.delete(dataMaesters);
+            companyDao.delete(greyMatter);
         } catch (Exception e) {
             //do nothing
         }
@@ -77,22 +77,16 @@ public class CompanyDaoTestSuite {
         Company greyMatter = new Company("Grey Matter");
 
         employeeDao.save(johnSmith);
-        int johnSmithID = johnSmith.getId();
         employeeDao.save(stephanieClarckson);
-        int stephanieClarcksonId = stephanieClarckson.getId();
         employeeDao.save(lindaKovalsky);
-        int lindaKovalskyId = lindaKovalsky.getId();
 
         companyDao.save(softwareMachine);
-        int softwareMachineId = softwareMachine.getId();
         companyDao.save(dataMaesters);
-        int dataMaestersId = dataMaesters.getId();
         companyDao.save(greyMatter);
-        int greyMatterId = greyMatter.getId();
 
         //When
-        List<Employee> findSmith = employeeDao.findEmplyoeeByLastname("Smith");
-        List<Company> findCompanyByThreeFirstLetters = companyDao.findCompanyByFirstThreeLetters("Dat");
+        List<Employee> findSmith = employeeDao.findEmployeeByLastname("Smith");
+        List<Company> findCompanyByThreeFirstLetters = companyDao.findCompanyByFirstThreeLetters("dat");
 
         //Then
         Assert.assertEquals(1, findSmith.size());
@@ -100,12 +94,12 @@ public class CompanyDaoTestSuite {
 
         //CleanUp
         try {
-            companyDao.delete(softwareMachineId);
-            companyDao.delete(dataMaestersId);
-            companyDao.delete(greyMatterId);
-            employeeDao.delete(johnSmithID);
-            employeeDao.delete(stephanieClarcksonId);
-            employeeDao.delete(lindaKovalskyId);
+            companyDao.delete(softwareMachine);
+            companyDao.delete(dataMaesters);
+            companyDao.delete(greyMatter);
+            employeeDao.delete(johnSmith);
+            employeeDao.delete(stephanieClarckson);
+            employeeDao.delete(lindaKovalsky);
         } catch (Exception e){
             //do nothing
         }
