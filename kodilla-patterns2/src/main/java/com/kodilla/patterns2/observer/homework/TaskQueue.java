@@ -21,16 +21,26 @@ public class TaskQueue implements Observable {
 
     @Override
     public void registerObserver(Observer observer) {
-
+        observers.add(observer);
     }
 
     @Override
     public void notifyObservers() {
-
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
     }
 
     @Override
     public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
 
+    public List<String> getTasks() {
+        return tasks;
+    }
+
+    public String getName() {
+        return name;
     }
 }
