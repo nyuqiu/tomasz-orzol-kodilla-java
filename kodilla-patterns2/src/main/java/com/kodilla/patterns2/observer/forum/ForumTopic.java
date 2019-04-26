@@ -1,8 +1,5 @@
 package com.kodilla.patterns2.observer.forum;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +19,19 @@ public class ForumTopic implements Observable {
         notifyObservers();
     }
 
+    @Override
     public void registerObserver(Observer observer) {
         observers.add(observer);
     }
 
+    @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
             observer.update(this);
         }
     }
 
+    @Override
     public void removeObserver(Observer observer) {
         observers.remove(observer);
     }
@@ -42,15 +42,5 @@ public class ForumTopic implements Observable {
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public void addListener(InvalidationListener listener) {
-
-    }
-
-    @Override
-    public void removeListener(InvalidationListener listener) {
-
     }
 }
