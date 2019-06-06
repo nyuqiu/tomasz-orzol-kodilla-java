@@ -21,24 +21,12 @@ public class SudokuBoard {
         return sudokuColumns;
     }
 
-    public SudokuElement fieldByColumnAndRow(int column, int row){
+    public SudokuElement fieldByColumnAndRow(int column, int row) {
         return getSudokuColumns().get(column).getSudokuRow().get(row);
     }
 
-    public Set<Integer> getValuesFromOneOfNineParts(int column, int row) {
-        if (column < 3) {
-            return whichColumns(row);
-        } else if (3 <= column && column < 6) {
-            return whichColumns(row);
-        } else if (6 <= column) {
-            return whichColumns(row);
-        } else {
-            return null;
-        }
-    }
-
-    public static SudokuBoard getInstance(){
-        if(sudokuBoardInstance == null){
+    public static SudokuBoard getInstance() {
+        if (sudokuBoardInstance == null) {
             sudokuBoardInstance = new SudokuBoard();
         }
         return sudokuBoardInstance;
@@ -49,7 +37,7 @@ public class SudokuBoard {
         clonedBoard.sudokuColumns = new ArrayList<>();
         for (SudokuRow clonedRows : sudokuColumns) {
             SudokuRow clonedRow = new SudokuRow();
-            for (SudokuElement sudokuElement : clonedRows.getSudokuRow()){
+            for (SudokuElement sudokuElement : clonedRows.getSudokuRow()) {
                 clonedRow.getSudokuRow().add(sudokuElement);
             }
             clonedBoard.getSudokuColumns().add(clonedRow);
@@ -71,13 +59,25 @@ public class SudokuBoard {
         return valuesFromOneOfNine;
     }
 
-    private Set<Integer> whichColumns(int columnNumber) {
-        if (columnNumber < 3) {
-            return addValuesFromOneOfNine(3, 6, 0, 3);
-        } else if (2 < columnNumber && columnNumber < 6) {
-            return addValuesFromOneOfNine(3, 6, 3, 6);
-        } else if (6 <= columnNumber) {
-            return addValuesFromOneOfNine(3, 6, 6, 9);
+    public Set<Integer> getValuesFromOneOfNineParts(int column, int row) {
+        if (0<= column && column <= 2) {
+            return whichRow(0, 2, row);
+        } else if (3 <= column && column <= 5) {
+            return whichRow(3, 5, row);
+        } else if (6 <= column && column <=8) {
+            return whichRow(6, 8, row);
+        } else {
+            return null;
+        }
+    }
+
+    private Set<Integer> whichRow(int columnMinNumber, int columnMaxNumber, int rowNumber) {
+        if (0 <= rowNumber && rowNumber <= 2) {
+            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 0, 3);
+        } else if (3 <= rowNumber && rowNumber <= 5) {
+            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 3, 6);
+        } else if (6 <= rowNumber && rowNumber <=8) {
+            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 6, 9);
         } else {
             return null;
         }
