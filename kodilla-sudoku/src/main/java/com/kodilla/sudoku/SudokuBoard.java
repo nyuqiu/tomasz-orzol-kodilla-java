@@ -60,11 +60,11 @@ public class SudokuBoard {
     }
 
     public Set<Integer> getValuesFromOneOfNineParts(int column, int row) {
-        if (0<= column && column <= 2) {
+        if (0 <= column && column <= 2) {
             return whichRow(0, 2, row);
         } else if (3 <= column && column <= 5) {
             return whichRow(3, 5, row);
-        } else if (6 <= column && column <=8) {
+        } else if (6 <= column && column <= 8) {
             return whichRow(6, 8, row);
         } else {
             return null;
@@ -76,7 +76,7 @@ public class SudokuBoard {
             return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 0, 3);
         } else if (3 <= rowNumber && rowNumber <= 5) {
             return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 3, 6);
-        } else if (6 <= rowNumber && rowNumber <=8) {
+        } else if (6 <= rowNumber && rowNumber <= 8) {
             return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 6, 9);
         } else {
             return null;
