@@ -73,14 +73,13 @@ public class SudokuBoard {
 
     private Set<Integer> whichRow(int columnMinNumber, int columnMaxNumber, int rowNumber) {
         if (0 <= rowNumber && rowNumber <= 2) {
-            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 0, 3);
+            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 0, 2);
         } else if (3 <= rowNumber && rowNumber <= 5) {
-            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 3, 6);
+            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 3, 5);
         } else if (6 <= rowNumber && rowNumber <= 8) {
-            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 6, 9);
+            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 6, 8);
         } else {
             return null;
         }
     }
 }
-
