@@ -15,6 +15,7 @@ public class AvaiableValues {
         for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
             for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
                 sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+                OnePartOfBoard onePartOfBoard = sudokuBoard.checkWhichPartOfBoard(columnNumber, rowNumber);
                 if (sudokuElement.getValue() == SudokuElement.EMPTY) {
                     for (int columnIteration = 0; columnIteration < 9; columnIteration++) {
                         addPossibleNumber(columnIteration, rowNumber);
@@ -22,10 +23,10 @@ public class AvaiableValues {
                     for (int rowIteration = 0; rowIteration < 9; rowIteration++) {
                         addPossibleNumber(columnNumber, rowIteration);
                     }
-                    if (sudokuBoard.getValuesFromOneOfNineParts(columnNumber, rowNumber).contains(sudokuElement.getValue()) && sudokuElement.getValue() > 0) {
+                    if (onePartOfBoard.valuesFromOneOfNine().contains(sudokuElement.getValue()) && sudokuElement.getValue() > 0) {
                         sudokuBoard = retrievePreviousBoard();
                     } else {
-                        usedValues.addAll(sudokuBoard.getValuesFromOneOfNineParts(columnNumber, rowNumber));
+                        usedValues.addAll(onePartOfBoard.valuesFromOneOfNine());
                     }
                     usedValues.remove(SudokuElement.EMPTY);
                     sudokuElement.setPossilbeValues(usedValues);

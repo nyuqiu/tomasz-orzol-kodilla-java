@@ -20,17 +20,6 @@ public class SudokuBoard {
     };
 
 
-//    private OnePartOfBoard topLeft = new OnePartOfBoard(0, 2, 0, 2);
-//    private OnePartOfBoard topCentre = new OnePartOfBoard(0, 2, 3, 5);
-//    private OnePartOfBoard topRight = new OnePartOfBoard(0, 2, 6, 8);
-//    private OnePartOfBoard centreLeft = new OnePartOfBoard(3, 5, 0, 2);
-//    private OnePartOfBoard centreCentre = new OnePartOfBoard(3, 5, 3, 5);
-//    private OnePartOfBoard centreRight = new OnePartOfBoard(3, 5, 6, 8);
-//    private OnePartOfBoard bottomLeft = new OnePartOfBoard(6, 8, 0, 2);
-//    private OnePartOfBoard bottomCentre = new OnePartOfBoard(6, 8, 3, 5);
-//    private OnePartOfBoard bottomRight = new OnePartOfBoard(6, 8, 6, 8);
-
-
     private SudokuBoard() {
         this.sudokuColumns = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
@@ -75,21 +64,6 @@ public class SudokuBoard {
         return clonedBoard;
     }
 
-    private Set<Integer> addValuesFromOneOfNine(int fromColumnNumber, int toColumnNumber, int fromRowNumber,
-                                                int toRowNumber) {
-        Set<Integer> valuesFromOneOfNine = new HashSet<>();
-        for (; fromColumnNumber < toColumnNumber; fromColumnNumber++) {
-            for (; fromRowNumber < toRowNumber; fromRowNumber++) {
-                if (valuesFromOneOfNine.contains(fieldByColumnAndRow(fromColumnNumber, fromRowNumber).getValue())) {
-                    System.out.println(Messages.VALUEEXIST);
-                } else {
-                    valuesFromOneOfNine.add(fieldByColumnAndRow(fromColumnNumber, fromRowNumber).getValue());
-                }
-            }
-        }
-        return valuesFromOneOfNine;
-    }
-
     public OnePartOfBoard checkWhichPartOfBoard(int column, int row) {
         String fullNameOneOfNine;
         if (0 <= row && row <= 2) {
@@ -111,31 +85,6 @@ public class SudokuBoard {
             return "Centre";
         } else if (6 <= column && column <= 8) {
             return "Right";
-        } else {
-            return null;
-        }
-    }
-
-
-    public Set<Integer> getValuesFromOneOfNineParts(int column, int row) {
-        if (0 <= column && column <= 2) {
-            return whichRow(0, 2, row);
-        } else if (3 <= column && column <= 5) {
-            return whichRow(3, 5, row);
-        } else if (6 <= column && column <= 8) {
-            return whichRow(6, 8, row);
-        } else {
-            return null;
-        }
-    }
-
-    private Set<Integer> whichRow(int columnMinNumber, int columnMaxNumber, int rowNumber) {
-        if (0 <= rowNumber && rowNumber <= 2) {
-            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 0, 2);
-        } else if (3 <= rowNumber && rowNumber <= 5) {
-            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 3, 5);
-        } else if (6 <= rowNumber && rowNumber <= 8) {
-            return addValuesFromOneOfNine(columnMinNumber, columnMaxNumber, 6, 8);
         } else {
             return null;
         }
