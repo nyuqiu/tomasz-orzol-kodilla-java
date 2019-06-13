@@ -5,32 +5,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AvaiableValues {
-    public final String VALUEEXIST = "Cannot add, number exist in row, columns, or in one of nine part.";
+    private SudokuBoard sudokuBoard;
+    private Set<Integer> usedValues = new HashSet<>();
+    private SudokuBoard oldSudokuBoard;
+    private SudokuElement sudokuElement;
 
     public void avaiableValuesForField(SudokuBoard sudokuBoard) {
-        Set<Integer> usedValues = new HashSet<>();
+
         for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
             for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
-                SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+                sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                 if (sudokuElement.getValue() == SudokuElement.EMPTY) {
-                    for (int numbersFromColumns = 0; numbersFromColumns < 9; numbersFromColumns++) {
-                        if (usedValues.contains(sudokuElement.getValue()) && sudokuElement.getValue() > 0) {
-                            sudokuBoard = trueForDuplicatedValues();
-                        } else {
-                            usedValues.add(sudokuBoard.fieldByColumnAndRow(numbersFromColumns, rowNumber).getValue());
-                        }
+                    for (int columnIteration = 0; columnIteration < 9; columnIteration++) {
+                        addPossibleNumber(columnIteration, rowNumber);
                     }
-                    for (int numbersFromRows = 0; numbersFromRows < 9; numbersFromRows++) {
-                        if (usedValues.contains(sudokuElement.getValue()) && sudokuElement.getValue() > 0) {
-                            sudokuBoard = trueForDuplicatedValues();
-                        } else {
-
-                            usedValues.add(sudokuBoard.fieldByColumnAndRow(columnNumber, numbersFromRows).getValue());
-                        }
+                    for (int rowIteration = 0; rowIteration < 9; rowIteration++) {
+                        addPossibleNumber(columnNumber, rowIteration);
                     }
                     if (sudokuBoard.getValuesFromOneOfNineParts(columnNumber, rowNumber).contains(sudokuElement.getValue()) && sudokuElement.getValue() > 0) {
-                        System.out.println(VALUEEXIST);
-                        sudokuBoard = Arrays.asList(BacktrackCopies.getInstance().getBacktrack()).get(0);
+                        sudokuBoard = retrievePreviousBoard();
                     } else {
                         usedValues.addAll(sudokuBoard.getValuesFromOneOfNineParts(columnNumber, rowNumber));
                     }
@@ -40,11 +33,30 @@ public class AvaiableValues {
             }
         }
     }
-    public SudokuBoard trueForDuplicatedValues(){
-        SudokuBoard sudokuBoard;
-        System.out.println(VALUEEXIST);
+
+    private void addPossibleNumber(int columnNumber, int rowNumber) {
+        if (usedValues.contains(sudokuElement.getValue()) && !(sudokuElement.getValue() == SudokuElement.EMPTY)) {
+            oldSudokuBoard = retrievePreviousBoard();
+            if (!oldSudokuBoard.equals(sudokuBoard)) {
+                sudokuBoard = oldSudokuBoard;
+            } else {
+                removeUnsolvableSudoku();
+            }
+
+        } else {
+            usedValues.add(sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber).getValue());
+        }
+    }
+
+    public SudokuBoard retrievePreviousBoard() {
+        System.out.println(Messages.VALUEEXIST);
         sudokuBoard = Arrays.asList(BacktrackCopies.getInstance().getBacktrack()).get(0);
         return sudokuBoard;
+    }
+
+    public void removeUnsolvableSudoku() {
+        System.out.println(Messages.CANNOTSOLVE);
+        sudokuBoard = Arrays.asList(BacktrackCopies.getInstance().getBacktrack()).remove(0);
     }
 }
 

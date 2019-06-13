@@ -3,7 +3,7 @@ package com.kodilla.sudoku;
 import java.util.*;
 
 public class SudokuElement {
-    public static int EMPTY = -1;
+    public static final int EMPTY = -1;
     private int value;
     private Set<Integer> possilbeValues;
 
