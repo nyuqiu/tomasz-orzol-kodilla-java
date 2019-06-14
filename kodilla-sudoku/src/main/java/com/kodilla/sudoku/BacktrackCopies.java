@@ -1,14 +1,17 @@
 package com.kodilla.sudoku;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BacktrackCopies {
     private static BacktrackCopies backtrackCopiesInstance = null;
-    private SudokuBoard[] backtrack;
+    private List<SudokuBoard> backtrack;
 
     private BacktrackCopies() {
-        this.backtrack = new SudokuBoard[1];
+        this.backtrack = new ArrayList<>();
     }
 
-    public SudokuBoard[] getBacktrack() {
+    public List<SudokuBoard> getBacktrack() {
         return backtrack;
     }
 

@@ -20,7 +20,7 @@ public class SudokuBoard {
     };
 
 
-    private SudokuBoard() {
+    public SudokuBoard() {
         this.sudokuColumns = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             sudokuColumns.add(new SudokuRow());
@@ -29,6 +29,14 @@ public class SudokuBoard {
 
     public List<SudokuRow> getSudokuColumns() {
         return sudokuColumns;
+    }
+
+    public void setSudokuColumns(List<SudokuRow> sudokuColumns) {
+        this.sudokuColumns = sudokuColumns;
+    }
+
+    public void setValue(int column, int row, int value) {
+        getSudokuColumns().get(column).getSudokuRow().get(row).setValue(value);
     }
 
     public SudokuElement fieldByColumnAndRow(int column, int row) {
@@ -88,5 +96,13 @@ public class SudokuBoard {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "SudokuBoard{" +
+                "sudokuColumns=" + sudokuColumns +
+                ", partsByName=" + partsByName +
+                '}';
     }
 }
