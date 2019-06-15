@@ -79,7 +79,7 @@ public class SudokuBoard {
         } else if (3 <= row && row <= 5) {
             fullNameOneOfNine = "centre" + checkForRow(column);
         } else if (6 <= row && row <= 8) {
-            fullNameOneOfNine = "right" + checkForRow(column);
+            fullNameOneOfNine = "bottom" + checkForRow(column);
         } else {
             return null;
         }

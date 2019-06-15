@@ -9,7 +9,7 @@ public class SudokuElement {
 
     public SudokuElement() {
         this.value = EMPTY;
-        this.possilbeValues = new HashSet<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
+        this.possilbeValues = new HashSet<>();
     }
 
     public int getValue() {
@@ -26,5 +26,13 @@ public class SudokuElement {
 
     public void setPossilbeValues(Set<Integer> possilbeValues) {
         this.possilbeValues = possilbeValues;
+    }
+
+    @Override
+    public String toString() {
+        return "SudokuElement{" +
+                "value=" + value +
+                ", possilbeValues=" + possilbeValues +
+                '}';
     }
 }

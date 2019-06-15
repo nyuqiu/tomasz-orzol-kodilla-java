@@ -2,13 +2,17 @@ package com.kodilla.sudoku;
 
 public class Runner {
 
+
     public static void main(String[] args) {
+        BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
 
         boolean gameFinished = false;
         while (!gameFinished) {
             System.out.println("start test");
             SudokuGame theGame = new SudokuGame();
             SudokuBoard sudokuBoard = new SudokuBoard();
+
+
             sudokuBoard.setValue(1,1,1);
             sudokuBoard.setValue(1,2,2);
             sudokuBoard.setValue(1,3,3);

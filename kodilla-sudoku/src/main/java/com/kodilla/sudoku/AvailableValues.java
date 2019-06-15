@@ -7,15 +7,15 @@ public class AvailableValues {
     private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
     private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
     private Set<Integer> usedValues = new HashSet<>();
-    private SudokuBoard oldSudokuBoard;
     private SudokuElement sudokuElement = new SudokuElement();
 
 
 
     public void availableValuesForField(SudokuBoard sudokuBoard) {
-
+        int count = 0;
         for (int columnNumber = 0; columnNumber <= 8; columnNumber++) {
             for (int rowNumber = 0; rowNumber <= 8; rowNumber++) {
+                count++;
                 sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                 OnePartOfBoard onePartOfBoard = sudokuBoard.checkWhichPartOfBoard(columnNumber, rowNumber);
                 if (sudokuElement.getValue() == SudokuElement.EMPTY) {
@@ -33,6 +33,10 @@ public class AvailableValues {
                     }
                     usedValues.remove(SudokuElement.EMPTY);
                     sudokuElement.setPossilbeValues(usedValues);
+                    System.out.println(usedValues);
+                    System.out.println(count);
+                    System.out.println(onePartOfBoard);
+                    System.out.println(sudokuElement);
                 }
             }
         }
@@ -47,7 +51,8 @@ public class AvailableValues {
     }
 
     private void checkBoard() {
-        oldSudokuBoard = retrievePreviousBoard();
+        SudokuBoard oldSudokuBoard = retrievePreviousBoard();
+        System.out.println(oldSudokuBoard);
         if (!oldSudokuBoard.equals(sudokuBoard)) {
             sudokuBoard = oldSudokuBoard;
         } else {
