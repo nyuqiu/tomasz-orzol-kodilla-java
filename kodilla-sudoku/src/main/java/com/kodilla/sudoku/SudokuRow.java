@@ -16,4 +16,11 @@ public class SudokuRow {
     public List<SudokuElement> getSudokuRow() {
         return sudokuRow;
     }
+
+    @Override
+    public String toString() {
+        return "SudokuRow{" +
+                "sudokuRow=" + sudokuRow +
+                '}';
+    }
 }

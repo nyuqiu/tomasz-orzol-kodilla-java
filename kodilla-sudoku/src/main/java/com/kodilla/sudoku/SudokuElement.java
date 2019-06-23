@@ -3,35 +3,44 @@ package com.kodilla.sudoku;
 import java.util.*;
 
 public class SudokuElement {
-    public static final int EMPTY = -1;
-    private int value;
-    private Set<Integer> possilbeValues;
+    public static final String EMPTY = "-1";
+    private String value;
+    private Set<String> possilbeValues;
 
     public SudokuElement() {
         this.value = EMPTY;
         this.possilbeValues = new HashSet<>();
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 
-    public Set<Integer> getPossilbeValues() {
+    public Set<String> getPossilbeValues() {
         return possilbeValues;
     }
 
-    public void setValue(int value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
-    public void setPossilbeValues(Set<Integer> possilbeValues) {
+    public void setPossilbeValues(Set<String> possilbeValues) {
         this.possilbeValues = possilbeValues;
     }
+
+//    @Override
+//    public String toString() {
+//        return "SudokuElement{" +
+//                "value=" + value +
+//                ", possilbeValues=" + possilbeValues +
+//                '}';
+//    }
+
 
     @Override
     public String toString() {
         return "SudokuElement{" +
-                "value=" + value +
+                "value='" + value + '\'' +
                 ", possilbeValues=" + possilbeValues +
                 '}';
     }

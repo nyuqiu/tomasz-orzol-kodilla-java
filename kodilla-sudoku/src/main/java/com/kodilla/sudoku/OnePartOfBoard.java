@@ -16,9 +16,9 @@ public class OnePartOfBoard {
         this.toRow = toRow;
     }
 
-    public Set<Integer> valuesFromOneOfNine() {
+    public Set<String> valuesFromOneOfNine() {
         SudokuBoard sudokuBoard = SudokuBoard.getInstance();
-        Set<Integer> values = new HashSet<>();
+        Set<String> values = new HashSet<>();
 
         for (; this.fromColumn <= this.toColumn; this.fromColumn++) {
             for (; this.fromRow <= this.toRow; this.fromRow++) {

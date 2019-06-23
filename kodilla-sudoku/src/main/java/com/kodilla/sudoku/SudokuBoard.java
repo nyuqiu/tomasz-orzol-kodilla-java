@@ -18,9 +18,11 @@ public class SudokuBoard {
             put("bottomRight", new OnePartOfBoard(6, 8, 6, 8));
         }
     };
+    private final Map<Integer, List<SudokuElement>> rowsValues = new HashMap<>();
+    private final Map<Integer, List<SudokuElement>> columnsValues = new HashMap<>();
 
 
-    public SudokuBoard() {
+    private SudokuBoard() {
         this.sudokuColumns = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             sudokuColumns.add(new SudokuRow());
@@ -35,7 +37,7 @@ public class SudokuBoard {
         this.sudokuColumns = sudokuColumns;
     }
 
-    public void setValue(int column, int row, int value) {
+    public void setValue(int column, int row, String value) {
         getSudokuColumns().get(column).getSudokuRow().get(row).setValue(value);
     }
 
@@ -104,5 +106,35 @@ public class SudokuBoard {
                 "sudokuColumns=" + sudokuColumns +
                 ", partsByName=" + partsByName +
                 '}';
+    }
+
+
+    public void populateColumnsAndRowsValues() {
+        for (int column = 0; column < 9; column++) {
+            columnsValues.put(column, valuesByColumns(column));
+        }
+        for (int row = 0; row < 9; row++) {
+            columnsValues.put(row, valuesByRows(row));
+        }
+    }
+
+    public Map<Integer, List<SudokuElement>> getColumnsValues() {
+        return columnsValues;
+    }
+
+    private List<SudokuElement> valuesByColumns(int column) {
+        List<SudokuElement> results = new ArrayList<>();
+        for (int row = 0; row < 9; row++) {
+            results.add(fieldByColumnAndRow(column, row));
+        }
+        return results;
+    }
+
+    private List<SudokuElement> valuesByRows(int row) {
+        List<SudokuElement> results = new ArrayList<>();
+        for (int column = 0; column < 9; column++) {
+            results.add(fieldByColumnAndRow(column, row));
+        }
+        return results;
     }
 }
