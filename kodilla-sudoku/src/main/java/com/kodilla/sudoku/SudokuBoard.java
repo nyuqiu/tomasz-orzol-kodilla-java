@@ -69,12 +69,12 @@ public class SudokuBoard {
     }
 
 
-//    public static SudokuBoard getInstance() {
-//        if (sudokuBoardInstance == null) {
-//            sudokuBoardInstance = new SudokuBoard();
-//        }
-//        return sudokuBoardInstance;
-//    }
+    public static SudokuBoard getInstance() {
+        if (sudokuBoardInstance == null) {
+            sudokuBoardInstance = new SudokuBoard();
+        }
+        return sudokuBoardInstance;
+    }
 
     private Set<SudokuElement> addElementsFromOneOfNine(int fromColumn, int toColumn, int fromRow, int toRow) {
         Set<SudokuElement> result = new HashSet<>();

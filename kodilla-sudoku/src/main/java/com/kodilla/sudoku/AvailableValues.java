@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class AvailableValues {
     private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
-    SudokuBoard sudokuBoard = backtrackCopies.getBacktrack().get(0);
-//    private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
+//    SudokuBoard sudokuBoard = backtrackCopies.getBacktrack().get(0);
+    private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
     private Set<String> usedValues;
     private SudokuElement sudokuElement;
 
@@ -45,7 +45,7 @@ public class AvailableValues {
 
     private void addPossibleNumber(int columnNumber, int rowNumber, SudokuElement sudokuElement) {
         System.out.println("Used values 3 " + usedValues);
-        if (usedValues.contains(sudokuElement.getValue()) && !(sudokuElement.getValue() == SudokuElement.EMPTY)) {
+        if (usedValues.contains(sudokuElement.getValue()) && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
             checkBoard();
         } else {
             System.out.println("value from board " + sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber).getValue());
