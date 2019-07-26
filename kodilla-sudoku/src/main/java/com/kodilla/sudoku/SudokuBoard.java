@@ -5,7 +5,7 @@ import java.util.*;
 public class SudokuBoard {
     private static SudokuBoard sudokuBoardInstance = null;
     private List<SudokuRow> sudokuColumns;
-    private Map<String, Set<SudokuElement>> partsByName = new HashMap<String, Set<SudokuElement>>() {
+    private final Map<String, Set<SudokuElement>> partsByName = new HashMap<String, Set<SudokuElement>>() {
         {
             put("topLeft", addElementsFromOneOfNine(0, 2, 0, 2));
             put("topCentre", addElementsFromOneOfNine(3, 5, 0, 2));
