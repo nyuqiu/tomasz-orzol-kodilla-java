@@ -6,7 +6,8 @@ import java.util.Set;
 
 public class AvailableValues {
     private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
-    private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
+    SudokuBoard sudokuBoard = backtrackCopies.getBacktrack().get(0);
+//    private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
     private Set<String> usedValues;
     private SudokuElement sudokuElement;
 
@@ -19,7 +20,6 @@ public class AvailableValues {
                 count++;
                 sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                 System.out.println("Value of checking element " + sudokuElement.getValue()+ " column " + columnNumber + " row " +rowNumber);
-                OnePartOfBoard onePartOfBoard = sudokuBoard.checkWhichPartOfBoard(columnNumber, rowNumber);
                 for (int columnIteration = 0; columnIteration <= 8; columnIteration++) {
                     System.out.println("Get value from " + columnIteration + " " + rowNumber);
                     addPossibleNumber(columnIteration, rowNumber, sudokuElement);
@@ -28,13 +28,13 @@ public class AvailableValues {
                     System.out.println("Get value from " + columnNumber + " " + rowIteration);
                     addPossibleNumber(columnNumber, rowIteration, sudokuElement);
                 }
-                if (onePartOfBoard.valuesFromOneOfNine(sudokuBoard).contains(sudokuElement.getValue())
+                if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
                         && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
                     checkBoard();
                 } else {
-                    onePartOfBoard.valuesFromOneOfNine(sudokuBoard).forEach(n->usedValues.remove(n));
+                    sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).forEach(n->usedValues.remove(n));
                 }
-                System.out.println("TRUE TEST " + onePartOfBoard.valuesFromOneOfNine(sudokuBoard));
+                System.out.println("TRUE TEST " + sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber));
                 sudokuElement.setPossilbeValues(usedValues);
                 System.out.println("Used values 2 " + usedValues);
                 System.out.println("count " +count);

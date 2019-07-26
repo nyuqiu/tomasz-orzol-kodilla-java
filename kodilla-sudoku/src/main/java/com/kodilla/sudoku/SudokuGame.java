@@ -22,7 +22,7 @@ public class SudokuGame {
                 availableValues.availableValuesForField();
                 SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                 List<String> onePossibleElement = new ArrayList<>(sudokuElement.getPossilbeValues());
-                if (sudokuElement.getValue() == SudokuElement.EMPTY) {
+                if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
                     if (sudokuElement.getPossilbeValues().size() == 1) {
                         sudokuElement.setValue(onePossibleElement.get(0));
                         availableValues.availableValuesForField();

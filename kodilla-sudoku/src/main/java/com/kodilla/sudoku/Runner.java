@@ -10,7 +10,7 @@ public class Runner {
 //        while (!gameFinished) {
         System.out.println("start test");
         SudokuGame theGame = new SudokuGame();
-        SudokuBoard sudokuBoard = SudokuBoard.getInstance();
+        SudokuBoard sudokuBoard = new SudokuBoard();
         System.out.println(sudokuBoard);
 
         int value = 9;
@@ -21,8 +21,9 @@ public class Runner {
                 sudokuBoard.setValue(column, row, String.valueOf(value % 9 + 1));
             }
         }
+        backtrackCopies.getBacktrack().add(sudokuBoard);
 
-        System.out.println();
+
 
         System.out.println(sudokuBoard);
 

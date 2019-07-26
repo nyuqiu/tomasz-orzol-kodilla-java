@@ -5,27 +5,27 @@ import java.util.*;
 public class SudokuBoard {
     private static SudokuBoard sudokuBoardInstance = null;
     private List<SudokuRow> sudokuColumns;
-    private final Map<String, OnePartOfBoard> partsByName = new HashMap<String, OnePartOfBoard>() {
+    private Map<String, Set<SudokuElement>> partsByName = new HashMap<String, Set<SudokuElement>>() {
         {
-            put("topLeft", new OnePartOfBoard(0, 2, 0, 2));
-            put("topCentre", new OnePartOfBoard(0, 2, 6, 8));
-            put("topRight", new OnePartOfBoard(0, 2, 0, 2));
-            put("centreLeft", new OnePartOfBoard(3, 5, 0, 2));
-            put("centreCentre", new OnePartOfBoard(3, 5, 3, 5));
-            put("centreRight", new OnePartOfBoard(3, 5, 6, 8));
-            put("bottomLeft", new OnePartOfBoard(6, 8, 0, 2));
-            put("bottomCentre", new OnePartOfBoard(6, 8, 3, 5));
-            put("bottomRight", new OnePartOfBoard(6, 8, 6, 8));
+            put("topLeft", addElementsFromOneOfNine(0, 2, 0, 2));
+            put("topCentre", addElementsFromOneOfNine(3, 5, 0, 2));
+            put("topRight", addElementsFromOneOfNine(6, 8, 0, 2));
+            put("centreLeft", addElementsFromOneOfNine(0, 2, 3, 5));
+            put("centreCentre", addElementsFromOneOfNine(3, 5, 3, 5));
+            put("centreRight", addElementsFromOneOfNine(6, 8, 3, 5));
+            put("bottomLeft", addElementsFromOneOfNine(0, 2, 6, 8));
+            put("bottomCentre", addElementsFromOneOfNine(3, 5, 6, 8));
+            put("bottomRight", addElementsFromOneOfNine(6, 8, 6, 8));
+
         }
     };
 
-    private SudokuBoard() {
+    public SudokuBoard() {
         this.sudokuColumns = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             sudokuColumns.add(new SudokuRow());
         }
     }
-
 
     public List<SudokuRow> getSudokuColumns() {
         return sudokuColumns;
@@ -47,11 +47,17 @@ public class SudokuBoard {
         return list;
     }
 
+    public List<String> getValuesFromOneOfNine(int column, int row) {
+        List<String> list = new ArrayList<>();
+        checkWhichPartOfBoard(column, row).forEach(n-> list.add(n.getValue()));
+        return list;
+    }
+
     public void setValue(int column, int row, String value) {
-        System.out.println("Test test test " + checkWhichPartOfBoard(column, row).valuesFromOneOfNine(this));
+        System.out.println("Test test test " + getValuesFromOneOfNine(column, row));
         if (!(getColumnValuesByColumnNumber(column).contains(value)) &&
                 !(getRowValuesByRowNumber(row).contains(value)) &&
-                !(checkWhichPartOfBoard(column, row).valuesFromOneOfNine(this).contains(value))) {
+                !(getValuesFromOneOfNine(column, row).contains(value))) {
             fieldByColumnAndRow(column, row).setValue(value);
         } else {
             System.out.println("Cannot add this value");
@@ -63,14 +69,24 @@ public class SudokuBoard {
     }
 
 
-    public static SudokuBoard getInstance() {
-        if (sudokuBoardInstance == null) {
-            sudokuBoardInstance = new SudokuBoard();
+//    public static SudokuBoard getInstance() {
+//        if (sudokuBoardInstance == null) {
+//            sudokuBoardInstance = new SudokuBoard();
+//        }
+//        return sudokuBoardInstance;
+//    }
+
+    private Set<SudokuElement> addElementsFromOneOfNine(int fromColumn, int toColumn, int fromRow, int toRow) {
+        Set<SudokuElement> result = new HashSet<>();
+        for (; fromColumn <= toColumn; fromColumn++) {
+            for (; fromRow <= toRow; toRow++) {
+                result.add(fieldByColumnAndRow(fromColumn, fromRow));
+            }
         }
-        return sudokuBoardInstance;
+        return result;
     }
 
-    public OnePartOfBoard checkWhichPartOfBoard(int column, int row) {
+    public Set<SudokuElement> checkWhichPartOfBoard(int column, int row) {
         String fullNameOneOfNine;
         if (0 <= row && row <= 2) {
             fullNameOneOfNine = "top" + checkForRow(column);
@@ -108,16 +124,6 @@ public class SudokuBoard {
         return result;
     }
 
-
-//    public void populateColumnsAndRowsValues() {
-//        for (int column = 0; column < 9; column++) {
-//            columnsValues.put(column, valuesByColumns(column));
-//        }
-//        for (int row = 0; row < 9; row++) {
-//            rowsValues.put(row, valuesByRows(row));
-//        }
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,27 +145,4 @@ public class SudokuBoard {
         }
         return clonedBoard;
     }
-
-    //    public Map<Integer, List<SudokuElement>> getColumnsValues() {
-//        return columnsValues;
-//    }
-
-    //    private List<SudokuElement> valuesByColumns(int column) {
-//        List<SudokuElement> results = new ArrayList<>();
-//        for (int row = 0; row < 9; row++) {
-//            results.add(fieldByColumnAndRow(column, row));
-//        }
-//        return results;
-//    }
-//
-//    private List<SudokuElement> valuesByRows(int row) {
-//        List<SudokuElement> results = new ArrayList<>();
-//        for (int column = 0; column < 9; column++) {
-//            results.add(fieldByColumnAndRow(column, row));
-//        }
-//        return results;
-//    }
-
-//    private final Map<Integer, List<SudokuElement>> rowsValues = new HashMap<>();
-//    private final Map<Integer, List<SudokuElement>> columnsValues = new HashMap<>();
 }
