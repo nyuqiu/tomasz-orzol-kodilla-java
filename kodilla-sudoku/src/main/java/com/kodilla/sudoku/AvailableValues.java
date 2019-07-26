@@ -7,32 +7,36 @@ import java.util.Set;
 public class AvailableValues {
     private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
     private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
-    private Set<String> usedValues = new HashSet<>(Arrays.asList("1","2","3","4","5","6","7","8","9"));
+    private Set<String> usedValues;
     private SudokuElement sudokuElement;
 
     public void availableValuesForField() {
+        System.out.println("Used values " + usedValues);
         int count = 0;
         for (int columnNumber = 0; columnNumber <= 8; columnNumber++) {
             for (int rowNumber = 0; rowNumber <= 8; rowNumber++) {
+                usedValues = new HashSet<>(Arrays.asList("1","2","3","4","5","6","7","8","9"));
                 count++;
                 sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
-                System.out.println(sudokuElement);
+                System.out.println("Value of checking element " + sudokuElement.getValue()+ " column " + columnNumber + " row " +rowNumber);
                 OnePartOfBoard onePartOfBoard = sudokuBoard.checkWhichPartOfBoard(columnNumber, rowNumber);
                 for (int columnIteration = 0; columnIteration <= 8; columnIteration++) {
+                    System.out.println("Get value from " + columnIteration + " " + rowNumber);
                     addPossibleNumber(columnIteration, rowNumber, sudokuElement);
                 }
                 for (int rowIteration = 0; rowIteration <= 8; rowIteration++) {
+                    System.out.println("Get value from " + columnNumber + " " + rowIteration);
                     addPossibleNumber(columnNumber, rowIteration, sudokuElement);
                 }
-                if (onePartOfBoard.valuesFromOneOfNine().contains(sudokuElement.getValue())
-                        && !(sudokuElement.getValue() == SudokuElement.EMPTY)) {
+                if (onePartOfBoard.valuesFromOneOfNine(sudokuBoard).contains(sudokuElement.getValue())
+                        && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
                     checkBoard();
                 } else {
-                    usedValues.removeAll(onePartOfBoard.valuesFromOneOfNine());
+                    onePartOfBoard.valuesFromOneOfNine(sudokuBoard).forEach(n->usedValues.remove(n));
                 }
-                usedValues.remove(SudokuElement.EMPTY);
+                System.out.println("TRUE TEST " + onePartOfBoard.valuesFromOneOfNine(sudokuBoard));
                 sudokuElement.setPossilbeValues(usedValues);
-                System.out.println("used values " + usedValues);
+                System.out.println("Used values 2 " + usedValues);
                 System.out.println("count " +count);
                 System.out.println(sudokuElement);
             }
@@ -40,6 +44,7 @@ public class AvailableValues {
     }
 
     private void addPossibleNumber(int columnNumber, int rowNumber, SudokuElement sudokuElement) {
+        System.out.println("Used values 3 " + usedValues);
         if (usedValues.contains(sudokuElement.getValue()) && !(sudokuElement.getValue() == SudokuElement.EMPTY)) {
             checkBoard();
         } else {
@@ -47,6 +52,7 @@ public class AvailableValues {
             usedValues.remove(sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber).getValue());
 
         }
+        System.out.println("Used values 4 " + usedValues);
     }
 
     private void checkBoard() {
@@ -60,6 +66,7 @@ public class AvailableValues {
     }
 
     public SudokuBoard retrievePreviousBoard() {
+        System.out.println("Size of array of copies " + backtrackCopies.getBacktrack().size());
         System.out.println(Messages.VALUEEXIST);
         sudokuBoard = backtrackCopies.getBacktrack().get(0);
         return sudokuBoard;

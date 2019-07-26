@@ -3,7 +3,7 @@ package com.kodilla.sudoku;
 import java.util.*;
 
 public class SudokuElement {
-    public static final String EMPTY = "-1";
+    public static final String EMPTY = "x";
     private String value;
     private Set<String> possilbeValues;
 
@@ -28,20 +28,11 @@ public class SudokuElement {
         this.possilbeValues = possilbeValues;
     }
 
-//    @Override
-//    public String toString() {
-//        return "SudokuElement{" +
-//                "value=" + value +
-//                ", possilbeValues=" + possilbeValues +
-//                '}';
-//    }
-
-
     @Override
     public String toString() {
         return "SudokuElement{" +
                 "value='" + value + '\'' +
-                ", possilbeValues=" + possilbeValues +
+                ", " + possilbeValues +
                 '}';
     }
 }

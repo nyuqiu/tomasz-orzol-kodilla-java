@@ -16,13 +16,14 @@ public class OnePartOfBoard {
         this.toRow = toRow;
     }
 
-    public Set<String> valuesFromOneOfNine() {
-        SudokuBoard sudokuBoard = SudokuBoard.getInstance();
-        Set<String> values = new HashSet<>();
+    public Set<SudokuElement> valuesFromOneOfNine(SudokuBoard sudokuBoard) {
+        Set<SudokuElement> values = new HashSet<>();
 
+        int count = 0;
         for (; this.fromColumn <= this.toColumn; this.fromColumn++) {
             for (; this.fromRow <= this.toRow; this.fromRow++) {
-                values.add(sudokuBoard.fieldByColumnAndRow(fromColumn, fromRow).getValue());
+                System.out.println("column " + this.fromColumn + " row " + this.fromRow + " value " + sudokuBoard.fieldByColumnAndRow(fromColumn, fromRow).getValue() + " " + count++);
+                values.add(sudokuBoard.fieldByColumnAndRow(fromColumn, fromRow));
             }
         }
         return values;

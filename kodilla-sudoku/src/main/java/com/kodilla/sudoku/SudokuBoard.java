@@ -18,9 +18,6 @@ public class SudokuBoard {
             put("bottomRight", new OnePartOfBoard(6, 8, 6, 8));
         }
     };
-    private final Map<Integer, List<SudokuElement>> rowsValues = new HashMap<>();
-    private final Map<Integer, List<SudokuElement>> columnsValues = new HashMap<>();
-
 
     private SudokuBoard() {
         this.sudokuColumns = new ArrayList<>();
@@ -29,49 +26,48 @@ public class SudokuBoard {
         }
     }
 
+
     public List<SudokuRow> getSudokuColumns() {
         return sudokuColumns;
     }
 
-    public void setSudokuColumns(List<SudokuRow> sudokuColumns) {
-        this.sudokuColumns = sudokuColumns;
+    public List<String> getColumnValuesByColumnNumber(int column) {
+        List<String> list = new ArrayList<>();
+        for (int row = 0; row < 9; row++) {
+            list.add(fieldByColumnAndRow(column, row).getValue());
+        }
+        return list;
+    }
+
+    public List<String> getRowValuesByRowNumber(int row) {
+        List<String> list = new ArrayList<>();
+        for (int column = 0; column < 9; column++) {
+            list.add(fieldByColumnAndRow(column, row).getValue());
+        }
+        return list;
     }
 
     public void setValue(int column, int row, String value) {
-        getSudokuColumns().get(column).getSudokuRow().get(row).setValue(value);
+        System.out.println("Test test test " + checkWhichPartOfBoard(column, row).valuesFromOneOfNine(this));
+        if (!(getColumnValuesByColumnNumber(column).contains(value)) &&
+                !(getRowValuesByRowNumber(row).contains(value)) &&
+                !(checkWhichPartOfBoard(column, row).valuesFromOneOfNine(this).contains(value))) {
+            fieldByColumnAndRow(column, row).setValue(value);
+        } else {
+            System.out.println("Cannot add this value");
+        }
     }
 
     public SudokuElement fieldByColumnAndRow(int column, int row) {
         return getSudokuColumns().get(column).getSudokuRow().get(row);
     }
 
+
     public static SudokuBoard getInstance() {
         if (sudokuBoardInstance == null) {
             sudokuBoardInstance = new SudokuBoard();
         }
         return sudokuBoardInstance;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SudokuBoard that = (SudokuBoard) o;
-        return Objects.equals(sudokuColumns, that.sudokuColumns);
-    }
-
-
-    public SudokuBoard deepCopy() throws CloneNotSupportedException {
-        SudokuBoard clonedBoard = (SudokuBoard) super.clone();
-        clonedBoard.sudokuColumns = new ArrayList<>();
-        for (SudokuRow clonedRows : sudokuColumns) {
-            SudokuRow clonedRow = new SudokuRow();
-            for (SudokuElement sudokuElement : clonedRows.getSudokuRow()) {
-                clonedRow.getSudokuRow().add(sudokuElement);
-            }
-            clonedBoard.getSudokuColumns().add(clonedRow);
-        }
-        return clonedBoard;
     }
 
     public OnePartOfBoard checkWhichPartOfBoard(int column, int row) {
@@ -102,39 +98,68 @@ public class SudokuBoard {
 
     @Override
     public String toString() {
-        return "SudokuBoard{" +
-                "sudokuColumns=" + sudokuColumns +
-                ", partsByName=" + partsByName +
-                '}';
-    }
-
-
-    public void populateColumnsAndRowsValues() {
-        for (int column = 0; column < 9; column++) {
-            columnsValues.put(column, valuesByColumns(column));
-        }
+        String result = "";
         for (int row = 0; row < 9; row++) {
-            columnsValues.put(row, valuesByRows(row));
+            for (int column = 0; column < 9; column++) {
+                result += "  " + fieldByColumnAndRow(column, row).getValue() + "  ";
+            }
+            result += "\n";
         }
+        return result;
     }
 
-    public Map<Integer, List<SudokuElement>> getColumnsValues() {
-        return columnsValues;
+
+//    public void populateColumnsAndRowsValues() {
+//        for (int column = 0; column < 9; column++) {
+//            columnsValues.put(column, valuesByColumns(column));
+//        }
+//        for (int row = 0; row < 9; row++) {
+//            rowsValues.put(row, valuesByRows(row));
+//        }
+//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SudokuBoard that = (SudokuBoard) o;
+        return Objects.equals(sudokuColumns, that.sudokuColumns);
     }
 
-    private List<SudokuElement> valuesByColumns(int column) {
-        List<SudokuElement> results = new ArrayList<>();
-        for (int row = 0; row < 9; row++) {
-            results.add(fieldByColumnAndRow(column, row));
+
+    public SudokuBoard deepCopy() throws CloneNotSupportedException {
+        SudokuBoard clonedBoard = (SudokuBoard) super.clone();
+        clonedBoard.sudokuColumns = new ArrayList<>();
+        for (SudokuRow clonedRows : sudokuColumns) {
+            SudokuRow clonedRow = new SudokuRow();
+            for (SudokuElement sudokuElement : clonedRows.getSudokuRow()) {
+                clonedRow.getSudokuRow().add(sudokuElement);
+            }
+            clonedBoard.getSudokuColumns().add(clonedRow);
         }
-        return results;
+        return clonedBoard;
     }
 
-    private List<SudokuElement> valuesByRows(int row) {
-        List<SudokuElement> results = new ArrayList<>();
-        for (int column = 0; column < 9; column++) {
-            results.add(fieldByColumnAndRow(column, row));
-        }
-        return results;
-    }
+    //    public Map<Integer, List<SudokuElement>> getColumnsValues() {
+//        return columnsValues;
+//    }
+
+    //    private List<SudokuElement> valuesByColumns(int column) {
+//        List<SudokuElement> results = new ArrayList<>();
+//        for (int row = 0; row < 9; row++) {
+//            results.add(fieldByColumnAndRow(column, row));
+//        }
+//        return results;
+//    }
+//
+//    private List<SudokuElement> valuesByRows(int row) {
+//        List<SudokuElement> results = new ArrayList<>();
+//        for (int column = 0; column < 9; column++) {
+//            results.add(fieldByColumnAndRow(column, row));
+//        }
+//        return results;
+//    }
+
+//    private final Map<Integer, List<SudokuElement>> rowsValues = new HashMap<>();
+//    private final Map<Integer, List<SudokuElement>> columnsValues = new HashMap<>();
 }
