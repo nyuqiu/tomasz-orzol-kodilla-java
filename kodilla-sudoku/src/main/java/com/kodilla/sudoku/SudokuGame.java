@@ -27,20 +27,7 @@ public class SudokuGame {
                         Set<String> setOfPossibleValues = sudokuElement.getPossibleValues();
                         List<String> listOfPossibleValues = new ArrayList<>(setOfPossibleValues);
                         if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
-                            if (setOfPossibleValues.size() == 1) {
-                                sudokuElement.setValue(listOfPossibleValues.get(0));
-                            } else if (setOfPossibleValues.size() == 0) {
-                                availableValues.removeUnsolvableSudoku();
-                            }
                             while (setOfPossibleValues.size() > 1) {
-                                System.out.println("save copy");
-                                try {
-                                    backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
-                                } catch (CloneNotSupportedException e) {
-
-                                }
-
-
 
                                 String setNumber = listOfPossibleValues.get(0);
 
@@ -55,6 +42,21 @@ public class SudokuGame {
 
                                 System.out.println("setting value " + setNumber);
                                 sudokuElement.setValue(setNumber);
+                                System.out.println("save copy");
+                                try {
+                                    System.out.println(sudokuBoard.deepCopy());
+                                    backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
+                                } catch (CloneNotSupportedException e) {
+
+                                }
+                            } if (setOfPossibleValues.size() == 1) {
+                                String setNumber = listOfPossibleValues.get(0);
+                                setOfPossibleValues.remove(setNumber);
+                                listOfPossibleValues.remove(setNumber);
+                                System.out.println("setting value " + setNumber);
+                                sudokuElement.setValue(setNumber);
+                            } else if (setOfPossibleValues.size() == 0) {
+                                availableValues.removeUnsolvableSudoku();
                             }
                         }
                     }

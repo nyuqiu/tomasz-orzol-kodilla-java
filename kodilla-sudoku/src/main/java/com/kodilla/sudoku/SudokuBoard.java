@@ -2,18 +2,32 @@ package com.kodilla.sudoku;
 
 import java.util.*;
 
-public class SudokuBoard extends Prototype{
+public class SudokuBoard extends Prototype {
     private static SudokuBoard sudokuBoardInstance = null;
-    private List<SudokuRow> sudokuColumns;
-    private Map<String, Set<SudokuElement>> partsByName;
-    private Set<String> boardValues;
+    private List<SudokuRow> sudokuColumns = new ArrayList<>(addRows());
+    private Map<String, Set<SudokuElement>> partsByName = new HashMap<>(addPartsByName());
+    private Set<String> boardValues = new HashSet<>(addBoardValues());
 
-    public SudokuBoard() {
-        this.sudokuColumns = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            sudokuColumns.add(new SudokuRow());
+    public SudokuBoard() {}
+
+    public SudokuBoard deepCopy() throws CloneNotSupportedException {
+        SudokuBoard clonedBoard = (SudokuBoard) super.clone();
+        clonedBoard.sudokuColumns = new ArrayList<>();
+        for (SudokuRow theSudokuRow : sudokuColumns) {
+            SudokuRow clonedRow = new SudokuRow();
+            clonedRow.getSudokuElements().clear();
+            for (SudokuElement sudokuElement : theSudokuRow.getSudokuElements()) {
+                clonedRow.getSudokuElements().add(sudokuElement);
+            }
+            clonedBoard.getSudokuColumns().add(clonedRow);
         }
-        this.partsByName = new HashMap<String, Set<SudokuElement>>() {{
+        clonedBoard.partsByName = new HashMap<>(addPartsByName());
+        clonedBoard.boardValues = new HashSet<>(addBoardValues());
+        return clonedBoard;
+    }
+
+    private Map<String, Set<SudokuElement>> addPartsByName() {
+        return new HashMap<String, Set<SudokuElement>>() {{
             put("topLeft", addElementsFromOneOfNine(0, 2, 0, 2));
             put("topCentre", addElementsFromOneOfNine(3, 5, 0, 2));
             put("topRight", addElementsFromOneOfNine(6, 8, 0, 2));
@@ -24,28 +38,24 @@ public class SudokuBoard extends Prototype{
             put("bottomCentre", addElementsFromOneOfNine(3, 5, 6, 8));
             put("bottomRight", addElementsFromOneOfNine(6, 8, 6, 8));
         }};
-        this.boardValues = new HashSet<String>(){{
-            for(int column = 0; column <=8; column++) {
-                for(int row = 0; row <=8; row++) {
+    }
+
+    private List<SudokuRow> addRows() {
+        List<SudokuRow> result = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            result.add(new SudokuRow());
+        }
+        return result;
+    }
+
+    private Set<String> addBoardValues() {
+        return new HashSet<String>() {{
+            for (int column = 0; column <= 8; column++) {
+                for (int row = 0; row <= 8; row++) {
                     add(fieldByColumnAndRow(column, row).getValue());
                 }
             }
-         }};
-    }
-
-    public SudokuBoard deepCopy() throws CloneNotSupportedException {
-        SudokuBoard clonedBoard = (SudokuBoard) super.clone();
-        clonedBoard.sudokuColumns = new ArrayList<>();
-        for (SudokuRow theSudokuRow : sudokuColumns) {
-            SudokuRow clonedRow = new SudokuRow();
-            for (SudokuElement sudokuElement : theSudokuRow.getSudokuElements()) {
-                clonedRow.getSudokuElements().add(sudokuElement);
-            }
-            clonedBoard.getSudokuColumns().add(clonedRow);
-        }
-        System.out.println("kopia " + clonedBoard);
-        return clonedBoard;
-
+        }};
     }
 
     public Set<String> getBoardValues() {
@@ -167,8 +177,6 @@ public class SudokuBoard extends Prototype{
     public int hashCode() {
         return Objects.hash(sudokuColumns, partsByName, boardValues);
     }
-
-
 
 
 }

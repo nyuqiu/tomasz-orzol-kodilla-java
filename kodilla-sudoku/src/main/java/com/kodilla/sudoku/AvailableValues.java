@@ -70,9 +70,9 @@ public class AvailableValues {
     }
 
     public void removeUnsolvableSudoku() {
-//        System.out.println(backtrackCopies.getBacktrack());
         System.out.println(Messages.CANNOTSOLVE);
         System.out.println(backtrackCopies.getBacktrack().size());
+        System.out.println(backtrackCopies.getBacktrack().get(0));
         backtrackCopies.getBacktrack().remove(0);
     }
 }
