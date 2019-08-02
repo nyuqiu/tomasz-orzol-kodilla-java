@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SudokuRow {
-    private List<SudokuElement> sudokuRow;
+    private List<SudokuElement> sudokuElements;
 
     public SudokuRow() {
-        this.sudokuRow = new ArrayList<>();
+        this.sudokuElements = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            sudokuRow.add(new SudokuElement());
+            sudokuElements.add(new SudokuElement());
         }
     }
 
-    public List<SudokuElement> getSudokuRow() {
-        return sudokuRow;
+    public List<SudokuElement> getSudokuElements() {
+        return sudokuElements;
     }
 
     @Override
     public String toString() {
         return "SudokuRow{" +
-                "sudokuRow=" + sudokuRow +
+                "sudokuElements=" + sudokuElements +
                 '}';
     }
 }

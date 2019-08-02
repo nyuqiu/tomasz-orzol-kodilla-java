@@ -2,11 +2,18 @@ package com.kodilla.sudoku;
 
 import java.util.*;
 
-public class SudokuBoard {
+public class SudokuBoard extends Prototype{
     private static SudokuBoard sudokuBoardInstance = null;
     private List<SudokuRow> sudokuColumns;
-    private final Map<String, Set<SudokuElement>> partsByName = new HashMap<String, Set<SudokuElement>>() {
-        {
+    private Map<String, Set<SudokuElement>> partsByName;
+    private Set<String> boardValues;
+
+    public SudokuBoard() {
+        this.sudokuColumns = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            sudokuColumns.add(new SudokuRow());
+        }
+        this.partsByName = new HashMap<String, Set<SudokuElement>>() {{
             put("topLeft", addElementsFromOneOfNine(0, 2, 0, 2));
             put("topCentre", addElementsFromOneOfNine(3, 5, 0, 2));
             put("topRight", addElementsFromOneOfNine(6, 8, 0, 2));
@@ -16,45 +23,65 @@ public class SudokuBoard {
             put("bottomLeft", addElementsFromOneOfNine(0, 2, 6, 8));
             put("bottomCentre", addElementsFromOneOfNine(3, 5, 6, 8));
             put("bottomRight", addElementsFromOneOfNine(6, 8, 6, 8));
+        }};
+        this.boardValues = new HashSet<String>(){{
+            for(int column = 0; column <=8; column++) {
+                for(int row = 0; row <=8; row++) {
+                    add(fieldByColumnAndRow(column, row).getValue());
+                }
+            }
+         }};
+    }
 
+    public SudokuBoard deepCopy() throws CloneNotSupportedException {
+        SudokuBoard clonedBoard = (SudokuBoard) super.clone();
+        clonedBoard.sudokuColumns = new ArrayList<>();
+        for (SudokuRow theSudokuRow : sudokuColumns) {
+            SudokuRow clonedRow = new SudokuRow();
+            for (SudokuElement sudokuElement : theSudokuRow.getSudokuElements()) {
+                clonedRow.getSudokuElements().add(sudokuElement);
+            }
+            clonedBoard.getSudokuColumns().add(clonedRow);
         }
-    };
+        System.out.println("kopia " + clonedBoard);
+        return clonedBoard;
 
-    public SudokuBoard() {
-        this.sudokuColumns = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            sudokuColumns.add(new SudokuRow());
-        }
+    }
+
+    public Set<String> getBoardValues() {
+        return boardValues;
     }
 
     public List<SudokuRow> getSudokuColumns() {
         return sudokuColumns;
     }
 
-    public List<String> getColumnValuesByColumnNumber(int column) {
-        List<String> list = new ArrayList<>();
+    public Set<String> getColumnValuesByColumnNumber(int column) {
+        Set<String> set = new HashSet<>();
         for (int row = 0; row < 9; row++) {
-            list.add(fieldByColumnAndRow(column, row).getValue());
+            set.add(fieldByColumnAndRow(column, row).getValue());
         }
-        return list;
+        set.remove(SudokuElement.EMPTY);
+        return set;
     }
 
-    public List<String> getRowValuesByRowNumber(int row) {
-        List<String> list = new ArrayList<>();
+    public Set<String> getRowValuesByRowNumber(int row) {
+        Set<String> set = new HashSet<>();
         for (int column = 0; column < 9; column++) {
-            list.add(fieldByColumnAndRow(column, row).getValue());
+            set.add(fieldByColumnAndRow(column, row).getValue());
         }
-        return list;
+        set.remove(SudokuElement.EMPTY);
+        return set;
     }
 
-    public List<String> getValuesFromOneOfNine(int column, int row) {
-        List<String> list = new ArrayList<>();
-        checkWhichPartOfBoard(column, row).forEach(n-> list.add(n.getValue()));
-        return list;
+    public Set<String> getValuesFromOneOfNine(int column, int row) {
+        Set<String> set = new HashSet<>();
+        checkWhichPartOfBoard(column, row).forEach(n -> set.add(n.getValue()));
+        set.remove(SudokuElement.EMPTY);
+        return set;
     }
 
     public void setValue(int column, int row, String value) {
-        System.out.println("Test test test " + getValuesFromOneOfNine(column, row));
         if (!(getColumnValuesByColumnNumber(column).contains(value)) &&
                 !(getRowValuesByRowNumber(row).contains(value)) &&
                 !(getValuesFromOneOfNine(column, row).contains(value))) {
@@ -65,7 +92,7 @@ public class SudokuBoard {
     }
 
     public SudokuElement fieldByColumnAndRow(int column, int row) {
-        return getSudokuColumns().get(column).getSudokuRow().get(row);
+        return getSudokuColumns().get(column).getSudokuElements().get(row);
     }
 
 
@@ -78,9 +105,9 @@ public class SudokuBoard {
 
     private Set<SudokuElement> addElementsFromOneOfNine(int fromColumn, int toColumn, int fromRow, int toRow) {
         Set<SudokuElement> result = new HashSet<>();
-        for (; fromColumn <= toColumn; fromColumn++) {
-            for (; fromRow <= toRow; toRow++) {
-                result.add(fieldByColumnAndRow(fromColumn, fromRow));
+        for (int column = fromColumn; column <= toColumn; column++) {
+            for (int row = fromRow; row <= toRow; row++) {
+                result.add(fieldByColumnAndRow(column, row));
             }
         }
         return result;
@@ -98,6 +125,7 @@ public class SudokuBoard {
             return null;
         }
         return partsByName.get(fullNameOneOfNine);
+
     }
 
     private String checkForRow(int column) {
@@ -124,25 +152,23 @@ public class SudokuBoard {
         return result;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SudokuBoard that = (SudokuBoard) o;
-        return Objects.equals(sudokuColumns, that.sudokuColumns);
+        return Objects.equals(sudokuColumns, that.sudokuColumns) &&
+                Objects.equals(partsByName, that.partsByName) &&
+                Objects.equals(boardValues, that.boardValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sudokuColumns, partsByName, boardValues);
     }
 
 
-    public SudokuBoard deepCopy() throws CloneNotSupportedException {
-        SudokuBoard clonedBoard = (SudokuBoard) super.clone();
-        clonedBoard.sudokuColumns = new ArrayList<>();
-        for (SudokuRow clonedRows : sudokuColumns) {
-            SudokuRow clonedRow = new SudokuRow();
-            for (SudokuElement sudokuElement : clonedRows.getSudokuRow()) {
-                clonedRow.getSudokuRow().add(sudokuElement);
-            }
-            clonedBoard.getSudokuColumns().add(clonedRow);
-        }
-        return clonedBoard;
-    }
+
+
 }
