@@ -10,12 +10,12 @@ public class SudokuGame {
 
     public boolean resolveSudoku(SudokuBoard sudokuBoard) {
 
-        System.out.println("save copy");
-        try {
-            backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
-        } catch (Exception e) {
-
-        }
+//        System.out.println("save copy");
+//        try {
+//            backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
+//        } catch (Exception e) {
+//
+//        }
         while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
 
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
@@ -26,6 +26,7 @@ public class SudokuGame {
                     if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
                         Set<String> setOfPossibleValues = sudokuElement.getPossibleValues();
                         List<String> listOfPossibleValues = new ArrayList<>(setOfPossibleValues);
+                        System.out.println("possible elements of " + columnNumber + " " + rowNumber);
                         if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
                             while (setOfPossibleValues.size() > 1) {
 
@@ -43,8 +44,8 @@ public class SudokuGame {
                                 System.out.println("setting value " + setNumber);
                                 sudokuElement.setValue(setNumber);
                                 System.out.println("save copy");
+                                System.out.println(sudokuBoard);
                                 try {
-                                    System.out.println(sudokuBoard.deepCopy());
                                     backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
                                 } catch (CloneNotSupportedException e) {
 
@@ -56,7 +57,9 @@ public class SudokuGame {
                                 System.out.println("setting value " + setNumber);
                                 sudokuElement.setValue(setNumber);
                             } else if (setOfPossibleValues.size() == 0) {
-                                availableValues.removeUnsolvableSudoku();
+                                System.out.println("from SudokuGame");
+                                rowNumber--;
+                                sudokuBoard = availableValues.checkBoard();
                             }
                         }
                     }

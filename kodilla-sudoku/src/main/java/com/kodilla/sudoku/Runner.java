@@ -30,6 +30,8 @@ public class Runner {
 
         System.out.println("oryginal " + sudokuBoard);
 
+
+
         System.out.println("finish test");
 
 

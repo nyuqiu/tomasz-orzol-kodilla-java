@@ -26,7 +26,7 @@ public class AvailableValues {
                     }
                     if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
                             && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
-                        checkBoard();
+                        sudokuBoard = checkBoard();
                         System.out.println(sudokuBoard);
                     } else {
                         sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).forEach(n -> possibleValues.remove(n));
@@ -48,14 +48,24 @@ public class AvailableValues {
 
     }
 
-    private void checkBoard() {
+    public SudokuBoard checkBoard() {
+        System.out.println("checking board");
         SudokuBoard savedSudokuBoard = retrievePreviousBoard();
         System.out.println(savedSudokuBoard);
-        if (!savedSudokuBoard.equals(sudokuBoard)) {
-            sudokuBoard = savedSudokuBoard;
-        } else {
+        if (savedSudokuBoard.equals(sudokuBoard)) {
             removeUnsolvableSudoku();
+            return null;
+        } else {
+            return savedSudokuBoard;
         }
+    }
+
+    public void removeUnsolvableSudoku() {
+        System.out.println(Messages.CANNOTSOLVE);
+        System.out.println(backtrackCopies.getBacktrack().size());
+        System.out.println(backtrackCopies.getBacktrack().get(0));
+        System.out.println(sudokuBoard);
+        backtrackCopies.getBacktrack().remove(0);
     }
 
     public SudokuBoard retrievePreviousBoard() {
@@ -69,11 +79,6 @@ public class AvailableValues {
         return null;
     }
 
-    public void removeUnsolvableSudoku() {
-        System.out.println(Messages.CANNOTSOLVE);
-        System.out.println(backtrackCopies.getBacktrack().size());
-        System.out.println(backtrackCopies.getBacktrack().get(0));
-        backtrackCopies.getBacktrack().remove(0);
-    }
+
 }
 

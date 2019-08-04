@@ -17,7 +17,7 @@ public class SudokuBoard extends Prototype {
             SudokuRow clonedRow = new SudokuRow();
             clonedRow.getSudokuElements().clear();
             for (SudokuElement sudokuElement : theSudokuRow.getSudokuElements()) {
-                clonedRow.getSudokuElements().add(sudokuElement);
+                clonedRow.getSudokuElements().add(sudokuElement.deepCopy());
             }
             clonedBoard.getSudokuColumns().add(clonedRow);
         }
@@ -162,7 +162,6 @@ public class SudokuBoard extends Prototype {
         return result;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -177,6 +176,4 @@ public class SudokuBoard extends Prototype {
     public int hashCode() {
         return Objects.hash(sudokuColumns, partsByName, boardValues);
     }
-
-
 }
