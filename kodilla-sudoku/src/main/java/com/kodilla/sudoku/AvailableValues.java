@@ -10,18 +10,17 @@ public class AvailableValues {
     private SudokuElement sudokuElement;
 
     public void availableValuesForField() {
-        for (int columnNumber = 0; columnNumber <= 8; columnNumber++) {
-            for (int rowNumber = 0; rowNumber <= 8; rowNumber++) {
+        for (int columnNumber = 0; columnNumber <= sudokuBoard.getColumns(); columnNumber++) {
+            for (int rowNumber = 0; rowNumber <= sudokuBoard.getRows(); rowNumber++) {
                 sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                 if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
 
                     possibleValues = sudokuElement.getPossibleValues();
 
-
-                    for (int columnIteration = 0; columnIteration <= 8; columnIteration++) {
+                    for (int columnIteration = 0; columnIteration <= sudokuBoard.getColumns(); columnIteration++) {
                         addPossibleNumber(columnIteration, rowNumber, sudokuElement);
                     }
-                    for (int rowIteration = 0; rowIteration <= 8; rowIteration++) {
+                    for (int rowIteration = 0; rowIteration <= sudokuBoard.getRows(); rowIteration++) {
                         addPossibleNumber(columnNumber, rowIteration, sudokuElement);
                     }
                     if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())

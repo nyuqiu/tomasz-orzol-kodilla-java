@@ -9,6 +9,7 @@ public class SudokuGame {
     private AvailableValues availableValues = new AvailableValues();
 
     public boolean resolveSudoku(SudokuBoard sudokuBoard) {
+        availableValues.availableValuesForField();
 
 //        System.out.println("save copy");
 //        try {
@@ -21,10 +22,10 @@ public class SudokuGame {
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
 
-                    availableValues.availableValuesForField();
+
                     SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                     if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
-                        Set<String> setOfPossibleValues = sudokuElement.getPossibleValues();
+                        Set<String> setOfPossibleValues = sudokuElement.getPossibleValues();   // wtf is the same below
                         List<String> listOfPossibleValues = new ArrayList<>(setOfPossibleValues);
                         System.out.println("possible elements of " + columnNumber + " " + rowNumber);
                         if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
@@ -54,8 +55,10 @@ public class SudokuGame {
                                 String setNumber = listOfPossibleValues.get(0);
                                 setOfPossibleValues.remove(setNumber);
                                 listOfPossibleValues.remove(setNumber);
-                                System.out.println("setting value " + setNumber);
+                                System.out.println("setting value " + setNumber);  // co sie tu dzieje, usuwa dostepne liczby po kolei i nie sprawdza pozniej od nowa i nie ma co wstawic
                                 sudokuElement.setValue(setNumber);
+
+
                             } else if (setOfPossibleValues.size() == 0) {
                                 System.out.println("from SudokuGame");
                                 rowNumber--;
@@ -63,6 +66,9 @@ public class SudokuGame {
                             }
                         }
                     }
+                    availableValues.availableValuesForField();
+                    System.out.println("checking values");
+                    System.out.println(sudokuElement.getPossibleValues());
                 }
             }
         }
