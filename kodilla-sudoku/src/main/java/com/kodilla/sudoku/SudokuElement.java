@@ -5,11 +5,11 @@ import java.util.*;
 public class SudokuElement extends Prototype {
     public static final String EMPTY = "x";
     private String value;
-    private Set<String> possibleValues;
+    private List<String> possibleValues;
 
     public SudokuElement() {
         this.value = EMPTY;
-        this.possibleValues = new HashSet<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9"));
+        this.possibleValues = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9"));
     }
 
     public SudokuElement deepCopy() throws CloneNotSupportedException {
@@ -23,7 +23,7 @@ public class SudokuElement extends Prototype {
         return value;
     }
 
-    public Set<String> getPossibleValues() {
+    public List<String> getPossibleValues() {
         return possibleValues;
     }
 
@@ -31,8 +31,8 @@ public class SudokuElement extends Prototype {
         this.value = value;
     }
 
-    public void setPossibleValues(Set<String> possibleValues) {
-        this.possibleValues = possibleValues;
+    public void setPossibleValues(List<String> values) {
+        this.possibleValues = values;
     }
 
     @Override

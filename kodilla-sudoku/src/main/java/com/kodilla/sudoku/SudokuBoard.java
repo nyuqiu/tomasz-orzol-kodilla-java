@@ -44,7 +44,7 @@ public class SudokuBoard extends Prototype {
 
     private List<SudokuRow> addRows() {
         List<SudokuRow> result = new ArrayList<>();
-        for (int i = 0; i < rows; i++) {
+        for (int i = 0; i < 9; i++) {
             result.add(new SudokuRow());
         }
         return result;
@@ -52,8 +52,8 @@ public class SudokuBoard extends Prototype {
 
     private Set<String> addBoardValues() {
         return new HashSet<String>() {{
-            for (int column = 0; column <= columns; column++) {
-                for (int row = 0; row <= rows; row++) {
+            for (int column = 0; column <= 8; column++) {
+                for (int row = 0; row <= 8; row++) {
                     add(fieldByColumnAndRow(column, row).getValue());
                 }
             }
@@ -68,17 +68,9 @@ public class SudokuBoard extends Prototype {
         return sudokuColumns;
     }
 
-    public int getColumns() {
-        return columns;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
     public Set<String> getColumnValuesByColumnNumber(int column) {
         Set<String> set = new HashSet<>();
-        for (int row = 0; row < rows; row++) {
+        for (int row = 0; row < 9; row++) {
             set.add(fieldByColumnAndRow(column, row).getValue());
         }
         set.remove(SudokuElement.EMPTY);
@@ -87,7 +79,7 @@ public class SudokuBoard extends Prototype {
 
     public Set<String> getRowValuesByRowNumber(int row) {
         Set<String> set = new HashSet<>();
-        for (int column = 0; column < columns; column++) {
+        for (int column = 0; column < 9; column++) {
             set.add(fieldByColumnAndRow(column, row).getValue());
         }
         set.remove(SudokuElement.EMPTY);
@@ -163,8 +155,8 @@ public class SudokuBoard extends Prototype {
     @Override
     public String toString() {
         String result = "";
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
+        for (int row = 0; row < 9; row++) {
+            for (int column = 0; column < 9; column++) {
                 result += "  " + fieldByColumnAndRow(column, row).getValue() + "  ";
             }
             result += "\n";

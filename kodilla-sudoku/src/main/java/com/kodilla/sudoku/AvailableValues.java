@@ -1,26 +1,30 @@
 package com.kodilla.sudoku;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AvailableValues {
     private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
     //    SudokuBoard sudokuBoard = backtrackCopies.getBacktrack().get(0);
     private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
-    private Set<String> possibleValues;
+    private List<String> possibleValues;
     private SudokuElement sudokuElement;
 
     public void availableValuesForField() {
-        for (int columnNumber = 0; columnNumber <= sudokuBoard.getColumns(); columnNumber++) {
-            for (int rowNumber = 0; rowNumber <= sudokuBoard.getRows(); rowNumber++) {
+        for (int columnNumber = 0; columnNumber <= 8; columnNumber++) {
+            for (int rowNumber = 0; rowNumber <= 8; rowNumber++) {
                 sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+                sudokuElement.setPossibleValues(new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9")));
+
                 if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
 
                     possibleValues = sudokuElement.getPossibleValues();
 
-                    for (int columnIteration = 0; columnIteration <= sudokuBoard.getColumns(); columnIteration++) {
+                    for (int columnIteration = 0; columnIteration <= 8; columnIteration++) {
                         addPossibleNumber(columnIteration, rowNumber, sudokuElement);
                     }
-                    for (int rowIteration = 0; rowIteration <= sudokuBoard.getRows(); rowIteration++) {
+                    for (int rowIteration = 0; rowIteration <= 8; rowIteration++) {
                         addPossibleNumber(columnNumber, rowIteration, sudokuElement);
                     }
                     if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
@@ -29,8 +33,11 @@ public class AvailableValues {
                         System.out.println(sudokuBoard);
                     } else {
                         sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).forEach(n -> possibleValues.remove(n));
+                        possibleValues.remove(sudokuElement.getValue());
                     }
                 }
+                sudokuElement.setPossibleValues(possibleValues);
+                System.out.println("available values class for "+ columnNumber + " " + rowNumber + possibleValues);
             }
         }
     }
@@ -42,8 +49,9 @@ public class AvailableValues {
             checkBoard();
         } else {
             possibleValues.remove(sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber).getValue());
-
+            possibleValues.remove(sudokuElement.getValue());
         }
+        sudokuElement.setPossibleValues(possibleValues);
 
     }
 

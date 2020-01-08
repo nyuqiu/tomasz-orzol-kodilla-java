@@ -18,7 +18,7 @@ public class Runner {
 
         System.out.println(sudokuBoard);
 
-        sudokuBoard.setValue(0, 0, "1");
+        sudokuBoard.setValue(0, 1, "1");
         sudokuBoard.setValue(1, 1, "2");
 
         System.out.println("oryginal " + sudokuBoard);
