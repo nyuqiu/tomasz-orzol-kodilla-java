@@ -19,18 +19,20 @@ public class SudokuGame {
                     SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                     if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
                         List<String> possibleValues = sudokuElement.getPossibleValues();
+                        List<String> baseOfPossibleValues = sudokuElement.getPossibleValues();
 
                         System.out.println("possible elements of " + columnNumber + " " + rowNumber + " " + possibleValues);
                         if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
                             while (possibleValues.size() > 1) {
 
                                 for (int i = 0; i < possibleValues.size() - 1; ) {
-                                    String setNumber = possibleValues.get(i);
+                                    String setNumber = possibleValues.get(0);
+                                    possibleValues.remove(setNumber);
 
                                     System.out.println("possible elements set " + possibleValues);
 
                                     System.out.println("setting value " + setNumber);
-                                    sudokuElement.setValue(setNumber);  //VERY IMPORTANT, put that fcking back as sudokuElement viable
+                                    sudokuElement.setValue(setNumber);
                                     System.out.println("save copy");
                                     System.out.println(sudokuBoard);
                                     try {
@@ -38,9 +40,7 @@ public class SudokuGame {
                                     } catch (CloneNotSupportedException e) {
 
                                     }
-//                                    possibleValues.removeAll(toRemove);
                                 }
-
                             }
                             if (possibleValues.size() == 1) {
                                 String setNumber = possibleValues.get(0);
@@ -58,9 +58,12 @@ public class SudokuGame {
                     }
                 }
             }
+
         }
         return true;
     }
-
 }
+
+
+
 

@@ -15,9 +15,9 @@ public class AvailableValues {
         for (int columnNumber = 0; columnNumber <= 8; columnNumber++) {
             for (int rowNumber = 0; rowNumber <= 8; rowNumber++) {
                 sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
-                sudokuElement.setPossibleValues(new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9")));
 
                 if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
+                    sudokuElement.setPossibleValues(new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9")));
 
                     possibleValues = sudokuElement.getPossibleValues();
 
@@ -36,7 +36,7 @@ public class AvailableValues {
                         possibleValues.remove(sudokuElement.getValue());
                     }
                 }
-                sudokuElement.setPossibleValues(possibleValues);
+
                 System.out.println("available values class for "+ columnNumber + " " + rowNumber + possibleValues);
             }
         }
@@ -51,8 +51,6 @@ public class AvailableValues {
             possibleValues.remove(sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber).getValue());
             possibleValues.remove(sudokuElement.getValue());
         }
-        sudokuElement.setPossibleValues(possibleValues);
-
     }
 
     public SudokuBoard checkBoard() {
