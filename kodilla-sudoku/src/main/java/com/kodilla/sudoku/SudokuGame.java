@@ -14,51 +14,50 @@ public class SudokuGame {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
 
                     availableValues.availableValuesForField();
-                    System.out.println("checking values");
+                    System.out.println("checking values 1");
 
                     SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+
                     if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
+
                         List<String> possibleValues = sudokuElement.getPossibleValues();
                         List<String> baseOfPossibleValues = sudokuElement.getPossibleValues();
 
                         System.out.println("possible elements of " + columnNumber + " " + rowNumber + " " + possibleValues);
-                        if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
-                            while (possibleValues.size() > 1) {
 
-                                for (int i = 0; i < possibleValues.size() - 1; ) {
-                                    String setNumber = possibleValues.get(0);
-                                    possibleValues.remove(setNumber);
+                        while (possibleValues.size() > 1) {
 
-                                    System.out.println("possible elements set " + possibleValues);
-
-                                    System.out.println("setting value " + setNumber);
-                                    sudokuElement.setValue(setNumber);
-                                    System.out.println("save copy");
-                                    System.out.println(sudokuBoard);
-                                    try {
-                                        backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
-                                    } catch (CloneNotSupportedException e) {
-
-                                    }
-                                }
-                            }
-                            if (possibleValues.size() == 1) {
+                            for (int i = 0; i < possibleValues.size() - 1; ) {
                                 String setNumber = possibleValues.get(0);
                                 possibleValues.remove(setNumber);
-                                System.out.println("setting value " + setNumber);  // co sie tu dzieje, usuwa dostepne liczby po kolei i nie sprawdza pozniej od nowa i nie ma co wstawic
+
+                                System.out.println("possible elements set " + possibleValues);
+
+                                System.out.println("setting value " + setNumber);
                                 sudokuElement.setValue(setNumber);
+                                System.out.println("save copy");
+                                System.out.println(sudokuBoard);
+                                try {
+                                    backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
+                                } catch (CloneNotSupportedException e) {
 
-
-                            } else if (possibleValues.size() == 0) {
-                                System.out.println("from SudokuGame");
-                                rowNumber--;
-                                sudokuBoard = availableValues.checkBoard();
+                                }
                             }
+                        }
+                        if (possibleValues.size() == 1) {
+                            String setNumber = possibleValues.get(0);
+                            possibleValues.remove(setNumber);
+                            System.out.println("setting value " + setNumber);
+                            sudokuElement.setValue(setNumber);
+
+
+                        } else if (possibleValues.size() == 0) {
+                            System.out.println("from SudokuGame");
+                            sudokuBoard = availableValues.checkBoard();
                         }
                     }
                 }
             }
-
         }
         return true;
     }
