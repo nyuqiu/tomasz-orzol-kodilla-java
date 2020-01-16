@@ -38,6 +38,7 @@ public class SudokuGame {
                                 System.out.println("save copy");
                                 System.out.println(sudokuBoard);
                                 try {
+                                    System.out.println("cpies " + backtrackCopies.getBacktrack());
                                     backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
                                 } catch (CloneNotSupportedException e) {
 

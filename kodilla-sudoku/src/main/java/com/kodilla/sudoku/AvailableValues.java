@@ -17,7 +17,7 @@ public class AvailableValues {
 
                 sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
 
-//                if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
+                if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
 
                     sudokuElement.setPossibleValues(new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9")));
 
@@ -38,10 +38,8 @@ public class AvailableValues {
                         possibleValues.remove(sudokuElement.getValue());
                     }
                     sudokuElement.setPossibleValues(possibleValues);
-//                }
-                System.out.println("arraylist " + possibleValues);
-                System.out.println("sudokuelement " + sudokuElement);
-                System.out.println("available values class for " + columnNumber + " " + rowNumber + possibleValues);
+                }
+                System.out.println(columnNumber + " " + rowNumber + " " + sudokuElement);
             }
         }
     }
@@ -71,21 +69,23 @@ public class AvailableValues {
 
     public void removeUnsolvableSudoku() {
         System.out.println(Messages.CANNOTSOLVE);
-        System.out.println(backtrackCopies.getBacktrack().size());
-        System.out.println(backtrackCopies.getBacktrack().get(0));
+        System.out.println("copies size " + backtrackCopies.getBacktrack().size());
+        System.out.println("first copy " + backtrackCopies.getBacktrack());
         System.out.println(sudokuBoard);
         backtrackCopies.getBacktrack().remove(0);
     }
 
     public SudokuBoard retrievePreviousBoard() {
-        System.out.println("retrieved board");
+        System.out.println("old board " + sudokuBoard);
         System.out.println(Messages.VALUEEXIST);
         if (backtrackCopies.getBacktrack().size() > 0) {
             sudokuBoard = backtrackCopies.getBacktrack().get(0);
+            System.out.println("retrieced board " + sudokuBoard);
             return sudokuBoard;
+        } else {
+            System.out.println("No more saved boards");
+            return null;
         }
-        System.out.println("No more saved boards");
-        return null;
     }
 
 
