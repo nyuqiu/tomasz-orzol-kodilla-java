@@ -10,7 +10,8 @@ public class SudokuBoard extends Prototype {
     private Map<String, Set<SudokuElement>> partsByName = new HashMap<>(addPartsByName());
     private Set<String> boardValues = new HashSet<>(addBoardValues());
 
-    public SudokuBoard() {}
+    public SudokuBoard() {
+    }
 
     public SudokuBoard deepCopy() throws CloneNotSupportedException {
         SudokuBoard clonedBoard = (SudokuBoard) super.clone();
@@ -177,5 +178,56 @@ public class SudokuBoard extends Prototype {
     @Override
     public int hashCode() {
         return Objects.hash(sudokuColumns, partsByName, boardValues);
+    }
+
+//    public void fillTheSudokuBoard(SudokuBoard sudokuBoard, int columnMax, int rowMax) {
+//        for (int columnNumber = 0; columnNumber < columnMax; columnNumber++) {
+//            for (int rowNumber = 0; rowNumber < rowMax; rowNumber++) {
+//                if (columnNumber == 0 || columnNumber == 3 || columnNumber == 6) {
+//                    sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber + 1));
+//                } else if (columnNumber == 1 || columnNumber == 4 || columnNumber == 7) {
+//                    if (rowNumber < 6) {
+//                        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber + 4));
+//                    } else {
+//                        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber - 5));
+//                    }
+//                } else if (columnNumber == 2 || columnNumber == 5 || columnNumber == 8) {
+//                    if (rowNumber < 3) {
+//                        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber + 7));
+//                    } else {
+//                        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber - 2));
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    public void fillTheSudokuBoard(SudokuBoard sudokuBoard, int columnMax, int rowMax) {
+        for (int columnNumber = 0; columnNumber < columnMax; columnNumber++) {
+            for (int rowNumber = 0; rowNumber < rowMax; rowNumber++) {
+
+                if (columnNumber == 0 || columnNumber == 3 || columnNumber == 6) {
+                    addingCorrectValueToBoard(sudokuBoard, columnNumber, rowNumber, 1);
+                } else if (columnNumber == 1 || columnNumber == 4 || columnNumber == 7) {
+                    if (rowNumber < 6) {
+                        addingCorrectValueToBoard(sudokuBoard, columnNumber, rowNumber, 4);
+                    } else
+                        addingCorrectValueToBoard(sudokuBoard, columnNumber, rowNumber, -5);
+                } else if (columnNumber == 2 || columnNumber == 5 || columnNumber == 8) {
+                    if (rowNumber < 3) {
+                        addingCorrectValueToBoard(sudokuBoard, columnNumber, rowNumber, 7);
+                    } else
+                        addingCorrectValueToBoard(sudokuBoard, columnNumber, rowNumber, -2);
+                }
+            }
+        }
+    }
+
+    private void addingCorrectValueToBoard(SudokuBoard sudokuBoard, int columnNumber, int rowNumber, int modifyByThis) {
+        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(biggerThanNine(rowNumber + modifyByThis + columnNumber / 3)));
+    }
+
+    private int biggerThanNine(int value) {
+        return value < 10 ? value : value -9;
     }
 }

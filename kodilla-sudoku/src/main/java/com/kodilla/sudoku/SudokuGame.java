@@ -7,11 +7,17 @@ public class SudokuGame {
     private AvailableValues availableValues = new AvailableValues();
 
     public boolean resolveSudoku(SudokuBoard sudokuBoard) {
+        int count = 0;
 
         while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
 
+
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
+
+
+                    count++;
+                    System.out.println("count " + count);
 
                     availableValues.availableValuesForField();
                     System.out.println("checking values 1");
@@ -38,7 +44,7 @@ public class SudokuGame {
                                 System.out.println("save copy");
                                 System.out.println(sudokuBoard);
                                 try {
-                                    System.out.println("cpies " + backtrackCopies.getBacktrack());
+//                                    System.out.println("sudokuboard copies " + backtrackCopies.getBacktrack());
                                     backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
                                 } catch (CloneNotSupportedException e) {
 

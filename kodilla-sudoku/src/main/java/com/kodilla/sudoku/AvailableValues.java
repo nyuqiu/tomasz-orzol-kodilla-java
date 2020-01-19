@@ -39,7 +39,7 @@ public class AvailableValues {
                     }
                     sudokuElement.setPossibleValues(possibleValues);
                 }
-                System.out.println(columnNumber + " " + rowNumber + " " + sudokuElement);
+//                System.out.println(columnNumber + " " + rowNumber + " " + sudokuElement);
             }
         }
     }
@@ -59,33 +59,42 @@ public class AvailableValues {
         System.out.println("checking board");
         SudokuBoard savedSudokuBoard = retrievePreviousBoard();
         System.out.println(savedSudokuBoard);
-        if (savedSudokuBoard.equals(sudokuBoard)) {
-            removeUnsolvableSudoku();
-            return null;
-        } else {
-            return savedSudokuBoard;
-        }
+//        while(savedSudokuBoard.equals(sudokuBoard)){
+//            removeUnsolvableSudoku();
+//        }
+        return savedSudokuBoard;
     }
 
     public void removeUnsolvableSudoku() {
         System.out.println(Messages.CANNOTSOLVE);
-        System.out.println("copies size " + backtrackCopies.getBacktrack().size());
-        System.out.println("first copy " + backtrackCopies.getBacktrack());
+//        System.out.println("copies size " + backtrackCopies.getBacktrack().size());
         System.out.println(sudokuBoard);
         backtrackCopies.getBacktrack().remove(0);
     }
 
     public SudokuBoard retrievePreviousBoard() {
-        System.out.println("old board " + sudokuBoard);
+        System.out.println("old board " + "\n" +sudokuBoard);
         System.out.println(Messages.VALUEEXIST);
         if (backtrackCopies.getBacktrack().size() > 0) {
-            sudokuBoard = backtrackCopies.getBacktrack().get(0);
-            System.out.println("retrieced board " + sudokuBoard);
+            sudokuBoard = backtrackCopies.getBacktrack().get(backtrackCopies.getBacktrack().size()-1);
+            backtrackCopies.getBacktrack().remove(sudokuBoard);
+            System.out.println("retrieced board " + "\n" + sudokuBoard);
+            availableValuesForField();
             return sudokuBoard;
         } else {
             System.out.println("No more saved boards");
             return null;
         }
+    }
+
+    public SudokuBoard findTheBiggestBoard() {
+        SudokuBoard biggestBoard = backtrackCopies.getBacktrack().get(0);
+        for (SudokuBoard board : backtrackCopies.getBacktrack()) {
+            if(biggestBoard.getBoardValues().size() < board.getBoardValues().size()){
+                biggestBoard = board;
+            }
+        }
+        return biggestBoard;
     }
 
 
