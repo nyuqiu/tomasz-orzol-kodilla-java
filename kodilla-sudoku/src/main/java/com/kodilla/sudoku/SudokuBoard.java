@@ -8,7 +8,7 @@ public class SudokuBoard extends Prototype {
     private static SudokuBoard sudokuBoardInstance = null;
     private List<SudokuRow> sudokuColumns = new ArrayList<>(addRows());
     private Map<String, Set<SudokuElement>> partsByName = new HashMap<>(addPartsByName());
-    private Set<String> boardValues = new HashSet<>(addBoardValues());
+    private Set<String> boardValues = new HashSet<>();
 
     public SudokuBoard() {
     }
@@ -25,7 +25,7 @@ public class SudokuBoard extends Prototype {
             clonedBoard.getSudokuColumns().add(clonedRow);
         }
         clonedBoard.partsByName = new HashMap<>(addPartsByName());
-        clonedBoard.boardValues = new HashSet<>(addBoardValues());
+        clonedBoard.boardValues = new HashSet<>(getBoardValues());
         return clonedBoard;
     }
 
@@ -51,7 +51,7 @@ public class SudokuBoard extends Prototype {
         return result;
     }
 
-    private Set<String> addBoardValues() {
+    public Set<String> getBoardValues() {
         return new HashSet<String>() {{
             for (int column = 0; column <= 8; column++) {
                 for (int row = 0; row <= 8; row++) {
@@ -59,10 +59,6 @@ public class SudokuBoard extends Prototype {
                 }
             }
         }};
-    }
-
-    public Set<String> getBoardValues() {
-        return boardValues;
     }
 
     public List<SudokuRow> getSudokuColumns() {
@@ -179,28 +175,6 @@ public class SudokuBoard extends Prototype {
     public int hashCode() {
         return Objects.hash(sudokuColumns, partsByName, boardValues);
     }
-
-//    public void fillTheSudokuBoard(SudokuBoard sudokuBoard, int columnMax, int rowMax) {
-//        for (int columnNumber = 0; columnNumber < columnMax; columnNumber++) {
-//            for (int rowNumber = 0; rowNumber < rowMax; rowNumber++) {
-//                if (columnNumber == 0 || columnNumber == 3 || columnNumber == 6) {
-//                    sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber + 1));
-//                } else if (columnNumber == 1 || columnNumber == 4 || columnNumber == 7) {
-//                    if (rowNumber < 6) {
-//                        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber + 4));
-//                    } else {
-//                        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber - 5));
-//                    }
-//                } else if (columnNumber == 2 || columnNumber == 5 || columnNumber == 8) {
-//                    if (rowNumber < 3) {
-//                        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber + 7));
-//                    } else {
-//                        sudokuBoard.setValue(columnNumber, rowNumber, Integer.toString(rowNumber - 2));
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     public void fillTheSudokuBoard(SudokuBoard sudokuBoard, int columnMax, int rowMax) {
         for (int columnNumber = 0; columnNumber < columnMax; columnNumber++) {
