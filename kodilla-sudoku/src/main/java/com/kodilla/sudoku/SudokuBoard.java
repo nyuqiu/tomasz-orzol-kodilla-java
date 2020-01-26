@@ -53,8 +53,8 @@ public class SudokuBoard extends Prototype {
 
     public Set<String> getBoardValues() {
         return new HashSet<String>() {{
-            for (int column = 0; column <= 8; column++) {
-                for (int row = 0; row <= 8; row++) {
+            for (int column = 0; column < 9; column++) {
+                for (int row = 0; row < 9; row++) {
                     add(fieldByColumnAndRow(column, row).getValue());
                 }
             }

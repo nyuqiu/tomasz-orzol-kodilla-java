@@ -4,28 +4,14 @@ public class Runner {
 
     public static void main(String[] args) {
         BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
-
-        boolean gameFinished = false;
-        System.out.println("start test");
         SudokuBoard sudokuBoard = SudokuBoard.getInstance();
+        backtrackCopies.getBacktrack().add(sudokuBoard);
 
         SudokuGame theGame = new SudokuGame();
 
-        System.out.println(sudokuBoard);
+        sudokuBoard.fillTheSudokuBoard(sudokuBoard,8,7);
 
-        sudokuBoard.fillTheSudokuBoard(sudokuBoard,9,8);
-
-        System.out.println("oryginal " + "\n" + sudokuBoard);
-
-        System.out.println("getting right part of code");
-
-        gameFinished = theGame.resolveSudoku(sudokuBoard);
-
-
-        System.out.println("oryginal " + "\n" + sudokuBoard);
-
-
-        System.out.println("finish test");
+        System.out.println("Amount of solved sudokus: " + theGame.resolveSudoku());
 
 
     }

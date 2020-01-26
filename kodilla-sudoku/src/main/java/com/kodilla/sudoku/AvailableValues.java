@@ -6,7 +6,6 @@ import java.util.List;
 
 public class AvailableValues {
     private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
-    //    SudokuBoard sudokuBoard = backtrackCopies.getBacktrack().get(0);
     private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
     private List<String> possibleValues;
     private SudokuElement sudokuElement;
@@ -31,7 +30,7 @@ public class AvailableValues {
                     }
                     if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
                             && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
-                        sudokuBoard = checkBoard();
+                        sudokuBoard = retrievePreviousBoard();
                         System.out.println(sudokuBoard);
                     } else {
                         sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).forEach(n -> possibleValues.remove(n));
@@ -39,7 +38,6 @@ public class AvailableValues {
                     }
                     sudokuElement.setPossibleValues(possibleValues);
                 }
-//                System.out.println(columnNumber + " " + rowNumber + " " + sudokuElement);
             }
         }
     }
@@ -48,37 +46,18 @@ public class AvailableValues {
         possibleValues = sudokuElement.getPossibleValues();
 
         if (possibleValues.contains(sudokuElement.getValue()) && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
-            checkBoard();
+            retrievePreviousBoard();
         } else {
             possibleValues.remove(sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber).getValue());
             possibleValues.remove(sudokuElement.getValue());
         }
     }
 
-    public SudokuBoard checkBoard() {
-        System.out.println("checking board");
-        SudokuBoard savedSudokuBoard = retrievePreviousBoard();
-        System.out.println(savedSudokuBoard);
-//        while(savedSudokuBoard.equals(sudokuBoard)){
-//            removeUnsolvableSudoku();
-//        }
-        return savedSudokuBoard;
-    }
-
-    public void removeUnsolvableSudoku() {
-        System.out.println(Messages.CANNOTSOLVE);
-//        System.out.println("copies size " + backtrackCopies.getBacktrack().size());
-        System.out.println(sudokuBoard);
-        backtrackCopies.getBacktrack().remove(0);
-    }
-
-    public SudokuBoard retrievePreviousBoard() {
-        System.out.println("old board " + "\n" +sudokuBoard);
+    SudokuBoard retrievePreviousBoard() {
         System.out.println(Messages.VALUEEXIST);
         if (backtrackCopies.getBacktrack().size() > 0) {
             sudokuBoard = backtrackCopies.getBacktrack().get(backtrackCopies.getBacktrack().size()-1);
             backtrackCopies.getBacktrack().remove(sudokuBoard);
-            System.out.println("retrieced board " + "\n" + sudokuBoard);
             availableValuesForField();
             return sudokuBoard;
         } else {
@@ -86,17 +65,5 @@ public class AvailableValues {
             return null;
         }
     }
-
-    public SudokuBoard findTheBiggestBoard() {
-        SudokuBoard biggestBoard = backtrackCopies.getBacktrack().get(0);
-        for (SudokuBoard board : backtrackCopies.getBacktrack()) {
-            if(biggestBoard.getBoardValues().size() < board.getBoardValues().size()){
-                biggestBoard = board;
-            }
-        }
-        return biggestBoard;
-    }
-
-
 }
 

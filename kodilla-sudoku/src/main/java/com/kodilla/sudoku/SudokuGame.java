@@ -5,68 +5,58 @@ import java.util.List;
 public class SudokuGame {
     private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
     private AvailableValues availableValues = new AvailableValues();
+    private SudokuBoard sudokuBoard = backtrackCopies.getBacktrack().get(0);
 
-    public boolean resolveSudoku(SudokuBoard sudokuBoard) {
-        int count = 0;
+    public int resolveSudoku() {
+        int resolvedSudokusCount = 0;
+        do
+        {
+            while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
+                System.out.println(sudokuBoard.getBoardValues());
+                for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
+                    for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
+                        availableValues.availableValuesForField();
+                        SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+                        if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
+                            List<String> possibleValues = sudokuElement.getPossibleValues();
+                            while (possibleValues.size() > 1) {
+                                for (int i = 0; i < possibleValues.size() - 1; ) {
+                                    String setNumber = possibleValues.get(0);
+                                    possibleValues.remove(setNumber);
+                                    sudokuElement.setValue(setNumber);
+                                    try {
+                                        backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
+                                    } catch (CloneNotSupportedException e) {
 
-        while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
-
-
-            for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
-                for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
-
-
-                    count++;
-                    System.out.println("count " + count);
-
-                    availableValues.availableValuesForField();
-                    System.out.println("checking values 1");
-
-                    SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
-
-                    if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
-
-                        List<String> possibleValues = sudokuElement.getPossibleValues();
-                        List<String> baseOfPossibleValues = sudokuElement.getPossibleValues();
-
-                        System.out.println("possible elements of " + columnNumber + " " + rowNumber + " " + possibleValues);
-
-                        while (possibleValues.size() > 1) {
-
-                            for (int i = 0; i < possibleValues.size() - 1; ) {
-                                String setNumber = possibleValues.get(0);
-                                possibleValues.remove(setNumber);
-
-                                System.out.println("possible elements set " + possibleValues);
-
-                                System.out.println("setting value " + setNumber);
-                                sudokuElement.setValue(setNumber);
-                                System.out.println("save copy");
-                                System.out.println(sudokuBoard);
-                                try {
-//                                    System.out.println("sudokuboard copies " + backtrackCopies.getBacktrack());
-                                    backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
-                                } catch (CloneNotSupportedException e) {
-
+                                    }
                                 }
                             }
-                        }
-                        if (possibleValues.size() == 1) {
-                            String setNumber = possibleValues.get(0);
-                            possibleValues.remove(setNumber);
-                            System.out.println("setting value " + setNumber);
-                            sudokuElement.setValue(setNumber);
+                            if (possibleValues.size() == 1) {
+                                String setNumber = possibleValues.get(0);
+                                possibleValues.remove(setNumber);
+                                sudokuElement.setValue(setNumber);
+                            } else if (possibleValues.size() == 0) {
+                                try {
+                                    sudokuBoard = availableValues.retrievePreviousBoard();
+                                } catch (NullPointerException e) {
+                                    return resolvedSudokusCount;
+                                }
 
-
-                        } else if (possibleValues.size() == 0) {
-                            System.out.println("from SudokuGame");
-                            sudokuBoard = availableValues.checkBoard();
+                            }
                         }
                     }
                 }
             }
+            try {
+                sudokuBoard = availableValues.retrievePreviousBoard();
+            } catch (NullPointerException e) {
+                return resolvedSudokusCount;
+            }
+            System.out.println(resolvedSudokusCount);
+            resolvedSudokusCount++;
         }
-        return true;
+        while (backtrackCopies.getBacktrack().size() > 0);
+        return resolvedSudokusCount;
     }
 }
 
