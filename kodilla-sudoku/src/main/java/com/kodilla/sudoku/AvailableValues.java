@@ -56,7 +56,9 @@ public class AvailableValues {
     SudokuBoard retrievePreviousBoard() {
         System.out.println(Messages.VALUEEXIST);
         if (backtrackCopies.getBacktrack().size() > 0) {
-            sudokuBoard = backtrackCopies.getBacktrack().get(backtrackCopies.getBacktrack().size()-1);
+//            sudokuBoard = backtrackCopies.getBacktrack().get(backtrackCopies.getBacktrack().size()-1);
+            sudokuBoard = backtrackCopies.getBacktrack().get(0);
+
             backtrackCopies.getBacktrack().remove(sudokuBoard);
             availableValuesForField();
             return sudokuBoard;
