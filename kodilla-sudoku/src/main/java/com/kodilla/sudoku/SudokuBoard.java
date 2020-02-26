@@ -3,8 +3,6 @@ package com.kodilla.sudoku;
 import java.util.*;
 
 public class SudokuBoard extends Prototype {
-    private int columns = 9;
-    private int rows = 9;
     private static SudokuBoard sudokuBoardInstance = null;
     private List<SudokuRow> sudokuColumns = new ArrayList<>(addRows());
     private Map<String, Set<SudokuElement>> partsByName = new HashMap<>(addPartsByName());

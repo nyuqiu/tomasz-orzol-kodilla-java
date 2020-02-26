@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AvailableValues {
-    private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
     private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
     private List<String> possibleValues;
     private SudokuElement sudokuElement;
@@ -30,8 +29,7 @@ public class AvailableValues {
                     }
                     if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
                             && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
-                        sudokuBoard = retrievePreviousBoard();
-                        System.out.println(sudokuBoard);
+                        possibleValues = new ArrayList<>();
                     } else {
                         sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).forEach(n -> possibleValues.remove(n));
                         possibleValues.remove(sudokuElement.getValue());
@@ -46,25 +44,10 @@ public class AvailableValues {
         possibleValues = sudokuElement.getPossibleValues();
 
         if (possibleValues.contains(sudokuElement.getValue()) && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
-            retrievePreviousBoard();
+            possibleValues = new ArrayList<>();
         } else {
             possibleValues.remove(sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber).getValue());
             possibleValues.remove(sudokuElement.getValue());
-        }
-    }
-
-    SudokuBoard retrievePreviousBoard() {
-        System.out.println(Messages.VALUEEXIST);
-        if (backtrackCopies.getBacktrack().size() > 0) {
-//            sudokuBoard = backtrackCopies.getBacktrack().get(backtrackCopies.getBacktrack().size()-1);
-            sudokuBoard = backtrackCopies.getBacktrack().get(0);
-
-            backtrackCopies.getBacktrack().remove(sudokuBoard);
-            availableValuesForField();
-            return sudokuBoard;
-        } else {
-            System.out.println("No more saved boards");
-            return null;
         }
     }
 }

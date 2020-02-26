@@ -11,8 +11,7 @@ public class SudokuGame {
         int resolvedSudokusCount = 0;
         do
         {
-            while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
-                System.out.println(sudokuBoard.getBoardValues());
+            while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY) && sudokuBoard!=null) {
                 for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                     for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
                         availableValues.availableValuesForField();
@@ -37,7 +36,7 @@ public class SudokuGame {
                                 sudokuElement.setValue(setNumber);
                             } else if (possibleValues.size() == 0) {
                                 try {
-                                    sudokuBoard = availableValues.retrievePreviousBoard();
+                                    sudokuBoard = retrievePreviousBoard();
                                 } catch (NullPointerException e) {
                                     return resolvedSudokusCount;
                                 }
@@ -48,7 +47,7 @@ public class SudokuGame {
                 }
             }
             try {
-                sudokuBoard = availableValues.retrievePreviousBoard();
+                sudokuBoard = retrievePreviousBoard();
             } catch (NullPointerException e) {
                 return resolvedSudokusCount;
             }
@@ -57,6 +56,18 @@ public class SudokuGame {
         }
         while (backtrackCopies.getBacktrack().size() > 0);
         return resolvedSudokusCount;
+    }
+
+    SudokuBoard retrievePreviousBoard() {
+        if (backtrackCopies.getBacktrack().size() > 0) {
+            sudokuBoard = backtrackCopies.getBacktrack().get(0);
+            backtrackCopies.getBacktrack().remove(sudokuBoard);
+            availableValues.availableValuesForField();
+            return sudokuBoard;
+        } else {
+            System.out.println("No more saved boards");
+            return null;
+        }
     }
 }
 
