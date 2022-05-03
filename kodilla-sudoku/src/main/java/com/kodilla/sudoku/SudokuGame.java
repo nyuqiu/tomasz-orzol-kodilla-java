@@ -1,28 +1,28 @@
 package com.kodilla.sudoku;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SudokuGame {
-    private BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
-    private AvailableValues availableValues = new AvailableValues();
+    final List<SudokuBoard> finishedBoards = new ArrayList<>();
+    private final BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
+    private final AvailableValues availableValues = new AvailableValues();
     private SudokuBoard sudokuBoard = backtrackCopies.getBacktrack().get(0);
+    private List<String> possibleValues;
+    private SudokuElement sudokuElement;
 
     public int resolveSudoku() {
-        int resolvedSudokusCount = 0;
-        do
-        {
-            while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY) && sudokuBoard!=null) {
-                for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
-                    for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
+        while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
+            for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
+                for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
+                    if (sudokuBoard != null) {
                         availableValues.availableValuesForField();
-                        SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
-                        if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
-                            List<String> possibleValues = sudokuElement.getPossibleValues();
+                        sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+                        if (sudokuElement.getValue().equals(SudokuElement.EMPTY)) {
+                            possibleValues = sudokuElement.getPossibleValues();
                             while (possibleValues.size() > 1) {
                                 for (int i = 0; i < possibleValues.size() - 1; ) {
-                                    String setNumber = possibleValues.get(0);
-                                    possibleValues.remove(setNumber);
-                                    sudokuElement.setValue(setNumber);
+                                    setValue();
                                     try {
                                         backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
                                     } catch (CloneNotSupportedException e) {
@@ -31,37 +31,31 @@ public class SudokuGame {
                                 }
                             }
                             if (possibleValues.size() == 1) {
-                                String setNumber = possibleValues.get(0);
-                                possibleValues.remove(setNumber);
-                                sudokuElement.setValue(setNumber);
+                                setValue();
+                                if(!sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)){
+                                    finishedBoards.add(sudokuBoard);
+                                }
                             } else if (possibleValues.size() == 0) {
                                 try {
                                     sudokuBoard = retrievePreviousBoard();
                                 } catch (NullPointerException e) {
-                                    return resolvedSudokusCount;
-                                }
 
+                                }
                             }
                         }
+                    } else {
+                        return finishedBoards.size();
                     }
                 }
             }
-            try {
-                sudokuBoard = retrievePreviousBoard();
-            } catch (NullPointerException e) {
-                return resolvedSudokusCount;
-            }
-            System.out.println(resolvedSudokusCount);
-            resolvedSudokusCount++;
         }
-        while (backtrackCopies.getBacktrack().size() > 0);
-        return resolvedSudokusCount;
+        System.out.println(finishedBoards);
+        return finishedBoards.size();
     }
 
-    SudokuBoard retrievePreviousBoard() {
-        if (backtrackCopies.getBacktrack().size() > 0) {
+    private SudokuBoard retrievePreviousBoard() {
+        if (backtrackCopies.getBacktrack().size() > 0 && backtrackCopies.getBacktrack().remove(sudokuBoard)) {
             sudokuBoard = backtrackCopies.getBacktrack().get(0);
-            backtrackCopies.getBacktrack().remove(sudokuBoard);
             availableValues.availableValuesForField();
             return sudokuBoard;
         } else {
@@ -69,8 +63,10 @@ public class SudokuGame {
             return null;
         }
     }
+
+    private void setValue() {
+        String setNumber = possibleValues.get(0);
+        possibleValues.remove(setNumber);
+        sudokuElement.setValue(setNumber);
+    }
 }
-
-
-
-
