@@ -16,7 +16,7 @@ public class SudokuGame {
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
                     if (sudokuBoard != null) {
-                        availableValues.availableValuesForField();
+                        availableValues.isEnoughAvaliableValuesForField();
                         sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                         if (sudokuElement.getValue().equals(SudokuElement.EMPTY)) {
                             possibleValues = sudokuElement.getPossibleValues();
@@ -32,7 +32,7 @@ public class SudokuGame {
                             }
                             if (possibleValues.size() == 1) {
                                 setValue();
-                                if(!sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)){
+                                if (!sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
                                     finishedBoards.add(sudokuBoard);
                                 }
                             } else if (possibleValues.size() == 0) {
@@ -56,7 +56,7 @@ public class SudokuGame {
     private SudokuBoard retrievePreviousBoard() {
         if (backtrackCopies.getBacktrack().size() > 0 && backtrackCopies.getBacktrack().remove(sudokuBoard)) {
             sudokuBoard = backtrackCopies.getBacktrack().get(0);
-            availableValues.availableValuesForField();
+            availableValues.isEnoughAvaliableValuesForField();
             return sudokuBoard;
         } else {
             System.out.println("No more saved boards");

@@ -88,6 +88,22 @@ public class SudokuBoard extends Prototype {
         return set;
     }
 
+    public Set<SudokuElement> getColumnElementsByColumnNumber(int column) {
+        Set<SudokuElement> set = new HashSet<>();
+        for (int row = 0; row < 9; row++) {
+            set.add(fieldByColumnAndRow(column, row));
+        }
+        return set;
+    }
+
+    public Set<SudokuElement> getRowElementsByRowNumber(int row) {
+        Set<SudokuElement> set = new HashSet<>();
+        for (int column = 0; column < 9; column++) {
+            set.add(fieldByColumnAndRow(column, row));
+        }
+        return set;
+    }
+
     public void setValue(int column, int row, String value) {
         if (!(getColumnValuesByColumnNumber(column).contains(value)) &&
                 !(getRowValuesByRowNumber(row).contains(value)) &&
