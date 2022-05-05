@@ -16,31 +16,32 @@ public class SudokuGame {
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
                     if (sudokuBoard != null) {
-                        availableValues.isEnoughAvaliableValuesForField();
-                        sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
-                        if (sudokuElement.getValue().equals(SudokuElement.EMPTY)) {
-                            possibleValues = sudokuElement.getPossibleValues();
-                            while (possibleValues.size() > 1) {
-                                for (int i = 0; i < possibleValues.size() - 1; ) {
-                                    setValue();
-                                    try {
-                                        backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
-                                    } catch (CloneNotSupportedException e) {
+                        if (availableValues.isEnoughAvaliableValuesForField()) {
+                            sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+                            if (sudokuElement.getValue().equals(SudokuElement.EMPTY)) {
+                                possibleValues = sudokuElement.getPossibleValues();
+                                while (possibleValues.size() > 1) {
+                                    for (int i = 0; i < possibleValues.size() - 1; ) {
+                                        setValue();
+                                        try {
+                                            backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
+                                        } catch (CloneNotSupportedException e) {
 
+                                        }
+                                    }
+                                }
+                                if (possibleValues.size() == 1) {
+                                    setValue();
+                                    if (!sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
+                                        finishedBoards.add(sudokuBoard);
                                     }
                                 }
                             }
-                            if (possibleValues.size() == 1) {
-                                setValue();
-                                if (!sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
-                                    finishedBoards.add(sudokuBoard);
-                                }
-                            } else if (possibleValues.size() == 0) {
-                                try {
-                                    sudokuBoard = retrievePreviousBoard();
-                                } catch (NullPointerException e) {
+                        } else {
+                            try {
+                                sudokuBoard = retrievePreviousBoard();
+                            } catch (NullPointerException ignored) {
 
-                                }
                             }
                         }
                     } else {

@@ -1,6 +1,8 @@
 package com.kodilla.sudoku;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class SudokuBoard extends Prototype {
     private static SudokuBoard sudokuBoardInstance = null;
@@ -43,70 +45,62 @@ public class SudokuBoard extends Prototype {
 
     private List<SudokuRow> addRows() {
         List<SudokuRow> result = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            result.add(new SudokuRow());
-        }
+        IntStream.range(0, 9).forEach(n -> result.add(new SudokuRow()));
         return result;
     }
 
     public Set<String> getBoardValues() {
-        return new HashSet<String>() {{
-            for (int column = 0; column < 9; column++) {
-                for (int row = 0; row < 9; row++) {
-                    add(fieldByColumnAndRow(column, row).getValue());
-                }
-            }
-        }};
+        Set<String> set = new HashSet<>();
+        IntStream.range(0, 9).boxed()
+                .map(column -> IntStream.range(0, 9)
+                        .mapToObj(row -> set.add(fieldByColumnAndRow(column, row).getValue())));
+        return set;
     }
 
     public List<SudokuRow> getSudokuColumns() {
         return sudokuColumns;
     }
 
-    public Set<String> getColumnValuesByColumnNumber(int column) {
+    public Set<String> getColumnValues(int column) {
         Set<String> set = new HashSet<>();
-        for (int row = 0; row < 9; row++) {
-            set.add(fieldByColumnAndRow(column, row).getValue());
-        }
+        IntStream.range(0, 9).forEach(row -> set.add(fieldByColumnAndRow(column, row).getValue()));
         set.remove(SudokuElement.EMPTY);
         return set;
     }
 
-    public Set<String> getRowValuesByRowNumber(int row) {
+    public Set<String> getRowValues(int row) {
         Set<String> set = new HashSet<>();
-        for (int column = 0; column < 9; column++) {
-            set.add(fieldByColumnAndRow(column, row).getValue());
-        }
+        IntStream.range(0, 9).forEach(column -> set.add(fieldByColumnAndRow(column, row).getValue()));
         set.remove(SudokuElement.EMPTY);
         return set;
     }
 
     public Set<String> getValuesFromOneOfNine(int column, int row) {
-        Set<String> set = new HashSet<>();
-        checkWhichPartOfBoard(column, row).forEach(n -> set.add(n.getValue()));
-        set.remove(SudokuElement.EMPTY);
+        return new HashSet<>(checkWhichPartOfBoard(column, row)).stream()
+                .map(SudokuElement::getValue)
+                .filter(n -> !Objects.equals(n, SudokuElement.EMPTY))
+                .collect(Collectors.toSet());
+    }
+
+    public Set<SudokuElement> getElementsFromOneOfNine(int column, int row) {
+        return new HashSet<>(checkWhichPartOfBoard(column, row));
+    }
+
+    public Set<SudokuElement> getColumnElements(int column) {
+        Set<SudokuElement> set = new HashSet<>();
+        IntStream.range(0, 9).forEach(row -> set.add(fieldByColumnAndRow(column, row)));
         return set;
     }
 
-    public Set<SudokuElement> getColumnElementsByColumnNumber(int column) {
+    public Set<SudokuElement> getRowElements(int row) {
         Set<SudokuElement> set = new HashSet<>();
-        for (int row = 0; row < 9; row++) {
-            set.add(fieldByColumnAndRow(column, row));
-        }
-        return set;
-    }
-
-    public Set<SudokuElement> getRowElementsByRowNumber(int row) {
-        Set<SudokuElement> set = new HashSet<>();
-        for (int column = 0; column < 9; column++) {
-            set.add(fieldByColumnAndRow(column, row));
-        }
+        IntStream.range(0, 9).forEach(column -> set.add(fieldByColumnAndRow(column, row)));
         return set;
     }
 
     public void setValue(int column, int row, String value) {
-        if (!(getColumnValuesByColumnNumber(column).contains(value)) &&
-                !(getRowValuesByRowNumber(row).contains(value)) &&
+        if (!(getColumnValues(column).contains(value)) &&
+                !(getRowValues(row).contains(value)) &&
                 !(getValuesFromOneOfNine(column, row).contains(value))) {
             fieldByColumnAndRow(column, row).setValue(value);
         } else {
@@ -216,6 +210,6 @@ public class SudokuBoard extends Prototype {
     }
 
     private int biggerThanNine(int value) {
-        return value < 10 ? value : value -9;
+        return value < 10 ? value : value - 9;
     }
 }

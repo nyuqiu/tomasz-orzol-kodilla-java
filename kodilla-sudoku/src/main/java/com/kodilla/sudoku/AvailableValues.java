@@ -21,16 +21,17 @@ public class AvailableValues {
 
                     for (int columnIteration = 0; columnIteration <= 8; columnIteration++) {
                         addPossibleNumber(columnIteration, rowNumber, sudokuElement);
-                        if (isMoreEmptyFieldsThanValuesAvailable(sudokuBoard.getColumnElementsByColumnNumber(columnNumber)))
+                        if (isMoreEmptyFieldsThanValuesAvailable(sudokuBoard.getColumnElements(columnNumber)))
                             return false;
                     }
                     for (int rowIteration = 0; rowIteration <= 8; rowIteration++) {
                         addPossibleNumber(columnNumber, rowIteration, sudokuElement);
-                        if (isMoreEmptyFieldsThanValuesAvailable(sudokuBoard.getRowElementsByRowNumber(columnNumber)))
+                        if (isMoreEmptyFieldsThanValuesAvailable(sudokuBoard.getRowElements(columnNumber)))
                             return false;
                     }
-                    if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
-                            && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
+                    if ((sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
+                            && !(sudokuElement.getValue().equals(SudokuElement.EMPTY)))
+                    || isMoreEmptyFieldsThanValuesAvailable(sudokuBoard.getElementsFromOneOfNine(columnNumber, rowNumber))) {
                         return false;
                     } else {
                         sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).forEach(n -> possibleValues.remove(n));
