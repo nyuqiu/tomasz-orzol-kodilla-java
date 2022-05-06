@@ -50,11 +50,13 @@ public class SudokuBoard extends Prototype {
     }
 
     public Set<String> getBoardValues() {
-        Set<String> set = new HashSet<>();
-        IntStream.range(0, 9).boxed()
-                .map(column -> IntStream.range(0, 9)
-                        .mapToObj(row -> set.add(fieldByColumnAndRow(column, row).getValue())));
-        return set;
+        return new HashSet<String>() {{
+            for (int column = 0; column < 9; column++) {
+                for (int row = 0; row < 9; row++) {
+                    add(fieldByColumnAndRow(column, row).getValue());
+                }
+            }
+        }};
     }
 
     public List<SudokuRow> getSudokuColumns() {

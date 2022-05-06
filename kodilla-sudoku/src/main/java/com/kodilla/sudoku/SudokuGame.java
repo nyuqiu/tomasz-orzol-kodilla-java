@@ -16,7 +16,8 @@ public class SudokuGame {
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
                     if (sudokuBoard != null) {
-                        if (availableValues.isEnoughAvaliableValuesForField()) {
+                        availableValues.avaliableValuesForField();
+                        if (availableValues.isEnoughPossibleValues(columnNumber, rowNumber)) {
                             sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                             if (sudokuElement.getValue().equals(SudokuElement.EMPTY)) {
                                 possibleValues = sudokuElement.getPossibleValues();
@@ -24,7 +25,9 @@ public class SudokuGame {
                                     for (int i = 0; i < possibleValues.size() - 1; ) {
                                         setValue();
                                         try {
+                                            System.out.println(sudokuBoard);
                                             backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
+                                            System.out.println(backtrackCopies.getBacktrack().size());
                                         } catch (CloneNotSupportedException e) {
 
                                         }
@@ -40,7 +43,7 @@ public class SudokuGame {
                         } else {
                             try {
                                 sudokuBoard = retrievePreviousBoard();
-                            } catch (NullPointerException ignored) {
+                            } catch (IndexOutOfBoundsException e) {
 
                             }
                         }
@@ -57,7 +60,7 @@ public class SudokuGame {
     private SudokuBoard retrievePreviousBoard() {
         if (backtrackCopies.getBacktrack().size() > 0 && backtrackCopies.getBacktrack().remove(sudokuBoard)) {
             sudokuBoard = backtrackCopies.getBacktrack().get(0);
-            availableValues.isEnoughAvaliableValuesForField();
+            availableValues.avaliableValuesForField();
             return sudokuBoard;
         } else {
             System.out.println("No more saved boards");
