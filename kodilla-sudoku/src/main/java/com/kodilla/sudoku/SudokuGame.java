@@ -3,6 +3,7 @@ package com.kodilla.sudoku;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class SudokuGame {
     final List<SudokuBoard> finishedBoards = new ArrayList<>();
@@ -18,7 +19,6 @@ public class SudokuGame {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
                     sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
                     if (sudokuBoard != null && Objects.equals(sudokuElement.getValue(), SudokuElement.EMPTY)) {
-                        System.out.println(sudokuBoard.hashCode());
                         if (availableValues.isEnoughPossibleValues(columnNumber, rowNumber)) {
                             possibleValues = sudokuElement.getPossibleValues();
                             while (possibleValues.size() > 1) {
@@ -26,7 +26,7 @@ public class SudokuGame {
                                     setValue();
                                     try {
                                         backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
-                                        System.out.println(backtrackCopies.getBacktrack().size());
+                                        System.out.println("number of copies: " + backtrackCopies.getBacktrack().size());
                                     } catch (CloneNotSupportedException e) {
 
                                     }
@@ -38,10 +38,10 @@ public class SudokuGame {
                                     finishedBoards.add(sudokuBoard);
                                 }
                             } else {
-                                sudokuBoard = retrievePreviousBoard();
+                                retrievePreviousBoard();
                             }
                         } else {
-                            sudokuBoard = retrievePreviousBoard();
+                            retrievePreviousBoard();
                         }
                     }
                 }
@@ -51,14 +51,11 @@ public class SudokuGame {
         return finishedBoards.size();
     }
 
-    private SudokuBoard retrievePreviousBoard() {
-        if (backtrackCopies.getBacktrack().size() > 0 && backtrackCopies.getBacktrack().remove(sudokuBoard)) {
-            sudokuBoard = backtrackCopies.getBacktrack().get(0);
-
-            return sudokuBoard;
-        } else {
-            System.out.println("No more saved boards");
-            return null;
+    private void retrievePreviousBoard() {
+        if (backtrackCopies.getBacktrack().size() > 0) {
+            IntStream.range(0, 8)
+                    .forEach(n -> sudokuBoard.getSudokuColumns().set(n, backtrackCopies.getBacktrack().get(0).getSudokuColumns().get(n)));
+            backtrackCopies.getBacktrack().remove(0);
         }
     }
 
