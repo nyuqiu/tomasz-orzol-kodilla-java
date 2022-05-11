@@ -57,9 +57,9 @@ public class CompanyDaoTestSuite {
 
         //CleanUp
         try {
-            companyDao.delete(softwareMachineId);
-            companyDao.delete(dataMaestersId);
-            companyDao.delete(greyMatterId);
+            companyDao.delete(softwareMachine);
+            companyDao.delete(dataMaesters);
+            companyDao.delete(greyMatter);
         } catch (Exception e) {
             //do nothing
         }
@@ -75,18 +75,33 @@ public class CompanyDaoTestSuite {
         Company softwareMachine = new Company("Software Machine");
         Company dataMaesters = new Company("Data Maesters");
         Company greyMatter = new Company("Grey Matter");
+
+        employeeDao.save(johnSmith);
+        employeeDao.save(stephanieClarckson);
+        employeeDao.save(lindaKovalsky);
+
+        companyDao.save(softwareMachine);
+        companyDao.save(dataMaesters);
+        companyDao.save(greyMatter);
+
         //When
-        List<Employee> findSmith = employeeDao.findEmplyoeeByLastname("Smith");
+        List<Employee> findSmith = employeeDao.findEmployeeByLastname("Smith");
         List<Company> findCompanyByThreeFirstLetters = companyDao.findCompanyByFirstThreeLetters("dat");
+
         //Then
         Assert.assertEquals(1, findSmith.size());
-        Assert.assertEquals(1, findCompanyByThreeFirstLetters);
+        Assert.assertEquals(1, findCompanyByThreeFirstLetters.size());
+
         //CleanUp
-        companyDao.delete(softwareMachine);
-        companyDao.delete(dataMaesters);
-        companyDao.delete(greyMatter);
-        employeeDao.delete(johnSmith);
-        employeeDao.delete(stephanieClarckson);
-        employeeDao.delete(lindaKovalsky);
+        try {
+            companyDao.delete(softwareMachine);
+            companyDao.delete(dataMaesters);
+            companyDao.delete(greyMatter);
+            employeeDao.delete(johnSmith);
+            employeeDao.delete(stephanieClarckson);
+            employeeDao.delete(lindaKovalsky);
+        } catch (Exception e){
+            //do nothing
+        }
     }
 }

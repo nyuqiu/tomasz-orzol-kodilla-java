@@ -21,9 +21,11 @@ public interface TaskDao extends CrudRepository<Task, Integer> {
     List<Task> retrieveShortTasks();
 
     @Query(nativeQuery = true)
-    List<Task> retrieveTasksWithEnoughTime();
+    List<Task> retrieveTaskWithEnoughTime();
 
     @Query
     List<Task> retrieveTasksWithDurationLongerThan(@Param("DURATION") int duration);
+
+    Task findOne(@Param("ID") int id);
 }
 

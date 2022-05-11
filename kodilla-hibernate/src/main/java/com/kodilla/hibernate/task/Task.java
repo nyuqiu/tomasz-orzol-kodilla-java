@@ -22,8 +22,8 @@ import java.util.Date;
 })
 @NamedNativeQuery(
         name = "Task.retrieveTaskWithEnoughTime",
-        query = "SELECT * FROM Task" +
-                " WHERE DATEDIFF(DATE_ADD(CREATED< INTERVAL DURATION DAY, NOW()) > 5)",
+        query = "SELECT * FROM kodilla_course.Task" +
+                " WHERE DATEDIFF(DATE_ADD(CREATED, INTERVAL DURATION DAY), NOW()) >5",
         resultClass = Task.class
 )
 @Entity
@@ -45,7 +45,9 @@ public final class Task {
     @Column(name="DURATION")
     private int duration;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     @JoinColumn(name = "TASKS_FINANCIAL_ID")
     private TaskFinancialDetails taskFinancialDetails;
 
