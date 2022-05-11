@@ -2,12 +2,13 @@ package com.kodilla.sudoku;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SudokuGame {
     final List<SudokuBoard> finishedBoards = new ArrayList<>();
     private final BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
     private final AvailableValues availableValues = new AvailableValues();
-    private SudokuBoard sudokuBoard = backtrackCopies.getBacktrack().get(0);
+    private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
     private List<String> possibleValues;
     private SudokuElement sudokuElement;
 
@@ -15,40 +16,33 @@ public class SudokuGame {
         while (sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
-                    if (sudokuBoard != null) {
-                        availableValues.avaliableValuesForField();
+                    sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+                    if (sudokuBoard != null && Objects.equals(sudokuElement.getValue(), SudokuElement.EMPTY)) {
+                        System.out.println(sudokuBoard.hashCode());
                         if (availableValues.isEnoughPossibleValues(columnNumber, rowNumber)) {
-                            sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
-                            if (sudokuElement.getValue().equals(SudokuElement.EMPTY)) {
-                                possibleValues = sudokuElement.getPossibleValues();
-                                while (possibleValues.size() > 1) {
-                                    for (int i = 0; i < possibleValues.size() - 1; ) {
-                                        setValue();
-                                        try {
-                                            System.out.println(sudokuBoard);
-                                            backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
-                                            System.out.println(backtrackCopies.getBacktrack().size());
-                                        } catch (CloneNotSupportedException e) {
-
-                                        }
-                                    }
-                                }
-                                if (possibleValues.size() == 1) {
+                            possibleValues = sudokuElement.getPossibleValues();
+                            while (possibleValues.size() > 1) {
+                                for (int i = 0; i < possibleValues.size() - 1; ) {
                                     setValue();
-                                    if (!sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
-                                        finishedBoards.add(sudokuBoard);
+                                    try {
+                                        backtrackCopies.getBacktrack().add(sudokuBoard.deepCopy());
+                                        System.out.println(backtrackCopies.getBacktrack().size());
+                                    } catch (CloneNotSupportedException e) {
+
                                     }
                                 }
+                            }
+                            if (possibleValues.size() == 1) {
+                                setValue();
+                                if (!sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
+                                    finishedBoards.add(sudokuBoard);
+                                }
+                            } else {
+                                sudokuBoard = retrievePreviousBoard();
                             }
                         } else {
-                            try {
-                                sudokuBoard = retrievePreviousBoard();
-                            } catch (IndexOutOfBoundsException e) {
-
-                            }
+                            sudokuBoard = retrievePreviousBoard();
                         }
-                    } else {
-                        return finishedBoards.size();
                     }
                 }
             }
@@ -60,7 +54,7 @@ public class SudokuGame {
     private SudokuBoard retrievePreviousBoard() {
         if (backtrackCopies.getBacktrack().size() > 0 && backtrackCopies.getBacktrack().remove(sudokuBoard)) {
             sudokuBoard = backtrackCopies.getBacktrack().get(0);
-            availableValues.avaliableValuesForField();
+
             return sudokuBoard;
         } else {
             System.out.println("No more saved boards");

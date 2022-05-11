@@ -7,36 +7,32 @@ public class AvailableValues {
     private SudokuBoard sudokuBoard = SudokuBoard.getInstance();
     private List<String> possibleValues;
 
-    public void avaliableValuesForField() {
-        for (int columnNumber = 0; columnNumber <= 8; columnNumber++) {
-            for (int rowNumber = 0; rowNumber <= 8; rowNumber++) {
+    private void avaliableValuesForField(int columnNumber, int rowNumber) {
+        SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
 
-                SudokuElement sudokuElement = sudokuBoard.fieldByColumnAndRow(columnNumber, rowNumber);
+        if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
 
-                if (sudokuElement.getValue().contains(SudokuElement.EMPTY)) {
+            sudokuElement.setPossibleValues(new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9")));
 
-                    sudokuElement.setPossibleValues(new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9")));
+            possibleValues = sudokuElement.getPossibleValues();
 
-                    possibleValues = sudokuElement.getPossibleValues();
-
-                    for (int columnIteration = 0; columnIteration <= 8; columnIteration++) {
-                        addPossibleNumber(columnIteration, rowNumber, sudokuElement);
-                    }
-                    for (int rowIteration = 0; rowIteration <= 8; rowIteration++) {
-                        addPossibleNumber(columnNumber, rowIteration, sudokuElement);
-                    }
-                    if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
-                            && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
-                        possibleValues = new ArrayList<>();
-                    } else {
-                        sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).forEach(n -> possibleValues.remove(n));
-                        possibleValues.remove(sudokuElement.getValue());
-                    }
-                    sudokuElement.setPossibleValues(possibleValues);
-                }
+            for (int columnIteration = 0; columnIteration <= 8; columnIteration++) {
+                addPossibleNumber(columnIteration, rowNumber, sudokuElement);
             }
+            for (int rowIteration = 0; rowIteration <= 8; rowIteration++) {
+                addPossibleNumber(columnNumber, rowIteration, sudokuElement);
+            }
+            if (sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).contains(sudokuElement.getValue())
+                    && !(sudokuElement.getValue().equals(SudokuElement.EMPTY))) {
+                possibleValues = new ArrayList<>();
+            } else {
+                sudokuBoard.getValuesFromOneOfNine(columnNumber, rowNumber).forEach(n -> possibleValues.remove(n));
+                possibleValues.remove(sudokuElement.getValue());
+            }
+            sudokuElement.setPossibleValues(possibleValues);
         }
     }
+
 
     private void addPossibleNumber(int columnNumber, int rowNumber, SudokuElement sudokuElement) {
         possibleValues = sudokuElement.getPossibleValues();
@@ -51,14 +47,14 @@ public class AvailableValues {
 
     private int getHigestNumberOfPossibleValues(Set<SudokuElement> input) {
         return input.stream()
-                .map(n-> n.getPossibleValues().size())
+                .map(n -> n.getPossibleValues().size())
                 .collect(Collectors.toList())
                 .stream()
                 .collect(Collectors.summarizingInt(Integer::intValue)).getMax();
     }
 
     private int countEmptySpaces(Set<SudokuElement> input) {
-        return  (int) input.stream()
+        return (int) input.stream()
                 .filter(n -> Objects.equals(n.getValue(), SudokuElement.EMPTY))
                 .count();
     }
@@ -67,11 +63,11 @@ public class AvailableValues {
         return getHigestNumberOfPossibleValues(input) >= countEmptySpaces(input);
     }
 
-    boolean isEnoughPossibleValues(int columnNumber, int rowNumber){
-        return isMoreValuesAvailableThanEmptyFields(sudokuBoard.getColumnElements(columnNumber)) &&
-                isMoreValuesAvailableThanEmptyFields(sudokuBoard.getRowElements(rowNumber)) &&
+    public boolean isEnoughPossibleValues(int columnNumber, int rowNumber) {
+        System.out.println(sudokuBoard.hashCode());
+        avaliableValuesForField(columnNumber, rowNumber);
+        return isMoreValuesAvailableThanEmptyFields(sudokuBoard.getColumnElements(columnNumber)) ||
+                isMoreValuesAvailableThanEmptyFields(sudokuBoard.getRowElements(rowNumber)) ||
                 isMoreValuesAvailableThanEmptyFields(sudokuBoard.getElementsFromOneOfNine(columnNumber, rowNumber));
-
-        // need to fix this
     }
 }
