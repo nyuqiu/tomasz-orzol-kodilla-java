@@ -36,6 +36,8 @@ public class SudokuGame {
                                 setValue();
                                 if (!sudokuBoard.getBoardValues().contains(SudokuElement.EMPTY)) {
                                     finishedBoards.add(sudokuBoard);
+                                    System.out.println(sudokuBoard);
+                                    retrievePreviousBoard();
                                 }
                             } else {
                                 retrievePreviousBoard();
@@ -55,6 +57,7 @@ public class SudokuGame {
         if (backtrackCopies.getBacktrack().size() > 0) {
             IntStream.range(0, 8)
                     .forEach(n -> sudokuBoard.getSudokuColumns().set(n, backtrackCopies.getBacktrack().get(0).getSudokuColumns().get(n)));
+            sudokuBoard.repopulateValuesInOneOfNine();
             backtrackCopies.getBacktrack().remove(0);
         }
     }

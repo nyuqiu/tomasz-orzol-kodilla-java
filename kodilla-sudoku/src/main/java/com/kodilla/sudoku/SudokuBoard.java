@@ -29,6 +29,11 @@ public class SudokuBoard extends Prototype {
         return clonedBoard;
     }
 
+    public void repopulateValuesInOneOfNine() {
+        partsByName.clear();
+        partsByName = new HashMap<>(addPartsByName());
+    }
+
     private Map<String, Set<SudokuElement>> addPartsByName() {
         return new HashMap<String, Set<SudokuElement>>() {{
             put("topLeft", addElementsFromOneOfNine(0, 2, 0, 2));
