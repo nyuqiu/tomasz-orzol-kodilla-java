@@ -2,18 +2,18 @@ package com.kodilla.sudoku;
 
 import java.util.*;
 
-public class SudokuElement extends Prototype {
+public class Element extends Prototype {
     public static final String EMPTY = "x";
     private String value;
     private List<String> possibleValues;
 
-    public SudokuElement() {
+    public Element() {
         this.value = EMPTY;
         this.possibleValues = new ArrayList<>();
     }
 
-    public SudokuElement deepCopy() throws CloneNotSupportedException {
-        SudokuElement clonedElement = (SudokuElement) super.clone();
+    public Element deepCopy() throws CloneNotSupportedException {
+        Element clonedElement = (Element) super.clone();
         clonedElement.value = value;
         clonedElement.possibleValues = possibleValues;
         return clonedElement;
@@ -37,7 +37,7 @@ public class SudokuElement extends Prototype {
 
     @Override
     public String toString() {
-        return "SudokuElement{" +
+        return "Element{" +
                 "value='" + value + '\'' +
                 ", " + possibleValues +
                 '}';

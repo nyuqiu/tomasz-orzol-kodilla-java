@@ -5,13 +5,13 @@ import java.util.List;
 
 public class BacktrackCopies {
     private static BacktrackCopies backtrackCopiesInstance = null;
-    private List<SudokuBoard> backtrack;
+    private List<Board> backtrack;
 
     private BacktrackCopies() {
         this.backtrack = new ArrayList<>();
     }
 
-    public List<SudokuBoard> getBacktrack() {
+    public List<Board> getBacktrack() {
         return backtrack;
     }
 

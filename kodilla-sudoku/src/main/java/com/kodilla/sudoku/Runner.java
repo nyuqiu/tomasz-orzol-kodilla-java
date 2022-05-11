@@ -4,13 +4,13 @@ public class Runner {
 
     public static void main(String[] args) {
         BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
-        SudokuBoard sudokuBoard = SudokuBoard.getInstance();
-        backtrackCopies.getBacktrack().add(sudokuBoard);
+        Board board = Board.getInstance();
+        backtrackCopies.getBacktrack().add(board);
 
         SudokuGame theGame = new SudokuGame();
 
-        sudokuBoard.fillTheSudokuBoard(sudokuBoard, 7, 9);
-        System.out.println(sudokuBoard);
+        board.fillTheSudokuBoard(board, 7, 9);
+        System.out.println(board);
 
         System.out.println("Amount of solved sudokus: " + theGame.resolveSudoku());
         System.out.println(theGame.finishedBoards);
