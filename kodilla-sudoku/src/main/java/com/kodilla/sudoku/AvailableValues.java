@@ -28,7 +28,6 @@ public class AvailableValues {
                             && !(element.getValue().equals(Element.EMPTY))) {
                         possibleValues = new ArrayList<>();
                     } else {
-                        // to fix
                         board.getValuesFromOneOfNine(columnNumber, rowNumber)
                                 .forEach(n -> possibleValues.remove(n));
                         possibleValues.remove(element.getValue());

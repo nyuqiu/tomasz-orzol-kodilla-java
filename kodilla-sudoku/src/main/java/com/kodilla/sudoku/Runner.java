@@ -9,8 +9,7 @@ public class Runner {
 
         SudokuGame theGame = new SudokuGame();
 
-        board.fillTheSudokuBoard(board, 7, 9);
-        System.out.println(board);
+        board.fillTheSudokuBoard(board, 6, 9);
 
         System.out.println("Amount of solved sudokus: " + theGame.resolveSudoku());
         System.out.println(theGame.finishedBoards);

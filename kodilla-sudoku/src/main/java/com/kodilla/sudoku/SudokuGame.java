@@ -26,24 +26,27 @@ public class SudokuGame {
                                     setValue();
                                     try {
                                         backtrackCopies.getBacktrack().add(board.deepCopy());
-                                        System.out.println("number of copies: " + backtrackCopies.getBacktrack().size());
                                     } catch (CloneNotSupportedException e) {
-
+                                        System.out.println(e);
                                     }
                                 }
                             }
                             if (possibleValues.size() == 1) {
                                 setValue();
                                 if (!board.getBoardValues().contains(Element.EMPTY)) {
-                                    finishedBoards.add(board);
-                                    System.out.println(board);
+                                    try {
+                                        finishedBoards.add(board.deepCopy());
+                                    } catch (CloneNotSupportedException e) {
+                                        System.out.println(e);
+                                    }
                                     retrievePreviousBoard();
                                 }
                             } else {
-                                retrievePreviousBoard();
+                                if (!retrievePreviousBoard()) return finishedBoards.size();
+
                             }
                         } else {
-                            retrievePreviousBoard();
+                            if (!retrievePreviousBoard()) return finishedBoards.size();
                         }
                     }
                 }
@@ -53,12 +56,15 @@ public class SudokuGame {
         return finishedBoards.size();
     }
 
-    private void retrievePreviousBoard() {
+    private boolean retrievePreviousBoard() {
         if (backtrackCopies.getBacktrack().size() > 0) {
-            IntStream.range(0, 8)
+            IntStream.range(0, 9)
                     .forEach(n -> board.getColumns().set(n, backtrackCopies.getBacktrack().get(0).getColumns().get(n)));
             board.repopulateValuesInOneOfNine();
             backtrackCopies.getBacktrack().remove(0);
+            return true;
+        } else {
+            return false;
         }
     }
 
