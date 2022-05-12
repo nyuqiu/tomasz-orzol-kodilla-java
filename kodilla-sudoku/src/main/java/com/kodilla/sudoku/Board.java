@@ -89,14 +89,16 @@ public class Board extends Prototype {
                 .collect(Collectors.toSet());
     }
 
-    public void setValue(int column, int row, String value) {
+    public boolean setValue(int column, int row, String value) {
         if (!(getColumnValues(column).contains(value)) &&
                 !(getRowValues(row).contains(value)) &&
                 !(getValuesFromOneOfNine(column, row).contains(value))
                 && Integer.parseInt(value) <= 9 && Integer.parseInt(value) >= 1) {
             fieldByColumnAndRow(column, row).setValue(value);
+            return true;
         } else {
             System.out.println("Cannot add this value");
+            return false;
         }
     }
 
