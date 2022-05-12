@@ -3,15 +3,13 @@ package com.kodilla.sudoku;
 public class Runner {
 
     public static void main(String[] args) {
-        BacktrackCopies backtrackCopies = BacktrackCopies.getInstance();
         Board board = Board.getInstance();
-        backtrackCopies.getBacktrack().add(board);
-
         SudokuGame theGame = new SudokuGame();
 
-        board.fillTheSudokuBoard(board, 6, 9);
+        board.fillTheSudokuBoardForTesting(board, 9, 7);
+        System.out.println(board);
 
         System.out.println("Amount of solved sudokus: " + theGame.resolveSudoku());
-        System.out.println(theGame.finishedBoards);
+        System.out.println("Solved sudoku: \n" +theGame.finishedBoards.get(0));
     }
 }
