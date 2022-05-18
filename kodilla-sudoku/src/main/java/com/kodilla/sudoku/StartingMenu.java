@@ -10,7 +10,26 @@ public class StartingMenu {
         System.out.println("What is your name?");
         String player = sc.nextLine();
         System.out.println("Hello " + player + ". Press 1 for solving your board or 2 for partly filled board");
+        chooseOption();
+        System.out.println("Your board: \n" + board);
+        return player;
+    }
 
+    private void printMessageToEnterValue() {
+        System.out.println("Enter column and row number, and value for field, use coma as separator.\n" +
+                "Type end to accept board.");
+    }
+
+    private int checkingRangeForFillingBoard() {
+        int input = sc.nextInt();
+        while (9 < input || input <= 0) {
+            System.out.println("Wrong value, try again.");
+            input = sc.nextInt();
+        }
+        return input;
+    }
+
+    private void chooseOption() {
         switch (sc.nextInt()) {
             case 1:
                 printMessageToEnterValue();
@@ -37,23 +56,8 @@ public class StartingMenu {
                 break;
             default:
                 System.out.println("Option doesn't exist, try again.");
+                chooseOption();
                 break;
         }
-        System.out.println("Your board: \n" + board);
-        return player;
-    }
-
-    private void printMessageToEnterValue() {
-        System.out.println("Enter column and row number, and value for field, use coma as separator.\n" +
-                "Type end to accept board.");
-    }
-
-    private int checkingRangeForFillingBoard () {
-        int input = sc.nextInt();
-        while (9 < input || input <= 0) {
-            System.out.println("Wrong value, try again.");
-            input = sc.nextInt();
-        }
-        return input;
     }
 }
