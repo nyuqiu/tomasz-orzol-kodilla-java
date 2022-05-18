@@ -1,6 +1,6 @@
 package com.kodilla.sudoku;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class StartingMenu {
     Scanner sc = new Scanner(System.in);
@@ -8,28 +8,52 @@ public class StartingMenu {
 
     public String startGame() {
         System.out.println("What is your name?");
-        String player = sc.next();
+        String player = sc.nextLine();
         System.out.println("Hello " + player + ". Press 1 for solving your board or 2 for partly filled board");
 
         switch (sc.nextInt()) {
             case 1:
-                for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
-                    for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
-                        System.out.println("Enter value for column " + columnNumber + " and row " + rowNumber);
-                        while (board.fieldByColumnAndRow(columnNumber, rowNumber).getValue().equals(Element.EMPTY)) {
-                            board.setValue(columnNumber, rowNumber, sc.next());
-                        }
+                printMessageToEnterValue();
+                while (sc.hasNext()) {
+                    printMessageToEnterValue();
+                    String input = sc.next();
+                    if (Objects.equals(input, "end")) {
+                        break;
+                    }
+                    List<String> userInput = Arrays.asList(input.split(","));
+                    if (!(userInput.size() == 3)) {
+                        System.out.println("Input incomplete. Try again.");
+                    } else {
+                        board.setValue(Integer.parseInt(userInput.get(0)), Integer.parseInt(userInput.get(1)), userInput.get(2));
                     }
                 }
+                break;
             case 2:
-                // add statment
                 System.out.println("How many columns you want have filled?");
-                int columns = sc.nextInt();
+                int columns = checkingRangeForFillingBoard();
                 System.out.println("How many rows you want have filled?");
-                int rows = sc.nextInt();
-                board.fillTheSudokuBoardForTesting(board, columns - 1, rows - 1);
+                int rows = checkingRangeForFillingBoard();
+                board.fillTheSudokuBoardForTesting(board, columns, rows);
+                break;
+            default:
+                System.out.println("Option doesn't exist, try again.");
+                break;
         }
         System.out.println("Your board: \n" + board);
         return player;
+    }
+
+    private void printMessageToEnterValue() {
+        System.out.println("Enter column and row number, and value for field, use coma as separator.\n" +
+                "Type end to accept board.");
+    }
+
+    private int checkingRangeForFillingBoard () {
+        int input = sc.nextInt();
+        while (9 < input || input <= 0) {
+            System.out.println("Wrong value, try again.");
+            input = sc.nextInt();
+        }
+        return input;
     }
 }

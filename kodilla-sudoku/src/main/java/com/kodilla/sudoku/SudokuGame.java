@@ -14,7 +14,7 @@ public class SudokuGame {
     private Element element;
 
     public int resolveSudoku() {
-//        addCopyToList(backtrackCopies.getBacktrack());
+
         while (board.getBoardValues().contains(Element.EMPTY)) {
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
@@ -41,7 +41,6 @@ public class SudokuGame {
                 }
             }
         }
-        System.out.println(finishedBoards);
         return finishedBoards.size();
     }
 
