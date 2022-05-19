@@ -3,16 +3,20 @@ package com.kodilla.sudoku;
 import java.util.*;
 
 public class StartingMenu {
+    SudokuGame theGame = new SudokuGame();
     Scanner sc = new Scanner(System.in);
     Board board = Board.getInstance();
 
-    public String startGame() {
+    public void startGame() {
         System.out.println("What is your name?");
         String player = sc.nextLine();
-        System.out.println("Hello " + player + ". Press 1 for solving your board or 2 for partly filled board");
+        System.out.println("Hello " + player + ". Choose 1 for one solution or any number for amount of sudoku solutions.");
+        boolean wantOneSolution = checkingIfOneOrTwo(sc.nextInt());
+        System.out.println("Press 1 for solving your board or 2 for partly filled board");
         chooseOption();
         System.out.println("Your board: \n" + board);
-        return player;
+        System.out.println("Amount of solved sudokus for " + player + ": " + theGame.resolveSudoku(wantOneSolution));
+        System.out.println("Solved sudoku: \n" + theGame.finishedBoards.get(0));
     }
 
     private void printMessageToEnterValue() {
@@ -27,6 +31,14 @@ public class StartingMenu {
             input = sc.nextInt();
         }
         return input;
+    }
+
+    private boolean checkingIfOneOrTwo(int toCheck) {
+        while (toCheck != 1 && toCheck != 2) {
+            System.out.println("Option doesn't exist, try again.");
+            toCheck = sc.nextInt();
+        }
+        return toCheck == 1;
     }
 
     private void chooseOption() {

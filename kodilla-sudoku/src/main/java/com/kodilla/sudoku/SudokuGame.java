@@ -13,14 +13,13 @@ public class SudokuGame {
     private List<String> possibleValues;
     private Element element;
 
-    public int resolveSudoku() {
-
+    public int resolveSudoku(boolean oneSolutionOnly) {
         while (board.getBoardValues().contains(Element.EMPTY)) {
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
                     element = board.fieldByColumnAndRow(columnNumber, rowNumber);
                     if (board != null && Objects.equals(element.getValue(), Element.EMPTY)) {
-                        availableValues.avaliableValuesForField();
+                        availableValues.avaliableValuesForField(columnNumber, rowNumber);
                         possibleValues = element.getPossibleValues();
                         while (possibleValues.size() > 1) {
                             for (int i = 0; i < possibleValues.size() - 1; ) {
@@ -32,7 +31,8 @@ public class SudokuGame {
                             setValue();
                             if (!board.getBoardValues().contains(Element.EMPTY)) {
                                 addCopyToList(finishedBoards);
-                                retrievePreviousBoard();
+                                if (oneSolutionOnly) return finishedBoards.size();
+                                else retrievePreviousBoard();
                             }
                         } else {
                             if (!retrievePreviousBoard()) return finishedBoards.size();
