@@ -89,29 +89,16 @@ public class Board extends Prototype {
                 .collect(Collectors.toSet());
     }
 
-    public Set<Element> getElementsFromOneOfNine(int column, int row) {
-        return new HashSet<>(checkWhichPartOfBoard(column, row));
-    }
-
-    public Set<Element> getColumnElements(int column) {
-        Set<Element> set = new HashSet<>();
-        IntStream.range(0, 9).forEach(row -> set.add(fieldByColumnAndRow(column, row)));
-        return set;
-    }
-
-    public Set<Element> getRowElements(int row) {
-        Set<Element> set = new HashSet<>();
-        IntStream.range(0, 9).forEach(column -> set.add(fieldByColumnAndRow(column, row)));
-        return set;
-    }
-
-    public void setValue(int column, int row, String value) {
+    public boolean setValue(int column, int row, String value) {
         if (!(getColumnValues(column).contains(value)) &&
                 !(getRowValues(row).contains(value)) &&
-                !(getValuesFromOneOfNine(column, row).contains(value))) {
+                !(getValuesFromOneOfNine(column, row).contains(value))
+                && Integer.parseInt(value) <= 9 && Integer.parseInt(value) >= 1) {
             fieldByColumnAndRow(column, row).setValue(value);
+            return true;
         } else {
             System.out.println("Cannot add this value");
+            return false;
         }
     }
 
@@ -149,7 +136,6 @@ public class Board extends Prototype {
             return null;
         }
         return partsByName.get(fullNameOneOfNine);
-
     }
 
     private String checkForRow(int column) {
@@ -191,10 +177,9 @@ public class Board extends Prototype {
         return Objects.hash(columns, partsByName, boardValues);
     }
 
-    public void fillTheSudokuBoard(Board board, int columnMax, int rowMax) {
+    public void fillTheSudokuBoardForTesting(Board board, int columnMax, int rowMax) {
         for (int columnNumber = 0; columnNumber < columnMax; columnNumber++) {
             for (int rowNumber = 0; rowNumber < rowMax; rowNumber++) {
-
                 if (columnNumber == 0 || columnNumber == 3 || columnNumber == 6) {
                     addingCorrectValueToBoard(board, columnNumber, rowNumber, 1);
                 } else if (columnNumber == 1 || columnNumber == 4 || columnNumber == 7) {

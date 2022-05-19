@@ -13,37 +13,26 @@ public class SudokuGame {
     private List<String> possibleValues;
     private Element element;
 
-    public int resolveSudoku() {
+    public int resolveSudoku(boolean oneSolutionOnly) {
         while (board.getBoardValues().contains(Element.EMPTY)) {
             for (int columnNumber = 0; columnNumber < 9; columnNumber++) {
                 for (int rowNumber = 0; rowNumber < 9; rowNumber++) {
                     element = board.fieldByColumnAndRow(columnNumber, rowNumber);
                     if (board != null && Objects.equals(element.getValue(), Element.EMPTY)) {
-                        if (availableValues.isEnoughPossibleValues(columnNumber, rowNumber)) {
-                            possibleValues = element.getPossibleValues();
-                            while (possibleValues.size() > 1) {
-                                for (int i = 0; i < possibleValues.size() - 1; ) {
-                                    setValue();
-                                    try {
-                                        backtrackCopies.getBacktrack().add(board.deepCopy());
-                                    } catch (CloneNotSupportedException e) {
-                                        System.out.println(e);
-                                    }
-                                }
-                            }
-                            if (possibleValues.size() == 1) {
+                        availableValues.avaliableValuesForField(columnNumber, rowNumber);
+                        possibleValues = element.getPossibleValues();
+                        while (possibleValues.size() > 1) {
+                            for (int i = 0; i < possibleValues.size() - 1; ) {
                                 setValue();
-                                if (!board.getBoardValues().contains(Element.EMPTY)) {
-                                    try {
-                                        finishedBoards.add(board.deepCopy());
-                                    } catch (CloneNotSupportedException e) {
-                                        System.out.println(e);
-                                    }
-                                    retrievePreviousBoard();
-                                }
-                            } else {
-                                if (!retrievePreviousBoard()) return finishedBoards.size();
-
+                                addCopyToList(backtrackCopies.getBacktrack());
+                            }
+                        }
+                        if (possibleValues.size() == 1) {
+                            setValue();
+                            if (!board.getBoardValues().contains(Element.EMPTY)) {
+                                addCopyToList(finishedBoards);
+                                if (oneSolutionOnly) return finishedBoards.size();
+                                else retrievePreviousBoard();
                             }
                         } else {
                             if (!retrievePreviousBoard()) return finishedBoards.size();
@@ -52,7 +41,6 @@ public class SudokuGame {
                 }
             }
         }
-        System.out.println(finishedBoards);
         return finishedBoards.size();
     }
 
@@ -72,5 +60,13 @@ public class SudokuGame {
         String setNumber = possibleValues.get(0);
         possibleValues.remove(setNumber);
         element.setValue(setNumber);
+    }
+
+    private void addCopyToList(List<Board> list) {
+        try {
+            list.add(board.deepCopy());
+        } catch (CloneNotSupportedException e) {
+            System.out.println(e);
+        }
     }
 }
