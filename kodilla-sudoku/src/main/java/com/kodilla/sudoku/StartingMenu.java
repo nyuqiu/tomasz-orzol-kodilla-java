@@ -55,7 +55,7 @@ public class StartingMenu {
                     if (!(userInput.size() == 3)) {
                         System.out.println("Input incomplete. Try again.");
                     } else {
-                        board.setValue(Integer.parseInt(userInput.get(0)), Integer.parseInt(userInput.get(1)), userInput.get(2));
+                        board.setValue(Integer.parseInt(userInput.get(0)) - 1, Integer.parseInt(userInput.get(1)) - 1, userInput.get(2));
                     }
                 }
                 break;
