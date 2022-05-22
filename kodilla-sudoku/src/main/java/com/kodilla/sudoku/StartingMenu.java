@@ -10,7 +10,7 @@ public class StartingMenu {
     public void startGame() {
         System.out.println("What is your name?");
         String player = sc.nextLine();
-        System.out.println("Hello " + player + ". Choose 1 for one solution or any number for amount of sudoku solutions.");
+        System.out.println("Hello " + player + ". Choose 1 for one solution or 2 for amount of sudoku solutions.");
         boolean wantOneSolution = checkingIfOneOrTwo(sc.nextInt());
         System.out.println("Press 1 for solving your board or 2 for partly filled board");
         chooseOption();
